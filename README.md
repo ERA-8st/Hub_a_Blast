@@ -1,24 +1,31 @@
-# README
+# <アプリ名>
+Hub a Blast
+## サイト概要
+Spotify API を用いた音楽特化型コミュニティサイト。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### サイトテーマ
+音楽という広い括りを、ジャンル、アーティスト、曲等でコミュニティを細分化する事で、より
+趣味嗜好の共通性が高い人々とのコミュニケーションを楽しめます。
 
-Things you may want to cover:
+### テーマを選んだ理由
+自分自身の好きなジャンル、曲等についてよりコアなコミュニティの中で
+意見交換ができるようなサイトが有ればと考えたため。
 
-* Ruby version
+### ターゲットユーザ
+* コアな音楽リスナー or プレイヤー
+* 普段聴かない音楽を楽しんでみたい人
 
-* System dependencies
+### 主な利用シーン
+日常
 
-* Configuration
+## 設計書
 
-* Database creation
+### 機能一覧
+<https://docs.google.com/spreadsheets/d/1LHwLXSsUSxS_-GFHTSwEQsmHKRL6Ioteizon5CBJi_A/edit?usp=sharing>
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- 仮想環境：Vagrant,VirtualBox
