@@ -1,5 +1,5 @@
-# <アプリ名>
-Hub a Blast
+# Hub a Blast
+
 ## サイト概要
 Spotify API を用いた音楽特化型コミュニティサイト。
 
