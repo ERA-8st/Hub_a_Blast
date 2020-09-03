@@ -1,0 +1,10 @@
+- if user_signed_in?
+    = link_to "TOP",     user_home_top_path
+    = link_to "ABOUT",   user_home_about_path
+    = link_to "INQUIRY", user_home_inquiry_path
+    = link_to "LOG_OUT", destroy_user_session_path, method: :delete
+- else
+    = link_to "TOP",     user_home_top_path
+    = link_to "ABOUT",   user_home_about_path
+    = link_to "SIGN_IN", new_user_registration_path
+    = link_to "LOG_IN",  new_user_password_path
