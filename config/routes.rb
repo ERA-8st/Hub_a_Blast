@@ -4,5 +4,13 @@ Rails.application.routes.draw do
     passwords:     'users/passwords',
     registrations: 'users/registrations'
   }
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  root to: 'user/home#top'
+
+  namespace :user do
+    get "home/top" => "home#top"
+    get "home/about" => "home#about"
+    get "home/inquiry" => "home#inquiry"
+  end
+
 end
