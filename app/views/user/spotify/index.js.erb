@@ -1,0 +1,3 @@
+$(".artists").html("<%= j(render partial: 'user/spotify/artists',  locals: {searchartists: @searchartists, artist_count: @artist_count, search_word: @search_word} ) %>")
+$(".albums").html("<%= j(render partial: 'user/spotify/albums',  locals: {searchalbums: @searchalbums, album_count: @album_count, search_word: @search_word} ) %>")
+$(".songs").html("<%= j(render partial: 'user/spotify/songs',  locals: {searchsongs: @searchsongs, song_count: @song_count, search_word: @search_word} ) %>")
