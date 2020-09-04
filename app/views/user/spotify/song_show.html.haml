@@ -1,0 +1,8 @@
+.container
+    - if @album.images.any?
+        - image = @album.images[1]
+        = image_tag(image["url"])
+    - else
+        =image_tag("default.jpg")
+    = @song.name
+    = link_to "ぷれびゅー", @song.preview_url

@@ -3,11 +3,12 @@
     - if searchalbums.present?
         - searchalbums.first(album_count).each do |searchalbum|
             .col-lg-3.col-md-3.col-xs-3
-                - if searchalbum.images.any?
-                    - image = searchalbum.images[2]
-                    = image_tag(image["url"])
-                - else
-                    =image_tag("default.jpg")
+                = link_to user_spotify_album_show_path(searchalbum.id) do
+                    - if searchalbum.images.any?
+                        - image = searchalbum.images[2]
+                        = image_tag(image["url"])
+                    - else
+                        =image_tag("default.jpg")
                 %br
                 = searchalbum.name
 - if searchalbums.count > album_count

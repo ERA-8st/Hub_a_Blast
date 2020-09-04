@@ -3,11 +3,12 @@
     - if searchartists.present?
         - searchartists.first(artist_count).each do |searchartist|
             .col-lg-3.col-md-3.col-xs-3
-                - if searchartist.images.any?
-                    - image = searchartist.images[2]
-                    = image_tag(image["url"])
-                - else
-                    =image_tag("default.jpg")
+                = link_to user_spotify_artist_show_path(searchartist.id) do
+                    - if searchartist.images.any?
+                        - image = searchartist.images[2]
+                        = image_tag(image["url"])
+                    - else
+                        =image_tag("default.jpg")
                 %br
                 = searchartist.name
 - if searchartists.count > artist_count

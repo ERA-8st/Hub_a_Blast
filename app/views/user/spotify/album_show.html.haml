@@ -1,0 +1,13 @@
+.container
+    - if @album.images.any?
+        - image = @album.images[1]
+        = image_tag(image["url"])
+    - else
+        =image_tag("default.jpg")
+    %br
+    = @album.name
+    %br
+    - @songs.each do |song|
+        = link_to user_spotify_song_show_path(song.id) do
+            = song.name
+        %br
