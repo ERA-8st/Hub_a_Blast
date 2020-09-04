@@ -13,6 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ // Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+
+
+
  * {
      margin: 0px;
      padding: 0px;
@@ -25,9 +30,13 @@
     background-color: black;
     text-align: center;
     a{
-        line-height: 100px;
-        margin: 10px;
+        line-height: 60px;
+        margin:20px;
         color:greenyellow;
         text-decoration: none;
     }
+ }
+
+ .more_link {
+    font-size: 120px;
  }

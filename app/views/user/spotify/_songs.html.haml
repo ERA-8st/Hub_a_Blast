@@ -1,0 +1,15 @@
+%h3 SONGs
+.row
+    - if searchsongs.present?
+        - searchsongs.first(song_count).each do |searchsong|
+            .col-lg-3.col-md-3.col-xs-3
+                - if searchsong.album.images.any?
+                    - image = searchsong.album.images[2]
+                    = image_tag(image["url"])
+                - else
+                    =image_tag("default.jpg")
+                %br
+                = searchsong.name
+- if searchsongs.count > song_count
+    - song_count += 8
+    = link_to "更に表示する", user_spotify_index_path(song_count: song_count, search: search_word), remote: true

@@ -12,6 +12,4 @@ class User::HomeController < ApplicationController
         
     end
     
-    
-    
 end

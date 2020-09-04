@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get "home/top" => "home#top"
     get "home/about" => "home#about"
     get "home/inquiry" => "home#inquiry"
+    resources :spotify, only: [:index]
   end
 
 end
