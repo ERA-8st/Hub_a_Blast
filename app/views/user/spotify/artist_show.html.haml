@@ -1,19 +1,33 @@
 .container
-    - if @artist.images.any?
-        - image = @artist.images[1]
-        = image_tag(image["url"])
-    - else
-        =image_tag("default.jpg")
-    %br
-    = @artist.name
-    .row
-        - @albums.each do |album|
-            .col-lg-3.col-md-3.col-xs-3
-                = link_to user_spotify_album_show_path(album.id) do
-                    - if album.images.any?
-                        - image = album.images[2]
-                        = image_tag(image["url"])
-                    - else
-                        =image_tag("default.jpg")
-                    %br
-                = album.name
+	.row
+		.col-lg-6.col-md-6.col-xs-6
+			- if @artist.images.any?
+				- image = @artist.images[1]
+				= image_tag(image["url"])
+			- else
+				=image_tag("default.jpg")
+			%br
+			= @artist.name
+		.col-lg-6.col-md-6.col-xs-6
+			= form_with model: @artist_comment, url: user_artist_comments_path, local: true do |f|
+				= f.text_area :comment, rows:"2",placeholder: "コメント"
+				= f.hidden_field :artist_id , :value => @artist.id
+				= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+			%table.table
+				- @artist_comments.each do |comment|
+					%tr
+						%td= comment.user.user_name
+						%td= comment.comment
+						%td= comment.created_at.strftime('%Y/%m/%d')
+			%p= "#{@artist_comments.count}コメント" 
+	.row
+		- @albums.each do |album|
+			.col-lg-3.col-md-3.col-xs-3
+				= link_to user_spotify_album_show_path(album.id) do
+					- if album.images.any?
+						- image = album.images[2]
+						= image_tag(image["url"])
+					- else
+						=image_tag("default.jpg")
+					%br
+				= album.name
