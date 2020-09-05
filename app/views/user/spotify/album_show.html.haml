@@ -24,4 +24,14 @@
 						%td= comment.user.user_name
 						%td= comment.comment
 						%td= comment.created_at.strftime('%Y/%m/%d')
+						- if comment.user == current_user
+							%td.fa.fa-bars.comment_pulldown
+								%ul.comment_edit
+									%li
+										= link_to user_album_comment_path(comment), method: :patch do
+											%i.fa.fa-pencil
+									%li
+										= link_to user_album_comment_path(comment), method: :delete do
+											%i.fa.fa-trash-o
+									
 			%p= "#{@album_comments.count}コメント" 

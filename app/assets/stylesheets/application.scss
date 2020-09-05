@@ -26,9 +26,11 @@
  
 
  header {
+    position: fixed;
+    z-index: 10;
     height: 100px;
     width: 100%;
-    background-color: black;
+    background-color: rgba(000, 000, 000, 0.9);
     text-align: center;
     a{
         line-height: 60px;
@@ -40,4 +42,8 @@
 
  .more_link {
     font-size: 120px;
+ }
+
+ .yield {
+    padding-top: 130px;
  }

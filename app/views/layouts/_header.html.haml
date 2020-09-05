@@ -7,7 +7,7 @@
     = link_to "TOP",     user_home_top_path
     = link_to "ABOUT",   user_home_about_path
     = link_to "SIGN_IN", new_user_registration_path
-    = link_to "LOG_IN",  new_user_password_path
+    = link_to "LOG_IN",  new_user_session_path
 %br
 = form_with url: user_spotify_index_path, method: :get, local: true do |f|
     = f.text_field :search

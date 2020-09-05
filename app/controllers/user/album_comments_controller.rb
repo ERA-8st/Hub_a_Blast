@@ -8,9 +8,14 @@ class User::AlbumCommentsController < ApplicationController
 		else
 			redirect_back(fallback_location: root_path)
 		end
-
 	end
 
+	def destroy
+		comment = AlbumComment.find(params[:id])
+		comment.destroy
+		redirect_back(fallback_location: root_path)
+	end
+	
 
 	private
 
