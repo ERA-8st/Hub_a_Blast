@@ -50,6 +50,8 @@ class User::SpotifyController < ApplicationController
 	def album_show
 		@album = RSpotify::Album.find(params[:id])
 		@songs = @album.tracks
+		@album_comment = AlbumComment.new
+		@album_comments = AlbumComment.where(album_id: @album.id)
 	end
 
 	def song_show
