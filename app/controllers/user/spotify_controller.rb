@@ -53,6 +53,8 @@ class User::SpotifyController < ApplicationController
     def song_show
         @song = RSpotify::Track.find(params[:id])
         @album = @song.album
+        @song_comment = SongComment.new
+        @song_comments = SongComment.where(song_id: @song.id)
     end
     
     

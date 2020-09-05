@@ -1,8 +1,30 @@
 .container
-    - if @album.images.any?
-        - image = @album.images[1]
-        = image_tag(image["url"])
-    - else
-        =image_tag("default.jpg")
-    = @song.name
-    = link_to "ぷれびゅー", @song.preview_url
+	.row
+		.col-lg-6.col-md-6.col-xs-6
+			= link_to user_spotify_album_show_path(@album.id) do
+				- if @album.images.any?
+					- image = @album.images[1]
+					= image_tag(image["url"])
+				- else
+					= image_tag("default.jpg")
+			%br
+			= @song.name
+			%br
+			= link_to @song.preview_url do
+				%i.fa.fa-play-circle Preview
+			%br
+			= link_to @song.external_urls["spotify"] do
+				%i.fa.fa-spotify Listen on Spotify
+		%br
+		.col-lg-6.col-md-6.col-xs-6
+			= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
+				= f.text_area :comment, rows:"2",placeholder: "コメント"
+				= f.hidden_field :song_id , :value => @song.id
+				= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+			%table.table
+				- @song_comments.each do |comment|
+					%tr
+						%td= comment.user.user_name
+						%td= comment.comment
+						%td= comment.created_at.strftime('%Y/%m/%d')
+			%p= "#{@song_comments.count}コメント" 
