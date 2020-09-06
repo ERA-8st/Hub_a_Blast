@@ -52,6 +52,9 @@ class User::SpotifyController < ApplicationController
 		@songs = @album.tracks
 		@album_comment = AlbumComment.new
 		@album_comments = AlbumComment.where(album_id: @album.id)
+		if params[:comment_id].present?
+			@comment = AlbumComment.find(params[:comment_id])
+		end
 	end
 
 	def song_show
