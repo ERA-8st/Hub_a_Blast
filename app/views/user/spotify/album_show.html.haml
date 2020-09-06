@@ -14,7 +14,8 @@
 						%td
 							= link_to user_spotify_song_show_path(song.id) do
 								= song.name
-		.col-lg-6.col-md-6.col-xs-6
+		.col-lg-1.col-md-1.col-xs-1
+		.col-lg-5.col-md-5.col-xs-5
 			= form_with model: @album_comment,  url: user_album_comments_path, local: true do |f|
 				= f.text_area :comment, rows:"2",placeholder: "コメント"
 				= f.hidden_field :album_id , :value => @album.id
@@ -41,5 +42,6 @@
 									%li
 										= link_to user_album_comment_path(comment), method: :delete do
 											%i.fa.fa-trash-o
-									
+						- else
+							%td
 			%p= "#{@album_comments.count}コメント" 
