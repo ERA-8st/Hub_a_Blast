@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   has_many :song_comments, dependent: :destroy
   has_many :artist_comments, dependent: :destroy
-  
+  has_many :album_comments, dependent: :destroy
+
 end

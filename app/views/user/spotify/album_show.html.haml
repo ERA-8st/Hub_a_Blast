@@ -1,13 +1,47 @@
 .container
-    - if @album.images.any?
-        - image = @album.images[1]
-        = image_tag(image["url"])
-    - else
-        =image_tag("default.jpg")
-    %br
-    = @album.name
-    %br
-    - @songs.each do |song|
-        = link_to user_spotify_song_show_path(song.id) do
-            = song.name
-        %br
+	.row
+		.col-lg-6.col-md-6.col-xs-6
+			- if @album.images.any?
+				- image = @album.images[1]
+				= image_tag(image["url"])
+			- else
+				= image_tag("default.jpg")
+			%br
+			= @album.name
+			%table.table
+				- @songs.each do |song|
+					%tr
+						%td
+							= link_to user_spotify_song_show_path(song.id) do
+								= song.name
+		.col-lg-1.col-md-1.col-xs-1
+		.col-lg-5.col-md-5.col-xs-5
+			= form_with model: @album_comment,  url: user_album_comments_path, local: true do |f|
+				= f.text_area :comment, rows:"2",placeholder: "コメント"
+				= f.hidden_field :album_id , :value => @album.id
+				= f.submit "コメント", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+			%table.table
+				- @album_comments.each do |comment|
+					%tr
+						%td= comment.user.user_name
+						-if @comment == comment
+							%td
+								= form_with model: @comment, url: user_album_comment_path(comment), local: true do |f|
+									= f.text_area :comment, rows:"2"
+									%br
+									= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+						-else
+							%td= comment.comment
+						%td= comment.created_at.strftime('%Y/%m/%d')
+						- if comment.user == current_user
+							%td.fa.fa-bars.comment_pulldown
+								%ul.comment_edit
+									%li
+										= link_to user_spotify_album_show_path(@album.id, comment_id: comment.id) do
+											%i.fa.fa-pencil
+									%li
+										= link_to user_album_comment_path(comment), method: :delete do
+											%i.fa.fa-trash-o
+						- else
+							%td
+			%p= "#{@album_comments.count}コメント" 
