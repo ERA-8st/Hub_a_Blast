@@ -1,5 +1,5 @@
 - if song_rating.blank? 
-	= form_with model: new_song_rating, url: user_song_ratings_path, local: true do |f| 
+	= form_with model: new_song_rating, url: user_song_ratings_path do |f| 
 		.star
 			= f.hidden_field :rate, id: :review_star 
 		= f.hidden_field :song_id, :value => song.id 
@@ -12,7 +12,7 @@
 				scoreName: "song_rating[rate]"
 			});
 - else
-	= form_with model: song_rating, url: user_song_rating_path(song_rating), local: true do |f|
+	= form_with model: song_rating, url: user_song_rating_path(song_rating) do |f|
 		.star-rate
 		= f.submit 'Re-evaluate', class:"btn btn-success"
 		:javascript
