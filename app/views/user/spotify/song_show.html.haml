@@ -7,7 +7,7 @@
 			=link_to "#{@song.album.name}", user_spotify_album_show_path(@song.album.id)
 			= " > #{@song.name}"
 	.row
-		.col-lg-6.col-md-6.col-xs-6
+		.col-lg-4.col-md-.col-xs-4
 			= link_to user_spotify_album_show_path(@album.id) do
 				- if @album.images.any?
 					- image = @album.images[1]
@@ -22,7 +22,9 @@
 			%br
 			= link_to @song.external_urls["spotify"] do
 				%i.fa.fa-spotify Listen on Spotify
-		%br
+		.col-lg-2.col-md-2.col-xs-2
+			.song_rating
+				= render "user/spotify/song_rating", song_rating: @song_rating, new_song_rating: @new_song_rating, song: @song
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
 			= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
@@ -55,4 +57,4 @@
 											%i.fa.fa-trash-o
 						- else
 							%td
-			%p= "#{@song_comments.count}コメント" 
+			%p= "#{@song_comments.count}コメント"
