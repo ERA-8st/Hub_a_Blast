@@ -1,4 +1,9 @@
 .container
+	-# アーティストリンク>アルバム名
+	.row
+		%h1.head_title
+			= link_to "#{@album.artists.first.name}", user_spotify_artist_show_path(@album.artists.first.id)
+			=  " > #{@album.name}"
 	.row
 		.col-lg-6.col-md-6.col-xs-6
 			- if @album.images.any?

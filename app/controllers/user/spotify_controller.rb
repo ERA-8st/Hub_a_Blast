@@ -45,6 +45,11 @@ class User::SpotifyController < ApplicationController
 		@albums = @artist.albums
 		@artist_comment = ArtistComment.new
 		@artist_comments = ArtistComment.where(artist_id: @artist.id)
+		# コメント編集用
+		if params[:comment_id].present?
+			@comment = ArtistComment.find(params[:comment_id])
+		end
+
 	end
 
 	def album_show
