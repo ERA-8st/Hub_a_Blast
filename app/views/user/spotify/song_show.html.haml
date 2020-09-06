@@ -16,7 +16,8 @@
 			= link_to @song.external_urls["spotify"] do
 				%i.fa.fa-spotify Listen on Spotify
 		%br
-		.col-lg-6.col-md-6.col-xs-6
+		.col-lg-1.col-md-1.col-xs-1
+		.col-lg-5.col-md-5.col-xs-5
 			= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
 				= f.text_area :comment, rows:"2",placeholder: "コメント"
 				= f.hidden_field :song_id , :value => @song.id
@@ -25,6 +26,26 @@
 				- @song_comments.each do |comment|
 					%tr
 						%td= comment.user.user_name
-						%td= comment.comment
+						-# コメント更新用テキストボックス
+						-if @comment == comment
+							%td
+								= form_with model: @comment, url: user_song_comment_path(comment), local: true do |f|
+									= f.text_area :comment, rows:"2"
+									%br
+									= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+						-else
+							%td= comment.comment
 						%td= comment.created_at.strftime('%Y/%m/%d')
+						-# 編集/削除用プルダウン
+						- if comment.user == current_user
+							%td.fa.fa-bars.comment_pulldown
+								%ul.comment_edit
+									%li
+										= link_to user_spotify_song_show_path(@song.id, comment_id: comment.id) do
+											%i.fa.fa-pencil
+									%li
+										= link_to user_song_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+											%i.fa.fa-trash-o
+						- else
+							%td
 			%p= "#{@song_comments.count}コメント" 

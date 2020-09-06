@@ -24,6 +24,7 @@
 				- @album_comments.each do |comment|
 					%tr
 						%td= comment.user.user_name
+						-# コメント更新用テキストボックス
 						-if @comment == comment
 							%td
 								= form_with model: @comment, url: user_album_comment_path(comment), local: true do |f|
@@ -33,6 +34,7 @@
 						-else
 							%td= comment.comment
 						%td= comment.created_at.strftime('%Y/%m/%d')
+						-# 編集/削除用プルダウン
 						- if comment.user == current_user
 							%td.fa.fa-bars.comment_pulldown
 								%ul.comment_edit
