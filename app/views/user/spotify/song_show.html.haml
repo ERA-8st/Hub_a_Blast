@@ -23,8 +23,9 @@
 			= link_to @song.external_urls["spotify"] do
 				%i.fa.fa-spotify Listen on Spotify
 		.col-lg-2.col-md-2.col-xs-2
+			-# 評価機能
 			.song_rating
-				= render "user/spotify/song_rating", song_rating: @song_rating, new_song_rating: @new_song_rating, song: @song
+				= render "user/spotify/song_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
 			= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|

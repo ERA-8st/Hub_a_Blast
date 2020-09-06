@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get "spotify/song_show/:id" => "spotify#song_show" , as: "spotify_song_show"
     resources :artist_comments, only: [:create, :destroy, :update]
     resources :album_comments, only: [:create, :destroy, :update]
+    resources :album_ratings, only: [:create, :update]
     resources :song_comments, only: [:create, :destroy, :update]
     resources :song_ratings, only: [:create, :update]
   end
