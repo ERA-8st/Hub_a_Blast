@@ -6,11 +6,25 @@ class User::SongCommentsController < ApplicationController
 		if @song_comment.save 
 			redirect_back(fallback_location: root_path)
 		else
-			render "user/spotify/song_show"
+			redirect_back(fallback_location: root_path)
 		end
 
 	end
 
+	def update
+		@comment = SongComment.find(params[:id])
+		if @comment.update(song_comment_params)
+			redirect_to user_spotify_song_show_path(@comment.song_id)
+		else
+			redirect_back(fallback_location: root_path)
+		end
+	end
+	
+	def destroy
+		comment = SongComment.find(params[:id])
+		comment.destroy
+		redirect_back(fallback_location: root_path)
+	end
 
 	private
 

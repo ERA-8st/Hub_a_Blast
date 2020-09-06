@@ -52,6 +52,7 @@ class User::SpotifyController < ApplicationController
 		@songs = @album.tracks
 		@album_comment = AlbumComment.new
 		@album_comments = AlbumComment.where(album_id: @album.id)
+		# コメント編集用
 		if params[:comment_id].present?
 			@comment = AlbumComment.find(params[:comment_id])
 		end
@@ -62,6 +63,10 @@ class User::SpotifyController < ApplicationController
 		@album = @song.album
 		@song_comment = SongComment.new
 		@song_comments = SongComment.where(song_id: @song.id)
+		# コメント編集用
+		if params[:comment_id].present?
+			@comment = SongComment.find(params[:comment_id])
+		end
 	end
   
 end
