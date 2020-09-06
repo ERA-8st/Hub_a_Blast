@@ -5,7 +5,7 @@
 			= link_to "#{@album.artists.first.name}", user_spotify_artist_show_path(@album.artists.first.id)
 			=  " > #{@album.name}"
 	.row
-		.col-lg-6.col-md-6.col-xs-6
+		.col-lg-4.col-md-4.col-xs-4
 			- if @album.images.any?
 				- image = @album.images[1]
 				= image_tag(image["url"])
@@ -19,6 +19,10 @@
 						%td
 							= link_to user_spotify_song_show_path(song.id) do
 								= song.name
+								.song_rating
+		.col-lg-2.col-md-2.col-xs-2
+			.album_rating
+				= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
 			= form_with model: @album_comment,  url: user_album_comments_path, local: true do |f|
