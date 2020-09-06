@@ -72,6 +72,8 @@ class User::SpotifyController < ApplicationController
 		if params[:comment_id].present?
 			@comment = SongComment.find(params[:comment_id])
 		end
+		@song_rating = current_user.song_ratings.find_by(song_id: @song.id)
+		@new_song_rating = current_user.song_ratings.new
 	end
   
 end

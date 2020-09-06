@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_05_103831) do
+ActiveRecord::Schema.define(version: 2020_09_06_090214) do
 
   create_table "album_comments", force: :cascade do |t|
     t.text "comment"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 2020_09_05_103831) do
     t.text "comment"
     t.integer "user_id"
     t.text "song_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "song_ratings", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "song_id"
+    t.float "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

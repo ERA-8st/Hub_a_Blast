@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resources :artist_comments, only: [:create, :destroy, :update]
     resources :album_comments, only: [:create, :destroy, :update]
     resources :song_comments, only: [:create, :destroy, :update]
-    
+    resources :song_ratings, only: [:create, :update]
   end
 
 end

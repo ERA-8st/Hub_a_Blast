@@ -1,0 +1,25 @@
+- if song_rating.blank? 
+	= form_with model: new_song_rating, url: user_song_ratings_path, local: true do |f| 
+		.star
+			= f.hidden_field :rate, id: :review_star 
+		= f.hidden_field :song_id, :value => song.id 
+		= f.submit 'evaluate', class:"btn btn-success"
+		:javascript
+			$('.star').raty({
+				size     : 36,
+				starOff:  '#{asset_path('star-off.png')}',
+				starOn : '#{asset_path('star-on.png')}',
+				scoreName: "song_rating[rate]"
+			});
+- else
+	= form_with model: song_rating, url: user_song_rating_path(song_rating), local: true do |f|
+		.star-rate
+		= f.submit 'Re-evaluate', class:"btn btn-success"
+		:javascript
+			$('.star-rate').raty({
+				size: 36,
+				starOff:  '#{asset_path('star-off.png')}',
+				starOn : '#{asset_path('star-on.png')}',
+				score: "#{song_rating.rate}" ,
+				scoreName: "song_rating[rate]"
+			});
