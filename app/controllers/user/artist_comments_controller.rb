@@ -6,11 +6,25 @@ class User::ArtistCommentsController < ApplicationController
 		if @artist_comment.save 
 			redirect_back(fallback_location: root_path)
 		else
-			render "user/spotify/artist_show"
+			redirect_back(fallback_location: root_path)
 		end
 
 	end
 
+	def update
+		@comment = ArtistComment.find(params[:id])
+      if @comment.update(artist_comment_params)
+				redirect_to user_spotify_artist_show_path(@comment.artist_id)
+			else
+				redirect_back(fallback_location: root_path)
+			end
+	end
+	
+	def destroy
+		comment = ArtistComment.find(params[:id])
+		comment.destroy
+		redirect_back(fallback_location: root_path)
+	end
 
 	private
 

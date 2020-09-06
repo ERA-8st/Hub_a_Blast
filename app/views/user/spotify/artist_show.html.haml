@@ -1,14 +1,15 @@
 .container
 	.row
+		%h1.head_title= "#{@artist.name}"
+	.row
 		.col-lg-6.col-md-6.col-xs-6
 			- if @artist.images.any?
 				- image = @artist.images[1]
 				= image_tag(image["url"])
 			- else
 				=image_tag("default.jpg")
-			%br
-			= @artist.name
-		.col-lg-6.col-md-6.col-xs-6
+		.col-lg-1.col-md-1.col-xs-1
+		.col-lg-5.col-md-5.col-xs-5
 			= form_with model: @artist_comment, url: user_artist_comments_path, local: true do |f|
 				= f.text_area :comment, rows:"2",placeholder: "コメント"
 				= f.hidden_field :artist_id , :value => @artist.id
@@ -17,8 +18,28 @@
 				- @artist_comments.each do |comment|
 					%tr
 						%td= comment.user.user_name
-						%td= comment.comment
+						-# コメント更新用テキストボックス
+						-if @comment == comment
+							%td
+								= form_with model: @comment, url: user_artist_comment_path(comment), local: true do |f|
+									= f.text_area :comment, rows:"2"
+									%br
+									= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+						-else
+							%td= comment.comment
 						%td= comment.created_at.strftime('%Y/%m/%d')
+						-# 編集/削除用プルダウン
+						- if comment.user == current_user
+							%td.fa.fa-bars.comment_pulldown
+								%ul.comment_edit
+									%li
+										= link_to user_spotify_artist_show_path(@artist.id, comment_id: comment.id) do
+											%i.fa.fa-pencil
+									%li
+										= link_to user_artist_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+											%i.fa.fa-trash-o
+						- else
+							%td
 			%p= "#{@artist_comments.count}コメント" 
 	.row
 		- @albums.each do |album|
