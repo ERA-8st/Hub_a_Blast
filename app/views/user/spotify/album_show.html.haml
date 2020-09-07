@@ -5,25 +5,36 @@
 			= link_to "#{@album.artists.first.name}", user_spotify_artist_show_path(@album.artists.first.id)
 			=  " > #{@album.name}"
 	.row
-		.col-lg-4.col-md-4.col-xs-4
+		.col-lg-6.col-md-6.col-xs-6
 			- if @album.images.any?
 				- image = @album.images[1]
 				= image_tag(image["url"])
 			- else
 				= image_tag("default.jpg")
 			%br
-			= @album.name
+			-# 評価機能
+			.album_rating
+				= @album.name
+				= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 			%table.table
 				- @songs.each do |song|
 					%tr
 						%td
 							= link_to user_spotify_song_show_path(song.id) do
 								= song.name
-								.song_rating
-		.col-lg-2.col-md-2.col-xs-2
-			-# 評価機能
-			.album_rating
-				= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
+						%td
+							%p{{class: "star-rate-#{song.id}"}} 
+								:javascript
+									$(".star-rate-#{song.id}").raty({
+										size: 36,
+										starOff: "#{asset_path('star-off.png')}",
+										starOn: "#{asset_path('star-on.png')}",
+										starHalf: "#{asset_path('star-half.png')}",
+										half: true,
+										readOnly: true,
+										score: "#{SongRating.where(song_id: song.id).average(:rate).to_f.round(1)}",
+									});
+						%td= "(#{SongRating.where(song_id: song.id).count})"
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
 			-# コメント機能
