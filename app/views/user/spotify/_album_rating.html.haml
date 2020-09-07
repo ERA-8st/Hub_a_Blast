@@ -2,8 +2,8 @@
 	= form_with model: new_album_rating, url: user_album_ratings_path do |f| 
 		.star
 			= f.hidden_field :rate, id: :review_star 
-		= f.hidden_field :album_id, :value => album.id 
-		= f.submit 'evaluate', class:"btn btn-success"
+			= f.hidden_field :album_id, :value => album.id 
+			= f.submit 'evaluate', class:"btn btn-success"
 		:javascript
 			$('.star').raty({
 				size     : 36,
@@ -14,7 +14,7 @@
 - else
 	= form_with model: album_rating, url: user_album_rating_path(album_rating) do |f|
 		.star-rate
-		= f.submit 'Re-evaluate', class:"btn btn-success"
+			= f.submit 'Re-evaluate', class:"btn btn-success"
 		:javascript
 			$('.star-rate').raty({
 				size: 36,
