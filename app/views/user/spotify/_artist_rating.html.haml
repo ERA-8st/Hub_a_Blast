@@ -1,0 +1,25 @@
+- if artist_rating.blank? 
+	= form_with model: new_artist_rating, url: user_artist_ratings_path do |f| 
+		.star
+			= f.hidden_field :rate, id: :review_star 
+		= f.hidden_field :artist_id, :value => artist.id 
+		= f.submit 'evaluate', class:"btn btn-success"
+		:javascript
+			$('.star').raty({
+				size     : 36,
+				starOff:  '#{asset_path('star-off.png')}',
+				starOn : '#{asset_path('star-on.png')}',
+				scoreName: "artist_rating[rate]"
+			});
+- else
+	= form_with model: artist_rating, url: user_artist_rating_path(artist_rating) do |f|
+		.star-rate
+		= f.submit 'Re-evaluate', class:"btn btn-success"
+		:javascript
+			$('.star-rate').raty({
+				size: 36,
+				starOff:  '#{asset_path('star-off.png')}',
+				starOn : '#{asset_path('star-on.png')}',
+				score: "#{artist_rating.rate}" ,
+				scoreName: "artist_rating[rate]"
+			});

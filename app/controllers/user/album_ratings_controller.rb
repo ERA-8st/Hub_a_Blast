@@ -1,6 +1,6 @@
 class User::AlbumRatingsController < ApplicationController
 
-    def create
+  def create
 		@album_rating = current_user.album_ratings.new(album_rating_params)
 		@album_rating.album_id = params[:album_rating][:album_id]
 		if @album_rating.save
@@ -22,6 +22,6 @@ class User::AlbumRatingsController < ApplicationController
 
 	def album_rating_params
 		params.require(:album_rating).permit(:rate, :album_id)
-		end
+	end
 		
 end
