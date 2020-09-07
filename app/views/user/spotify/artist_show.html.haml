@@ -2,14 +2,19 @@
 	.row
 		%h1.head_title= "#{@artist.name}"
 	.row
-		.col-lg-6.col-md-6.col-xs-6
+		.col-lg-4.col-md-4.col-xs-4
 			- if @artist.images.any?
 				- image = @artist.images[1]
 				= image_tag(image["url"])
 			- else
 				=image_tag("default.jpg")
+		.col-lg-2.col-md-2.col-xs-2
+			-# 評価機能
+			.artist_rating
+				= render "user/spotify/artist_rating", artist_rating: @artist_rating, new_artist_rating: @new_artist_rating, artist: @artist
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
+			-# コメント機能
 			= form_with model: @artist_comment, url: user_artist_comments_path, local: true do |f|
 				= f.text_area :comment, rows:"2",placeholder: "コメント"
 				= f.hidden_field :artist_id , :value => @artist.id

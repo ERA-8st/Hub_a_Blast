@@ -49,7 +49,9 @@ class User::SpotifyController < ApplicationController
 		if params[:comment_id].present?
 			@comment = ArtistComment.find(params[:comment_id])
 		end
-
+		# 評価機能
+		@artist_rating = current_user.artist_ratings.find_by(artist_id: @artist.id)
+		@new_artist_rating = current_user.artist_ratings.new
 	end
 
 	def album_show

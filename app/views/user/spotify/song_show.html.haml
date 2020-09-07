@@ -28,6 +28,7 @@
 				= render "user/spotify/song_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
+			-# コメント機能
 			= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
 				= f.text_area :comment, rows:"2",placeholder: "コメント"
 				= f.hidden_field :song_id , :value => @song.id
