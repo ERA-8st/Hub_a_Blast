@@ -11,7 +11,7 @@
 			= link_to user_spotify_album_show_path(@album.id) do
 				- if @album.images.any?
 					- image = @album.images[1]
-					= image_tag(image["url"])
+					= image_tag(image["url"], "data-adaptive-background" => '1')
 				- else
 					= image_tag("default.jpg")
 			%br

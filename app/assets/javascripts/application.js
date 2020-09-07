@@ -782,6 +782,7 @@
 	};
 })(jQuery);
 
+// コメント編集プルダウン
 $(function(){
     $(".comment_pulldown").hover(function(){
         $("li:not(:animated)", this).slideDown();
@@ -789,3 +790,15 @@ $(function(){
         $("li",this).slideUp();
     });
 });
+
+// jquary.adaptive-backgrounds
+var defaul = {
+	selector: '[data-adaptive-background="1"]',
+	parent: ".yield",
+	lumaClasses: {light: "ab-light", dark: "ab-dark"},
+	normalizedTextColors: {dark: '#202020', light: '#fff'}
+}
+
+$(document).ready(function(){
+	$.adaptiveBackground.run(defaul)
+  });
