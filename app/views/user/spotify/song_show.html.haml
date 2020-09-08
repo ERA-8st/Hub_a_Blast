@@ -4,8 +4,8 @@
 		%h2.head_title
 			= link_to "#{@song.artists.first.name}", user_spotify_artist_show_path(@song.artists.first.id)
 			> 
-			=link_to "#{@song.album.name}", user_spotify_album_show_path(@song.album.id)
-			= " > #{@song.name}"
+			=link_to "#{@song.album.name.truncate(24)}", user_spotify_album_show_path(@song.album.id)
+			= " > #{@song.name.truncate(24)}"
 	.row
 		.col-lg-4.col-md-.col-xs-4
 			= link_to user_spotify_album_show_path(@album.id) do

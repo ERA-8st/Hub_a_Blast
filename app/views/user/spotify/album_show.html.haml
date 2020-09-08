@@ -3,7 +3,7 @@
 	.row
 		%h1.head_title
 			= link_to "#{@album.artists.first.name}", user_spotify_artist_show_path(@album.artists.first.id)
-			=  " > #{@album.name}"
+			=  " > #{@album.name.truncate(24)}"
 	.row
 		.col-lg-6.col-md-6.col-xs-6
 			- if @album.images.any?
@@ -14,7 +14,7 @@
 			%br
 			-# 評価機能
 			.album_rating
-				= @album.name
+				= @album.name.truncate(24)
 				= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 			%table.table
 				- @songs.each do |song|
@@ -23,6 +23,7 @@
 							= link_to user_spotify_song_show_path(song.id) do
 								= song.name
 						%td
+							-# レビュー平均
 							%p{{class: "star-rate-#{song.id}"}} 
 								:javascript
 									$(".star-rate-#{song.id}").raty({

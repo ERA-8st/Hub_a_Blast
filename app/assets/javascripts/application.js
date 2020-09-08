@@ -796,9 +796,13 @@ var defaul = {
 	selector: '[data-adaptive-background="1"]',
 	parent: ".yield",
 	lumaClasses: {light: "ab-light", dark: "ab-dark"},
-	normalizedTextColors: {dark: '#202020', light: '#fff'}
 }
 
 $(document).ready(function(){
 	$.adaptiveBackground.run(defaul)
+	.css( "background", "linear-gradient(:root[0], :root[1]")
   });
+
+$(".yield").on("ab-color-found", function(payload){
+    console.log(payload.palette);
+});
