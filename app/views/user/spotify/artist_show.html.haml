@@ -56,4 +56,17 @@
 					- else
 						=image_tag("default.jpg")
 					%br
-				= album.name
+				= album.name.truncate(24)
+				-# レビュー平均
+				%p{{class: "star-rate-#{album.id}"}} 
+					:javascript
+						$(".star-rate-#{album.id}").raty({
+							size: 36,
+							starOff: "#{asset_path('star-off.png')}",
+							starOn: "#{asset_path('star-on.png')}",
+							starHalf: "#{asset_path('star-half.png')}",
+							half: true,
+							readOnly: true,
+							score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
+						});
+				= "(#{AlbumRating.where(album_id: album.id).count})"

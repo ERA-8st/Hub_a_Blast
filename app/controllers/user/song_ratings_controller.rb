@@ -4,6 +4,7 @@ class User::SongRatingsController < ApplicationController
 		@song_rating = current_user.song_ratings.new(song_rating_params)
 		@song_rating.song_id = params[:song_rating][:song_id]
 		if @song_rating.save
+
 		else
 			redirect_back(fallback_location: root_path)
 		end
