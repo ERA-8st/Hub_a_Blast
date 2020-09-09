@@ -1,1 +1,29 @@
-%p top
+.container
+	%h2 New Releases
+	%h3 JP
+	.row
+		- @new_releases_in_jp.first(3).each do |new_release_in_jp|
+			= link_to user_spotify_album_show_path(new_release_in_jp.id) do
+				- if new_release_in_jp.images.any?
+					- image = new_release_in_jp.images[1]
+					= image_tag(image["url"])
+				- else
+					= image_tag("default.jpg")
+	%h3 World
+	.row
+		- @new_releases.first(3).each do |new_release|
+			= link_to user_spotify_album_show_path(new_release.id) do
+				- if new_release.images.any?
+					- image = new_release.images[1]
+					= image_tag(image["url"])
+				- else
+					= image_tag("default.jpg")
+	- if user_signed_in?
+		.row
+			- @song_comments.each do |song_comment|
+				- @song = RSpotify::Track.find(song_comment.song_id)
+				- if @song.album.images.any?
+					- image = @song.album.images[1]
+					= image_tag(image["url"])
+				- else
+					= image_tag("default.jpg")

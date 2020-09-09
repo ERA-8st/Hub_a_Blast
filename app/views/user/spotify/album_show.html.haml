@@ -13,9 +13,10 @@
 				= image_tag("default.jpg")
 			%br
 			-# 評価機能
-			.album_rating
-				= @album.name.truncate(24)
-				= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
+			- if user_signed_in?
+				.album_rating
+					= @album.name.truncate(24)
+					= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 			%table.table
 				- @songs.each do |song|
 					%tr
