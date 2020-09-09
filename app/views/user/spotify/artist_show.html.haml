@@ -46,27 +46,61 @@
 						- else
 							%td
 			%p= "#{@artist_comments.count}コメント" 
+	-# アルバム一覧
+	%h3 Album
 	.row
+		- @album_name = [""]
 		- @albums.each do |album|
-			.col-lg-3.col-md-3.col-xs-3
-				= link_to user_spotify_album_show_path(album.id) do
-					- if album.images.any?
-						- image = album.images[2]
-						= image_tag(image["url"])
-					- else
-						=image_tag("default.jpg")
-					%br
-				= album.name.truncate(24)
-				-# レビュー平均
-				%p{{class: "star-rate-#{album.id}"}} 
-					:javascript
-						$(".star-rate-#{album.id}").raty({
-							size: 36,
-							starOff: "#{asset_path('star-off.png')}",
-							starOn: "#{asset_path('star-on.png')}",
-							starHalf: "#{asset_path('star-half.png')}",
-							half: true,
-							readOnly: true,
-							score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
-						});
-				= "(#{AlbumRating.where(album_id: album.id).count})"
+			-if album.album_type == "album" && !@album_name.include?(album.name.downcase)
+				.col-lg-3.col-md-3.col-xs-3
+					= link_to user_spotify_album_show_path(album.id) do
+						- if album.images.any?
+							- image = album.images[2]
+							= image_tag(image["url"])
+						- else
+							=image_tag("default.jpg")
+						%br
+					= album.name.truncate(24)
+					-# レビュー平均
+					%p{{class: "star-rate-#{album.id}"}} 
+						:javascript
+							$(".star-rate-#{album.id}").raty({
+								size: 36,
+								starOff: "#{asset_path('star-off.png')}",
+								starOn: "#{asset_path('star-on.png')}",
+								starHalf: "#{asset_path('star-half.png')}",
+								half: true,
+								readOnly: true,
+								score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
+							});
+					= "(#{AlbumRating.where(album_id: album.id).count})"
+					- @album_name.push(album.name.downcase)
+	-# シングル一覧
+	%h3 Single & EP
+	.row
+		- @single_name = [""]
+		- @albums.each do |album|
+			-if album.album_type == "single" && !@single_name.include?(album.name.downcase)
+				.col-lg-3.col-md-3.col-xs-3
+					= link_to user_spotify_album_show_path(album.id) do
+						- if album.images.any?
+							- image = album.images[2]
+							= image_tag(image["url"])
+						- else
+							=image_tag("default.jpg")
+						%br
+					= album.name.truncate(24)
+					-# レビュー平均
+					%p{{class: "star-rate-#{album.id}"}} 
+						:javascript
+							$(".star-rate-#{album.id}").raty({
+								size: 36,
+								starOff: "#{asset_path('star-off.png')}",
+								starOn: "#{asset_path('star-on.png')}",
+								starHalf: "#{asset_path('star-half.png')}",
+								half: true,
+								readOnly: true,
+								score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
+							});
+					= "(#{AlbumRating.where(album_id: album.id).count})"
+					- @single_name.push(album.name.downcase)

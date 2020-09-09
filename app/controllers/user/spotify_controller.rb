@@ -50,8 +50,10 @@ class User::SpotifyController < ApplicationController
 			@comment = ArtistComment.find(params[:comment_id])
 		end
 		# 評価機能
-		@artist_rating = current_user.artist_ratings.find_by(artist_id: @artist.id)
+		if user_signed_in?
+			@artist_rating = current_user.artist_ratings.find_by(artist_id: @artist.id)
 		@new_artist_rating = current_user.artist_ratings.new
+		end
 	end
 
 	def album_show
@@ -64,8 +66,10 @@ class User::SpotifyController < ApplicationController
 			@comment = AlbumComment.find(params[:comment_id])
 		end
 		# 評価機能
-		@album_rating = current_user.album_ratings.find_by(album_id: @album.id)
-		@new_album_rating = current_user.album_ratings.new
+		if user_signed_in?
+			@album_rating = current_user.album_ratings.find_by(album_id: @album.id)
+			@new_album_rating = current_user.album_ratings.new
+		end
 	end
 
 	def song_show
@@ -78,8 +82,10 @@ class User::SpotifyController < ApplicationController
 			@comment = SongComment.find(params[:comment_id])
 		end
 		# 評価機能
-		@song_rating = current_user.song_ratings.find_by(song_id: @song.id)
+		if user_signed_in?
+			@song_rating = current_user.song_ratings.find_by(song_id: @song.id)
 		@new_song_rating = current_user.song_ratings.new
+		end
 	end
   
 end
