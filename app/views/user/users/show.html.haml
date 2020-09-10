@@ -1,0 +1,22 @@
+.container
+	= attachment_image_tag(@user, :profile_image,  size: "50x50", fallback: "no-image.png")
+	= @user.user_name
+	%br
+	= @user.introduction
+
+	= link_to "edit", edit_user_user_path(@user)
+
+	- if user_signed_in? && @user == current_user
+		%h2 Latest your comment
+	- else
+		%h2 Latest #{@user.user_name}'s comment
+	.row
+		- @song_comments.each do |song_comment|
+			.col-lg-4.col-md-4.col-xs-4
+				= link_to user_spotify_song_show_path(song_comment.song_id) do
+					- @song = RSpotify::Track.find(song_comment.song_id)
+					- if @song.album.images.any?
+						- image = @song.album.images[1]
+						= image_tag(image["url"])
+					- else
+						= image_tag("default.jpg")
