@@ -1,6 +1,8 @@
 .container
-	%h2 New Releases
+	= link_to user_soptify_new_releases_path do
+		%h2 New Releases
 	%h3 JP
+
 	.row
 		- @new_releases_in_jp.first(3).each do |new_release_in_jp|
 			.col-lg-4.col-md-4.col-xs-4
