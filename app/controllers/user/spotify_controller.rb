@@ -87,5 +87,17 @@ class User::SpotifyController < ApplicationController
 		@new_song_rating = current_user.song_ratings.new
 		end
 	end
-  
+	
+	def new_releases
+		case params[:country]
+			when nil || ""
+				@new_releases = RSpotify::Album.new_releases
+			# 国別 new_release
+			else
+				@new_releases = RSpotify::Album.new_releases(country: params[:country])
+				@country_name = params[:country]
+		end
+	end
+	
+	
 end

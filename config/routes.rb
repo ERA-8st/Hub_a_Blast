@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get "spotify/artist_show/:id" => "spotify#artist_show" , as: "spotify_artist_show"
     get "spotify/album_show/:id" => "spotify#album_show" , as: "spotify_album_show"
     get "spotify/song_show/:id" => "spotify#song_show" , as: "spotify_song_show"
+    get "spotify/new_releases" => "spotify#new_releases", as: "soptify_new_releases"
     resources :artist_comments, only: [:create, :destroy, :update]
     resources :artist_ratings, only: [:create, :update]
     resources :album_comments, only: [:create, :destroy, :update]
