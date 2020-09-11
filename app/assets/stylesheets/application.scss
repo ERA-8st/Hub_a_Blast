@@ -37,14 +37,27 @@
     z-index: 10;
     height: 100px;
     width: 100%;
-    background-color: rgba(000, 000, 000, 0.9);
-    text-align: center;
-    a{
-        line-height: 60px;
-        margin:20px;
-        color:greenyellow;
-        text-decoration: none;
-    }
+		background-color: rgba(000, 000, 000, 0.9);
+		.left {
+			line-height: 100px;
+			font-size: 70px;
+			a {
+				color: white;
+			}
+		}
+    .center {
+			text-align: center;
+			a{
+				line-height: 60px;
+				margin:20px;
+				color:greenyellow;
+				text-decoration: none;
+			}
+		}
+		.right {
+			line-height: 90px;
+			text-align: right;
+		}
  }
 
  .more_link {

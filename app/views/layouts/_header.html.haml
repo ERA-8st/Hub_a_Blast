@@ -1,14 +1,24 @@
-- if user_signed_in?
-    = link_to "TOP",     user_home_top_path
-    = link_to "ABOUT",   user_home_about_path
-    = link_to "INQUIRY", user_home_inquiry_path
-    = link_to "LOG_OUT", destroy_user_session_path, method: :delete
-- else
-    = link_to "TOP",     user_home_top_path
-    = link_to "ABOUT",   user_home_about_path
-    = link_to "SIGN_IN", new_user_registration_path
-    = link_to "LOG_IN",  new_user_session_path
-%br
-= form_with url: user_spotify_index_path, method: :get, local: true do |f|
-    = f.text_field :search
-    = f.submit '検索', name: nil
+.container
+	.row
+		.col-lg-3.col-md-3.col-xs-3.left
+			= link_to "https://www.spotify.com/jp/" do
+				%i.fa.fa-spotify
+		.col-lg-6.col-md-6.col-xs-6.center
+			- if user_signed_in?
+				= link_to "TOP",     user_home_top_path
+				= link_to "ABOUT",   user_home_about_path
+				= link_to "INQUIRY", user_home_inquiry_path
+				= link_to "LOG_OUT", destroy_user_session_path, method: :delete
+			- else
+				= link_to "TOP",     user_home_top_path
+				= link_to "ABOUT",   user_home_about_path
+				= link_to "SIGN_IN", new_user_registration_path
+				= link_to "LOG_IN",  new_user_session_path
+			%br
+			= form_with url: user_spotify_index_path, method: :get, local: true do |f|
+				= f.text_field :search
+				= f.submit '検索', name: nil
+		.col-lg-3.col-md-3.col-xs-3.right
+			- if user_signed_in?
+				= current_user.user_name
+				= link_to attachment_image_tag(current_user, :profile_image,  size: "50x50", fallback: "no-image.png"), user_user_path(current_user)

@@ -1,11 +1,12 @@
 .container
-	= attachment_image_tag(@user, :profile_image,  size: "50x50", fallback: "no-image.png")
-	= @user.user_name
-	%br
-	= @user.introduction
-
-	= link_to "edit", edit_user_user_path(@user)
-
+	.row
+		.col-lg-3.col-md-3.col-xs-3
+			= attachment_image_tag(@user, :profile_image,  size: "200x200", fallback: "no-image.png")
+		.col-lg-4.col-md-4.col-xs-4
+			= @user.user_name
+			%br= @user.introduction
+			- if @user == current_user
+				= link_to "edit", edit_user_user_path(@user)
 	- if user_signed_in? && @user == current_user
 		%h2 Latest your comment
 	- else
