@@ -1,0 +1,30 @@
+.container
+	.row
+		.col-lg-3.col-md-3.col-xs-3
+		.col-lg-3.col-md-3.col-xs-3
+			- if @time.present?
+				%h4= "Charged Up(#{@time})"
+			- else
+				%h4 Charged Up
+		.col-lg-3.col-md-3.col-xs-3.charged_up_search
+			= form_with url: user_soptify_charged_ups_path, method: :get, local: true do |f|
+				= select_tag(:times, options_for_select(times))
+				= f.submit '検索', name: nil
+	.row
+		.col-lg-3.col-md-3.col-xs-3
+		.col-lg-6.col-md-6.col-xs-6
+			- @charged_up.each do |song|
+				%table.table.charged_up_table
+					%tr
+						%td
+							= link_to user_spotify_song_show_path(song[0]) do
+								- @song = RSpotify::Track.find(song[0])
+								- if @song.album.images.any?
+									- image = @song.album.images[2]
+									= image_tag(image["url"])
+								- else
+									= image_tag("default.jpg")
+						%td.charged_up_song_name
+							= @song.name
+						%td.charged_up_comments_count
+							= "#{song[1]}Comments"

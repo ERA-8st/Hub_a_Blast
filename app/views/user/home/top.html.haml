@@ -25,7 +25,8 @@
 					- else
 						= image_tag("default.jpg")
 	-# トップアクティブ
-	%h2 Charged Up
+	%h2
+		= link_to "Charged Up" , user_soptify_charged_ups_path
 	.row
 		- @charged_up.first(3).each do |song|
 			.col-lg-4.col-md-4.col-xs-4
