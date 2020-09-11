@@ -1,24 +1,23 @@
-%h2User info
-
-= form_with model: @user ,url: user_user_path(@user),local: true do |f| 
-	- if @user.errors.any?
-		#error_explanation
-			%h3= "#{@user.errors.count}error prohibited this obj from being saved"
-			%ul
-				- @user.errors.full_messages.each do |message| 
-					%li= message 
-
-	.field
-		= f.label :user_name
-		= f.text_field :user_name, class: "name" 
-
-	.field
-		= f.label :image
-		= f.attachment_field :profile_image, class: "user_image"
-
-	.field
-		= f.label :introduction 
-		= f.text_area :introduction, class: "introduction"
-
-	.actions
-		= f.submit
+.container
+	%h2 User info
+	= form_with model: @user ,url: user_user_path(@user),local: true do |f| 
+		= attachment_image_tag(@user, :profile_image,  size: "200x200", format: 'jpeg', fallback: "no-image.png", id: 'preview')
+		.row
+			- if @user.errors.any?
+				#error_explanation
+					%h3= "#{@user.errors.count}error prohibited this obj from being saved"
+					%ul
+						- @user.errors.full_messages.each do |message| 
+							%li= message 
+		.row
+			.col-lg-2.col-md-2.col-xs-2.user_edit_label
+				= f.label :user_name
+				%br
+				= f.label :image
+				%br
+				= f.label :introduction 
+				= f.submit
+			.col-lg-3.col-md-3.col-xs-3.user_edit_field
+				= f.text_field :user_name, class: "name" 
+				= f.attachment_field :profile_image, onchange: 'previewImage(preview)'
+				= f.text_area :introduction, class: "introduction"

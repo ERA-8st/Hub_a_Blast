@@ -29,11 +29,12 @@
 					= render "user/spotify/song_rating", song_rating: @song_rating, new_song_rating: @new_song_rating, song: @song
 		.col-lg-1.col-md-1.col-xs-1
 		.col-lg-5.col-md-5.col-xs-5
-			-# コメント機能
-			= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
-				= f.text_area :comment, rows:"2",placeholder: "コメント"
-				= f.hidden_field :song_id , :value => @song.id
-				= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+			- if user_signed_in?
+				-# コメント機能
+				= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
+					= f.text_area :comment, rows:"2",placeholder: "コメント"
+					= f.hidden_field :song_id , :value => @song.id
+					= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
 			%table.table
 				- @song_comments.each do |comment|
 					%tr

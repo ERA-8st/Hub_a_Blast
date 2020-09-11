@@ -27,7 +27,6 @@
  #wrapper{
 	position: relative;
 	min-height: 100vh;
-	padding-bottom: 110px;
   }
   
  body{
@@ -63,6 +62,10 @@
 		.right {
 			line-height: 90px;
 			text-align: right;
+			img {
+				height: 50px;
+				width: 50px;
+			}
 		}
  }
 
@@ -71,7 +74,10 @@
  }
 
  .yield{
-	 padding-top: 130px;
+	padding-top: 130px;
+	padding-bottom: 110px;
+	min-height: 750px; 
+	height:auto !important; 
  }
 
 .ab-light{
@@ -88,7 +94,6 @@
 }
 
 footer{
-	margin-top: auto;
 	height: 80px;
 	color: #fff;
 	background-color: #666;
@@ -97,7 +102,7 @@ footer{
 	width: 100%;
  
 	div{
-	  text-align: center;
-	  line-height: 80px;
+		text-align: center;
+		line-height: 80px;
 	}
   }
