@@ -37,7 +37,7 @@
 			%table.table
 				- @song_comments.each do |comment|
 					%tr
-						%td= comment.user.user_name
+						%td= link_to comment.user.user_name, user_user_path(comment.user)
 						-# コメント更新用テキストボックス
 						-if @comment == comment
 							%td

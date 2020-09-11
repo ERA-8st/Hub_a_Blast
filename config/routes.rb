@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get "home/top" => "home#top"
     get "home/about" => "home#about"
     get "home/inquiry" => "home#inquiry"
+    resources :users, only: [:show, :edit, :update]
     resources :spotify, only: [:index]
     get "spotify/artist_show/:id" => "spotify#artist_show" , as: "spotify_artist_show"
     get "spotify/album_show/:id" => "spotify#album_show" , as: "spotify_album_show"

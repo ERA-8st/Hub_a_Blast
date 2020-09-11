@@ -10,7 +10,12 @@
     %script{type: "text/javascript", src: "/js/jquery.adaptive-backgrounds.js"}
     %link{rel: "stylesheet", href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: "anonymous"}
   %body
-    %header
-      = render "layouts/header"
-    .yield
-      = yield
+    #wrapper
+      %header
+        = render "layouts/header"
+      .yield
+        = yield
+      
+      %footer
+        %div
+          © Hub a Blast 2020

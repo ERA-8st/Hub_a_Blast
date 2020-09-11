@@ -73,3 +73,6 @@ gem 'dotenv-rails'
 # Haml導入
 gem 'haml-rails'
 gem 'jquery-rails'
+
+# ユーザープロフィール画像
+gem 'refile', require: 'refile/rails', github: 'manfe/refile'
