@@ -22,3 +22,7 @@
 			- if user_signed_in?
 				= current_user.user_name
 				= link_to attachment_image_tag(current_user, :profile_image,  size: "50x50", fallback: "no-image.png"), user_user_path(current_user)
+			- else
+				Guest
+				= link_to new_user_session_path do
+					= image_tag "no-image.png"
