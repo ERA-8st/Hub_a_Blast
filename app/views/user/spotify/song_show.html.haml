@@ -16,7 +16,8 @@
 					= image_tag("default.jpg")
 			%br
 			= @song.name
-			= render "user/song_favorites/song_favorites", song_favorite: @song_favorite, song: @song
+			.song_favorite
+				= render "user/song_favorites/song_favorites", song_favorite: @song_favorite, song: @song
 			%br
 			= link_to @song.preview_url do
 				%i.fa.fa-play-circle Preview
