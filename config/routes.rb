@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :album_ratings, only: [:create, :update]
     resources :song_comments, only: [:create, :destroy, :update]
     resources :song_ratings, only: [:create, :update]
+    resources :song_favorites, only: [:create, :destroy]
   end
 
 end
