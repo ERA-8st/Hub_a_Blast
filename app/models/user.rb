@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :album_ratings, dependent: :destroy
   has_many :song_comments, dependent: :destroy
   has_many :song_ratings, dependent: :destroy
+  has_many :song_favorites, dependent: :destroy
+
 end

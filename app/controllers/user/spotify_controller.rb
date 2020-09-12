@@ -1,7 +1,5 @@
 class User::SpotifyController < ApplicationController
 
-	require 'rspotify'
-	RSpotify.authenticate(ENV['SPOTIFY_CLIENT_ID'], ENV['SPOTIFY_SECRET_ID'])
 
 	def index
 		if params[:search].blank?
@@ -84,8 +82,9 @@ class User::SpotifyController < ApplicationController
 		# 評価機能
 		if user_signed_in?
 			@song_rating = current_user.song_ratings.find_by(song_id: @song.id)
-		@new_song_rating = current_user.song_ratings.new
+			@new_song_rating = current_user.song_ratings.new
 		end
+		@song_favorite = SongFavorite.find_by(user_id: current_user, song_id: @song.id)
 	end
 	
 	def new_releases

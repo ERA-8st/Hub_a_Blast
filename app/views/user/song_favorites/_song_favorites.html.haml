@@ -1,0 +1,8 @@
+-if song_favorite
+	= link_to user_song_favorite_path(song_favorite, song_id: song.id), method: :delete, remote: true do
+		%i.fa.fa-star
+	= SongFavorite.where(song_id: song.id).count 
+-else
+	= link_to user_song_favorites_path(song_id: song.id), method: :post, remote: true do
+		%i.fa.fa-star-o
+	= SongFavorite.where(song_id: song.id).count
