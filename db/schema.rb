@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_073719) do
+ActiveRecord::Schema.define(version: 2020_09_14_075929) do
 
   create_table "album_comments", force: :cascade do |t|
     t.text "comment"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_073719) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "song_id"], name: "index_song_favorites_on_user_id_and_song_id", unique: true
     t.index ["user_id"], name: "index_song_favorites_on_user_id"
   end
 
