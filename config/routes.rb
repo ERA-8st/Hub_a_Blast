@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :user do
+    get 'inquiry/index'
+    get 'inquiry/confirm'
+    get 'inquiry/thanks'
+  end
   devise_for :users, controllers: {
     sessions:      'users/sessions',
     passwords:     'users/passwords',
@@ -10,7 +15,9 @@ Rails.application.routes.draw do
   namespace :user do
     get "home/top" => "home#top"
     get "home/about" => "home#about"
-    get "home/inquiry" => "home#inquiry"
+    get   'inquiry'         => 'inquiry#index'     
+    post  'inquiry/confirm' => 'inquiry#confirm'   
+    post  'inquiry/thanks'  => 'inquiry#thanks'
     resources :users, only: [:show, :edit, :update]
     resources :spotify, only: [:index]
     get "spotify/artist_show/:id" => "spotify#artist_show" , as: "spotify_artist_show"
