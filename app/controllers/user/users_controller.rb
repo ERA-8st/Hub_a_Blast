@@ -7,6 +7,7 @@ class User::UsersController < ApplicationController
 		@user = User.find(params[:id])
 		# コメントを新しい順に並び替えて、同じ曲に対してのコメントを除外したデータを取得
 		@song_comments = @user.song_comments.order("id DESC").select(:song_id).distinct
+		# お気に入りを新しい順に並び替えて取得
 		@song_favorites = @user.song_favorites.order("id DESC")
 	end
 	
