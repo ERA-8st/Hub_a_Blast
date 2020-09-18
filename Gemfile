@@ -67,7 +67,7 @@ gem 'bootstrap', '~> 4.1.1'
 #Spootify Web API用ラッパー 
 gem 'rspotify'
 
-#環境変数設定用
+#環境変数設定用()
 gem 'dotenv-rails'
 
 # Haml導入
