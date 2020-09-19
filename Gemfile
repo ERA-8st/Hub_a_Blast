@@ -80,5 +80,5 @@ gem 'refile', require: 'refile/rails', github: 'manfe/refile'
 # 本番環境用
 group :production do
   gem 'mysql2'
-  gem 'listen'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 end
