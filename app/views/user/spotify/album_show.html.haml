@@ -17,6 +17,20 @@
 				.album_rating
 					= @album.name.truncate(24)
 					= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
+			-#　シェア機能
+			-# Facebook
+			#fb-root
+			%script{async: "defer", crossorigin:"anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce:"FfQIW2IJ"}
+			.fb-share-button{"data-href" => "http://localhost:3000/user/spotify/album_show/#{@album.id};", "data-layout" => "button", "data-size" => "small"}
+				%a.fb-xfbml-parse-ignore{target: "_blank", href: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fspotify%2Falbum_show%2F%23%7B%40album.id%7D&amp;src=sdkpreparse"}
+			%br
+			-# Line
+			.line-it-button{"data-lang" => "ja", "data-type" => "share-a", "data-ver" => "3", "data-url" => "http://localhost:3000/user/spotify/album_show/#{@album.id}", "data-color" => "default", "data-size" => "small", "data-count" => "false", "style" => "display: none;"}
+			%script{src: "https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js", async: "async", defer: "defer"}
+			%br
+			-# Twitter
+			%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
+			%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
 			%table.table
 				- @songs.each do |song|
 					%tr
