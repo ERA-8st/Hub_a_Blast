@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     post  'inquiry/confirm' => 'inquiry#confirm'   
     post  'inquiry/thanks'  => 'inquiry#thanks'
     resources :users, only: [:show, :edit, :update]
+    get "users/follow_index/:id" => "users#follow_index",as: "users_follow_index"
     resources :relationships, only: [:create, :destroy]
     resources :spotify, only: [:index]
     get "spotify/artist_show/:id" => "spotify#artist_show" , as: "spotify_artist_show"

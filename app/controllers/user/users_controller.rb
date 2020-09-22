@@ -18,11 +18,17 @@ class User::UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if @user.update(user_params)
-      redirect_to user_user_path(@user), notice: "You have updated user successfully."
-    else
-      render "user/users/edit"
-    end
+			redirect_to user_user_path(@user), notice: "You have updated user successfully."
+		else
+			render "user/users/edit"
+		end
 	end
+
+	def follow_index
+		@index_user = User.find(params[:id])
+		@follows = @index_user.relationships
+	end
+	
 
 	private
 
