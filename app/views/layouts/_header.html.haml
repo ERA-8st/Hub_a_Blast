@@ -17,7 +17,7 @@
 			%br
 			= form_with url: user_spotify_index_path, method: :get, local: true do |f|
 				= f.text_field :search
-				= f.submit '検索', name: nil
+				= f.submit '検索', name: nil,　class: "add_loading_button"
 		.col-lg-3.col-md-3.col-xs-3.right
 			- if user_signed_in?
 				= current_user.user_name
