@@ -4,6 +4,10 @@ class User::RelationshipsController < ApplicationController
 
   def create
 		following = current_user.follow(@user)
+		if params[:relationship][:index_user_id]
+			@index_user = User.find(params[:relationship][:index_user_id])
+			@follows = @index_user.relationships
+		end
 		if following.save
 			flash[:success] = 'ユーザーをフォローしました'
 		else
@@ -13,7 +17,11 @@ class User::RelationshipsController < ApplicationController
   end
 
   def destroy
-    following = current_user.unfollow(@user)
+		following = current_user.unfollow(@user)
+		if params[:relationship][:index_user_id]
+			@index_user = User.find(params[:relationship][:index_user_id])
+			@follows = @index_user.relationships
+		end
     if following.destroy
 			flash[:success] = 'ユーザーのフォローを解除しました'
     else
