@@ -112,6 +112,14 @@
             return getYIQ(color) >= 128 ? blendRGBColors(color, opts.shadeColors.dark, opts.shadePercentage) : blendRGBColors(color, opts.shadeColors.light, opts.shadePercentage);
           }
         };
+        // 反転色生成メソッド(未使用)
+        function invertRgb(str_old_rgb) {
+          var ary_rgb = str_old_rgb.match(/([0-9]+)/g);
+          for (var i = 0; i < ary_rgb.length; i++) {
+              ary_rgb[i] = 255 - ary_rgb[i];
+          }
+          return 'RGB(' + ary_rgb.join(',') + ')';
+        }
 
         /* Subscribe to our color-found event. */
         $this.on(EVENT_CF, function (ev, data) {
@@ -129,9 +137,13 @@
             $parent = $this.parent();
           }
 
+          var getLumaClass = function (color) {
+            return getYIQ(color) <= 128 ? opts.lumaClasses.dark : opts.lumaClasses.light;
+          };
+
           if (!!opts.shadeVariation)
             data.color = getShadeAdjustment(data.color);
-
+              
           if ($.isNumeric(opts.transparent) && opts.transparent != null && opts.transparent >= 0.01 && opts.transparent <= 0.99) {
             var dominantColor = data.color;
             var rgbToRgba = dominantColor.replace("rgb", "rgba");
@@ -140,17 +152,25 @@
               backgroundColor: transparentColor
             });
           } else {
-            $parent.css({
-              backgroundColor: data.color
-            });
+            if (getLumaClass(data.color) == "ab-dark"){
+              var background = "linear-gradient(-20deg, #d3d3d3,"+ data.color + ")"
+              $parent.css(
+                "background", background,
+              );
+              $this.css("box-shadow", "0 10px 25px 0 #ffffff")
+            }else if(getLumaClass(data.color) == "ab-light"){
+              var background = "linear-gradient(-20deg,#808080,"+ data.color + ")"
+              $parent.css(
+                "background", background,
+              );
+              $this.css("box-shadow", "0 10px 25px 0 #000000")
+            }
           }
+
+          
 
           var getNormalizedTextColor = function (color) {
             return getYIQ(color) >= 128 ? opts.normalizedTextColors.dark : opts.normalizedTextColors.light;
-          };
-
-          var getLumaClass = function (color) {
-            return getYIQ(color) <= 128 ? opts.lumaClasses.dark : opts.lumaClasses.light;
           };
 
           // Normalize the text color based on luminance.

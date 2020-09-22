@@ -8,7 +8,7 @@
 			= " > #{@song.name.truncate(24)}"
 	.row
 		.col-lg-4.col-md-.col-xs-4
-			= link_to user_spotify_album_show_path(@album.id) do
+			= link_to user_spotify_album_show_path(@album.id), {class: "song_image"} do
 				- if @album.images.any?
 					- image = @album.images[1]
 					= image_tag(image["url"], "data-adaptive-background" => '1')
