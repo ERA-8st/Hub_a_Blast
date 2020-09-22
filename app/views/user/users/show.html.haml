@@ -7,6 +7,8 @@
 			%br= @user.introduction
 			- if @user == current_user
 				= link_to "edit", edit_user_user_path(@user)
+			.follow_button
+				= render "user/relationships/follow_button", user: @user
 	.row
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in? && @user == current_user
