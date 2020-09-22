@@ -783,11 +783,11 @@
 
 // コメント編集プルダウン
 $(function(){
-    $(".comment_pulldown").hover(function(){
-        $("li:not(:animated)", this).slideDown();
-    }, function(){
-        $("li",this).slideUp();
-    });
+	$(".comment_pulldown").hover(function(){
+			$("li:not(:animated)", this).slideDown();
+	}, function(){
+			$("li",this).slideUp();
+	});
 });
 
 // jquary.adaptive-backgrounds
@@ -803,5 +803,25 @@ $(document).ready(function(){
   });
 
 $(".yield").on("ab-color-found", function(payload){
-    console.log(payload.palette);
+  console.log(payload.palette);
+});
+
+$(function(){
+	var loader = $('.loader-wrap');
+
+	// ページ遷移が始まるとアニメーションを表示
+	$(window).on('beforeunload',function(){
+		loader.fadeIn();
+	});
+
+	//ページの読み込みが完了したらアニメーションを非表示
+	$(window).on('load',function(){
+		loader.fadeOut();
+	});
+
+	//ページの読み込みが完了してなくても3秒後にアニメーションを非表示にする
+	setTimeout(function(){
+		loader.fadeOut();
+	},3000);
+
 });
