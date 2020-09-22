@@ -8,9 +8,10 @@
 			- if @user == current_user
 				= link_to "edit", edit_user_user_path(@user)
 			-# フォローボタン
-			.follow_button
+			%div{class: "follow_button#{@user.id}"}
 				= render "user/relationships/follow_button", user: @user
 			= link_to "フォロー", user_users_follow_index_path(@user)
+			= link_to "フォロワー", user_users_follower_index_path(@user)
 	.row
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in? && @user == current_user

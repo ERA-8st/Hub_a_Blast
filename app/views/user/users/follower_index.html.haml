@@ -1,0 +1,15 @@
+.container
+	.row
+		.col-lg-3.col-md-3.col-xs-3
+		.col-lg-6.col-md-6.col-xs-6.follow_index
+			%table.table
+				- @followers.each do |follow|
+					%tr
+						- user = User.find(follow.user_id)
+						%td
+							= attachment_image_tag(user, :profile_image,  size: "40x40", fallback: "no-image.png")
+						%td
+							= link_to user.user_name, user_user_path(user)
+						%td
+							%div{class: "follow_button#{user.id}"}
+								= render "user/relationships/follow_button", user: user

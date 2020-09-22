@@ -28,6 +28,11 @@ class User::UsersController < ApplicationController
 		@index_user = User.find(params[:id])
 		@follows = @index_user.relationships
 	end
+
+	def follower_index
+		@followers = Relationship.where(follow_id: params[:id])
+	end
+	
 	
 
 	private
