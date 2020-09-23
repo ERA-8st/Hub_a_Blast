@@ -157,13 +157,15 @@
               $parent.css(
                 "background", background,
               );
-              $this.css("box-shadow", "0 10px 25px 0 #ffffff")
+              $this.css("box-shadow", "0 10px 25px 0 #ffffff");
+              $(".evaluate").css("backgroutcolor", data.color);
             }else if(getLumaClass(data.color) == "ab-light"){
               var background = "linear-gradient(-20deg,#808080,"+ data.color + ")"
               $parent.css(
                 "background", background,
               );
-              $this.css("box-shadow", "0 10px 25px 0 #000000")
+              $this.css("box-shadow", "0 10px 25px 0 #000000");
+              $(".evaluate").css("backgroutcolor", data.color);
             }
           }
 

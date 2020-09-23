@@ -8,13 +8,17 @@
 					size     : 36,
 					starOff:  '#{asset_path('star-off.png')}',
 					starOn : '#{asset_path('star-on.png')}',
-					scoreName: "song_rating[rate]"
+					scoreName: "song_rating[rate]",
 				});
-		= f.submit 'evaluate', class:"btn btn-success"
+				// レビュー用ボタン省略用
+				$(".star").on("click", function(){
+					$('.evaluate').trigger("click");
+				});
+		= f.submit 'evaluate', class:"evaluate"
 - else
 	= form_with model: song_rating, url: user_song_rating_path(song_rating) do |f|
 		.star-rate
-		= f.submit 'Re-evaluate', class:"btn btn-success"
+		= f.submit 'Re-evaluate', class:"evaluate"
 		:javascript
 			$('.star-rate').raty({
 				size: 36,
@@ -22,4 +26,8 @@
 				starOn : '#{asset_path('star-on.png')}',
 				score: "#{song_rating.rate}" ,
 				scoreName: "song_rating[rate]"
+			});
+			// レビュー用ボタン省略用
+			$(".star-rate").on("click", function(){
+				$('.evaluate').trigger("click");
 			});

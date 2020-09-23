@@ -12,10 +12,10 @@
 			- else
 				= image_tag("default.jpg")
 			%br
+			= @album.name.truncate(24)
 			-# 評価機能
 			- if user_signed_in?
 				.album_rating
-					= @album.name.truncate(24)
 					= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
 			-#　シェア機能
 			-# Facebook
