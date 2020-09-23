@@ -45,8 +45,7 @@
 				-# 評価機能
 				.song_rating
 					= render "user/spotify/song_rating", song_rating: @song_rating, new_song_rating: @new_song_rating, song: @song
-		.col-lg-1.col-md-1.col-xs-1
-		.col-lg-5.col-md-5.col-xs-5
+		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in?
 				-# コメント機能
 				= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
@@ -56,6 +55,9 @@
 			%table.table
 				- @song_comments.each do |comment|
 					%tr
+						%td
+							= link_to user_user_path(comment.user) do
+								= attachment_image_tag(comment.user, :profile_image,  size: "40x40", fallback: "no-image.png")
 						%td= link_to comment.user.user_name, user_user_path(comment.user)
 						-# コメント更新用テキストボックス
 						-if @comment == comment
