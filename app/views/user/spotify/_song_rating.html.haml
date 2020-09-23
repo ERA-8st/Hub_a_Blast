@@ -10,7 +10,7 @@
 					starOn : '#{asset_path('star-on.png')}',
 					scoreName: "song_rating[rate]",
 				});
-				// レビュー用ボタン省略用
+				// レビューボタン省略用
 				$(".star").on("click", function(){
 					$('.evaluate').trigger("click");
 				});
@@ -27,7 +27,7 @@
 				score: "#{song_rating.rate}" ,
 				scoreName: "song_rating[rate]"
 			});
-			// レビュー用ボタン省略用
+			// レビューボタン省略用
 			$(".star-rate").on("click", function(){
 				$('.evaluate').trigger("click");
 			});

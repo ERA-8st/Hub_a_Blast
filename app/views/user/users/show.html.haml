@@ -13,6 +13,18 @@
 			= link_to "フォロー", user_users_follow_index_path(@user)
 			%br
 			= link_to "フォロワー", user_users_follower_index_path(@user)
+
+			- unless @user.id == current_user.id 
+				- if (Relationship.find_by(user_id: @user, follow_id: current_user)) && (current_user.following?(@user)) 
+					- if @isRoom == true 
+						%p.user-show-room
+							= link_to "チャットへ", user_room_path(@roomId), class: "btn btn-primary btn-lg"
+								
+					- else
+						= form_for @room, url: user_rooms_path do |f|
+							= fields_for @entry do |e|
+								= e.hidden_field :user_id, value: @user.id 
+							= f.submit "チャットを始める", class:"btn btn-primary btn-lg user-show-chat"
 	.row
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in? && @user == current_user
