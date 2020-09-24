@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     get "users/follow_index/:id" => "users#follow_index",as: "users_follow_index"
     get "users/follower_index/:id" => "users#follower_index",as: "users_follower_index"
     resources :relationships, only: [:create, :destroy]
+    resources :messages, only: [:create]
+    resources :rooms, only: [:create,:show]
     resources :spotify, only: [:index]
     get "spotify/artist_show/:id" => "spotify#artist_show" , as: "spotify_artist_show"
     get "spotify/album_show/:id" => "spotify#album_show" , as: "spotify_album_show"
