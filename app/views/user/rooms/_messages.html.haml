@@ -1,0 +1,18 @@
+- if messages.present? 
+	.chat
+		- messages.each do |m| 
+			- if m.user == current_user
+				.right-chat-box
+					%p
+						= m.message
+						%br
+						= m.created_at.strftime("%Y-%m-%d %H:%M")
+			- else
+				.left-chat-box
+					.chat-image
+						= attachment_image_tag(m.user, :profile_image,  size: "40x40", fallback: "no-image.png")
+					.chat-message
+						%p
+							= m.message
+							%br
+							= m.created_at.strftime("%Y-%m-%d %H:%M")
