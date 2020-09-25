@@ -56,6 +56,7 @@
 											%i.fa.fa-trash-o
 						- else
 							%td
+			= paginate @artist_comments
 			%p= "#{@artist_comments.count}コメント" 
 	-# アルバム一覧
 	%h3 Album
