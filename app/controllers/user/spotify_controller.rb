@@ -42,7 +42,7 @@ class User::SpotifyController < ApplicationController
 		@artist = RSpotify::Artist.find(params[:id])
 		@albums = @artist.albums
 		@artist_comment = ArtistComment.new
-		@artist_comments = ArtistComment.where(artist_id: @artist.id)
+		@artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC")
 		# コメント編集用
 		if params[:comment_id].present?
 			@comment = ArtistComment.find(params[:comment_id])
@@ -58,7 +58,7 @@ class User::SpotifyController < ApplicationController
 		@album = RSpotify::Album.find(params[:id])
 		@songs = @album.tracks
 		@album_comment = AlbumComment.new
-		@album_comments = AlbumComment.where(album_id: @album.id)
+		@album_comments = AlbumComment.where(album_id: @album.id).order("id DESC")
 		# コメント編集用
 		if params[:comment_id].present?
 			@comment = AlbumComment.find(params[:comment_id])
@@ -74,7 +74,7 @@ class User::SpotifyController < ApplicationController
 		@song = RSpotify::Track.find(params[:id])
 		@album = @song.album
 		@song_comment = SongComment.new
-		@song_comments = SongComment.where(song_id: @song.id)
+		@song_comments = SongComment.where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
 		# コメント編集用
 		if params[:comment_id].present?
 			@comment = SongComment.find(params[:comment_id])

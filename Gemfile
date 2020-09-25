@@ -85,3 +85,6 @@ end
 
 # 管理者機能
 gem 'activeadmin'
+
+# ページネーション
+gem 'kaminari'

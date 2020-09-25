@@ -81,4 +81,5 @@
 											%i.fa.fa-trash-o
 						- else
 							%td
+			= paginate @song_comments
 			%p= "#{@song_comments.count}コメント"
