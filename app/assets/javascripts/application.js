@@ -825,3 +825,8 @@ $(function(){
 	},3000);
 
 });
+
+$(function(){
+	var chat = $('.chat');
+	$('.DM').height(chat.height());
+})

@@ -18,6 +18,11 @@
       .yield
         = yield
       
-      %footer
-        %div
-          © Hub a Blast 2020
+      -if @messages
+        .fixed-footer 
+          %div
+            © Hub a Blast 2020
+      -else
+        %footer
+          %div
+            © Hub a Blast 2020
