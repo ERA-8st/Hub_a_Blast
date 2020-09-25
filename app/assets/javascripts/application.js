@@ -806,7 +806,7 @@ $(".yield").on("ab-color-found", function(payload){
   console.log(payload.palette);
 });
 
-// ローシング機能
+// ローディング機能
 $(function(){
 	var loader = $('.loader-wrap');
 
