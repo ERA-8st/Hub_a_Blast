@@ -790,7 +790,7 @@ $(function(){
 	});
 });
 
-// jquary.adaptive-backgrounds
+// jquary.adaptive-backgrounds(背景色と画像をリンク)
 var defaul = {
 	selector: '[data-adaptive-background="1"]',
 	parent: ".yield",
@@ -806,6 +806,7 @@ $(".yield").on("ab-color-found", function(payload){
   console.log(payload.palette);
 });
 
+// ローシング機能
 $(function(){
 	var loader = $('.loader-wrap');
 
@@ -825,3 +826,9 @@ $(function(){
 	},3000);
 
 });
+
+// DM画面height可変
+$(function(){
+	var chat = $('.chat');
+	$('.DM').height(chat.height());
+})
