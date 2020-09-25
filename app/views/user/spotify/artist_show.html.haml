@@ -56,7 +56,8 @@
 											%i.fa.fa-trash-o
 						- else
 							%td
-			%p= "#{@artist_comments.count}コメント" 
+			= paginate @artist_comments
+			%p= "#{ArtistComment.where(artist_id: @artist.id).count}コメント" 
 	-# アルバム一覧
 	%h3 Album
 	.row

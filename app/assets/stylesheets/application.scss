@@ -190,3 +190,12 @@ footer{
     height: 5em;
   }
 }
+
+
+ul.pagination {
+	display: flex;
+	justify-content: center;
+	a{
+		color: black;
+	}
+}

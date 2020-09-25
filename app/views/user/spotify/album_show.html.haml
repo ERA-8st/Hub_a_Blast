@@ -85,4 +85,5 @@
 											%i.fa.fa-trash-o
 						- else
 							%td
-			%p= "#{@album_comments.count}コメント" 
+			= paginate @album_comments
+			%p= "#{AlbumComment.where(album_id: @album.id).count}コメント" 
