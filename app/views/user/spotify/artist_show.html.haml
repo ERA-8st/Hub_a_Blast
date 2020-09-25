@@ -57,7 +57,7 @@
 						- else
 							%td
 			= paginate @artist_comments
-			%p= "#{@artist_comments.count}コメント" 
+			%p= "#{ArtistComment.where(artist_id: @artist.id).count}コメント" 
 	-# アルバム一覧
 	%h3 Album
 	.row

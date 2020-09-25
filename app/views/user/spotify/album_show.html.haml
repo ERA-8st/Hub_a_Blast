@@ -86,4 +86,4 @@
 						- else
 							%td
 			= paginate @album_comments
-			%p= "#{@album_comments.count}コメント" 
+			%p= "#{AlbumComment.where(album_id: @album.id).count}コメント" 
