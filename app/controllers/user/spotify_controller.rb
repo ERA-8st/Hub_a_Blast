@@ -58,7 +58,7 @@ class User::SpotifyController < ApplicationController
 		@album = RSpotify::Album.find(params[:id])
 		@songs = @album.tracks
 		@album_comment = AlbumComment.new
-		@album_comments = AlbumComment.where(album_id: @album.id).order("id DESC")
+		@album_comments = AlbumComment.where(album_id: @album.id).order("id DESC").page(params[:page]).per(5)
 		# コメント編集用
 		if params[:comment_id].present?
 			@comment = AlbumComment.find(params[:comment_id])

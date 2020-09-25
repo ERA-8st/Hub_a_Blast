@@ -192,7 +192,7 @@ footer{
 }
 
 
-span .next a{
-	margin: 10px;
-	color: red;
+ul.pagination {
+	display: flex;
+	justify-content: center;
 }
