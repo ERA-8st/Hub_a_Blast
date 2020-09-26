@@ -18,5 +18,7 @@ class User::RoomsController < ApplicationController
     else
       redirect_back(fallback_location: root_path)
     end
+    # フッター固定用
+    @fixed_footer = true
   end
 end

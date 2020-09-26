@@ -6,10 +6,10 @@ class User::UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
 		# コメントを新しい順に並び替えて、同じ曲に対してのコメントを除外したデータを取得
-		@song_comments = @user.song_comments.order("id DESC").select(:song_id).distinct
+		@song_comments = @user.song_comments.order("id DESC").select(:song_id).distinct.limit(5)
 		# お気に入りを新しい順に並び替えて取得
-		@song_favorites = @user.song_favorites.order("id DESC")
-
+		@song_favorites = @user.song_favorites.order("id DESC").limit(5)
+		# DM
 		@currentUserEntry=Entry.where(user_id: current_user.id)
     @userEntry=Entry.where(user_id: @user.id)
 		unless @user.id == current_user.id
@@ -28,6 +28,7 @@ class User::UsersController < ApplicationController
 			end
 		end
 		if @user == current_user
+			# ユーザーのメッセージを新しい順に並び替えて同一のroomに対してのメッセージを除外
 			@messages = @user.messages.order("id DESC").select(:room_id).distinct.limit(3)
 		end
 	end
