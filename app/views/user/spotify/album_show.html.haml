@@ -36,7 +36,7 @@
 					%tr
 						%td
 							= link_to user_spotify_song_show_path(song.id) do
-								= song.name
+								= song.name.truncate(27)
 						%td
 							-# レビュー平均
 							%p{{class: "star-rate-#{song.id}"}} 

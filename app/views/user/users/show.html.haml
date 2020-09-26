@@ -26,6 +26,7 @@
 								= e.hidden_field :user_id, value: @user.id 
 							= f.submit "チャットを始める", class:"btn btn-primary btn-lg user-show-chat"
 		.col-lg-6.col-md-6.col-xs-6
+			-# 直近でDMを送ったユーザー一覧
 			- if @user == current_user
 				%h2 Latest Chats
 				%table.table
@@ -65,9 +66,10 @@
 		.col-lg-6.col-md-6.col-xs-6
 			-# お気に入り(ブックマーク)曲一覧
 			- if user_signed_in? && @user == current_user
-				%h2 your favorite
+				%h2.favorite your favorite
 			- else
-				%h2 #{@user.user_name}'s favorite
+				%h2.favorite #{@user.user_name}'s favorite
+			= link_to "View All", user_song_favorites_path(user_id: @user.id),class: "viewall"
 			- @song_favorites.each do |song_favorite|
 				%table.table
 					%tr

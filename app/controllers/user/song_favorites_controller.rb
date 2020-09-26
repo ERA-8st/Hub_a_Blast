@@ -1,5 +1,11 @@
 class User::SongFavoritesController < ApplicationController
 
+	def index
+		@user = User.find(params[:user_id])
+		@song_favorites = @user.song_favorites
+	end
+	
+
 	def create
 		@song = RSpotify::Track.find(params[:song_id])
 		new_song_favorite = current_user.song_favorites.new
