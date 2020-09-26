@@ -31,26 +31,6 @@
 			-# Twitter
 			%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
 			%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
-			%table.table
-				- @songs.each do |song|
-					%tr
-						%td
-							= link_to user_spotify_song_show_path(song.id) do
-								= song.name.truncate(27)
-						%td
-							-# レビュー平均
-							%p{{class: "star-rate-#{song.id}"}} 
-								:javascript
-									$(".star-rate-#{song.id}").raty({
-										size: 36,
-										starOff: "#{asset_path('star-off.png')}",
-										starOn: "#{asset_path('star-on.png')}",
-										starHalf: "#{asset_path('star-half.png')}",
-										half: true,
-										readOnly: true,
-										score: "#{SongRating.where(song_id: song.id).average(:rate).to_f.round(1)}",
-									});
-						%td= "(#{SongRating.where(song_id: song.id).count})"
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in?
 				-# コメント機能
@@ -89,3 +69,28 @@
 							%td
 			= paginate @album_comments
 			%p= "#{AlbumComment.where(album_id: @album.id).count}コメント" 
+	.row
+		.col-lg-12.col-md-12.col-xs-12
+			%table.table
+				- @number = 0
+				- @songs.each do |song|
+					- @number += 1
+					%tr
+						%td
+							= @number
+						%td
+							= link_to user_spotify_song_show_path(song.id) do
+								= song.name.truncate(50)
+						%td
+							-# レビュー平均
+							%p{{class: "star-rate-#{song.id}"}} 
+								:javascript
+									$(".star-rate-#{song.id}").raty({
+										size: 36,
+										starOff: "#{asset_path('star-off.png')}",
+										starOn: "#{asset_path('star-on.png')}",
+										starHalf: "#{asset_path('star-half.png')}",
+										half: true,
+										readOnly: true,
+										score: "#{SongRating.where(song_id: song.id).average(:rate).to_f.round(1)}",
+									});
