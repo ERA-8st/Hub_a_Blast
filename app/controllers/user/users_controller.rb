@@ -55,8 +55,6 @@ class User::UsersController < ApplicationController
 		@followers = Relationship.where(follow_id: params[:id])
 	end
 	
-	
-
 	private
 
 	def user_params

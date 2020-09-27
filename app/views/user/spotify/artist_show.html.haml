@@ -2,51 +2,54 @@
 	.row
 		%h1.head_title= "#{@artist.name}"
 	.row
-		.col-lg-4.col-md-4.col-xs-4
+		.col-lg-4.col-md-4.col-xs-4.text-right
 			- if @artist.images.any?
 				- image = @artist.images[1]
 				= image_tag(image["url"], "data-adaptive-background" => '1')
 			- else
 				=image_tag("default.jpg")
-		.col-lg-2.col-md-2.col-xs-2
-			- if user_signed_in?
-				-# 評価機能
-				.artist_rating
-					= render "user/spotify/artist_rating", artist_rating: @artist_rating, new_artist_rating: @new_artist_rating, artist: @artist
+		.col-lg-1.col-md-1.col-xs-1
+			-# Facebook
 			.fb-root
 			%script{async: "defer", crossorigin: "anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce: "gaokNTax"}
 			.fb-share-button{"data-href" => "http://localhost:3000/user/spotify/artist_show/#&#123;&#064;artist.id&#125;", "data-layout" => "button", "data-size" => "small"}
 				%a.fb-xfbml-parse-ignore{target: "_blank", href: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fspotify%2Fartist_show%2F%23%7B%40artist.id%7D&amp;src=sdkpreparse"} シェア
+			-# Line
 			.line-it-button{"data-lang" => "ja", "data-type" => "share-a", "data-ver" => "3", "data-url" => "http://localhost:3000/user/spotify/artist_show/#{@artist.id}", "data-color" => "default", "data-size" => "small", "data-count" => "false", "style" => "display: none;"}
 			%script{src: "https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js", async: "async", defer: "defer"}
 			-# Twitter
 			%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
 			%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
 		.col-lg-1.col-md-1.col-xs-1
-		.col-lg-5.col-md-5.col-xs-5
+		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in?
 				-# コメント機能
 				= form_with model: @artist_comment, url: user_artist_comments_path, local: true do |f|
 					= f.text_area :comment, rows:"2",placeholder: "コメント"
 					= f.hidden_field :artist_id , :value => @artist.id
 					= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
-			%table.table
 				- @artist_comments.each do |comment|
-					%tr
-						%td= comment.user.user_name
+					.row.comment
+						.col-lg-1.col-md-1.col-xs-1
+							= link_to user_user_path(comment.user) do
+								= attachment_image_tag(comment.user, :profile_image,  size: "40x40", fallback: "no-image.png")
+						.col-lg-2.col-md-2.col-xs-2.comment-user-name
+							= link_to comment.user.user_name, user_user_path(comment.user)
 						-# コメント更新用テキストボックス
 						-if @comment == comment
-							%td
+							.col-lg-6.col-md-6.col-xs-6
 								= form_with model: @comment, url: user_artist_comment_path(comment), local: true do |f|
 									= f.text_area :comment, rows:"2"
 									%br
 									= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
 						-else
-							%td= comment.comment
-						%td= comment.created_at.strftime('%Y/%m/%d')
+							.col-lg-6.col-md-6.col-xs-6.comment-comment.table-responsive.text-center
+								= comment.comment
+						.col-lg-2.col-md-2.col-xs-2
+							= comment.created_at.strftime('%Y/%m/%d')
 						-# 編集/削除用プルダウン
 						- if comment.user == current_user
-							%td.fa.fa-bars.comment_pulldown
+							.col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
 								%ul.comment_edit
 									%li
 										= link_to user_spotify_artist_show_path(@artist.id, comment_id: comment.id) do
@@ -55,9 +58,9 @@
 										= link_to user_artist_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
 											%i.fa.fa-trash-o
 						- else
-							%td
-			= paginate @artist_comments
-			%p= "#{ArtistComment.where(artist_id: @artist.id).count}コメント" 
+							.col-lg-1.col-md-1.col-xs-1
+				%p= "#{ArtistComment.where(artist_id: @artist.id).count}コメント"
+				= paginate @artist_comments
 	-# アルバム一覧
 	%h3 Album
 	.row
@@ -74,7 +77,7 @@
 						%br
 					= album.name.truncate(24)
 					-# レビュー平均
-					%p{{class: "star-rate-#{album.id}"}} 
+					%p{class: "star-rate-#{album.id}"}
 						:javascript
 							$(".star-rate-#{album.id}").raty({
 								size: 36,
@@ -85,7 +88,7 @@
 								readOnly: true,
 								score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
 							});
-					= "(#{AlbumRating.where(album_id: album.id).count})"
+						= "(#{AlbumRating.where(album_id: album.id).count})"
 					- @album_name.push(album.name.downcase)
 	-# シングル一覧
 	%h3 Single & EP
@@ -103,7 +106,7 @@
 						%br
 					= album.name.truncate(24)
 					-# レビュー平均
-					%p{{class: "star-rate-#{album.id}"}} 
+					%p{class: "star-rate-#{album.id}"}
 						:javascript
 							$(".star-rate-#{album.id}").raty({
 								size: 36,
@@ -114,5 +117,5 @@
 								readOnly: true,
 								score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
 							});
-					= "(#{AlbumRating.where(album_id: album.id).count})"
+						= "(#{AlbumRating.where(album_id: album.id).count})"
 					- @single_name.push(album.name.downcase)

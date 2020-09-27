@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   attachment :profile_image
+
+  validates :user_name, presence: true
+  attachment :profile_image, content_type: ["image/jpeg", "image/png", "image/gif"]
+  
   
   has_many :artist_comments, dependent: :destroy
   has_many :artist_ratings, dependent: :destroy

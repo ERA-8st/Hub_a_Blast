@@ -11,26 +11,27 @@
 				= image_tag(image["url"], "data-adaptive-background" => '1')
 			- else
 				= image_tag("default.jpg")
-			%br
-			= @album.name.truncate(24)
-			-# 評価機能
-			- if user_signed_in?
-				.album_rating
-					= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
-			-#　シェア機能
-			-# Facebook
-			#fb-root
-			%script{async: "defer", crossorigin:"anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce:"FfQIW2IJ"}
-			.fb-share-button{"data-href" => "http://localhost:3000/user/spotify/album_show/#{@album.id};", "data-layout" => "button", "data-size" => "small"}
-				%a.fb-xfbml-parse-ignore{target: "_blank", href: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fspotify%2Falbum_show%2F%23%7B%40album.id%7D&amp;src=sdkpreparse"}
-			%br
-			-# Line
-			.line-it-button{"data-lang" => "ja", "data-type" => "share-a", "data-ver" => "3", "data-url" => "http://localhost:3000/user/spotify/album_show/#{@album.id}", "data-color" => "default", "data-size" => "small", "data-count" => "false", "style" => "display: none;"}
-			%script{src: "https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js", async: "async", defer: "defer"}
-			%br
-			-# Twitter
-			%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
-			%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
+			.album-info
+				= @album.name.truncate(24)
+				%br
+				-# 評価機能
+				- if user_signed_in?
+					.album_rating
+						= render "user/spotify/album_rating", album_rating: @album_rating, new_album_rating: @new_album_rating, album: @album
+				-#　シェア機能
+				-# Facebook
+				#fb-root
+				%script{async: "defer", crossorigin:"anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce:"FfQIW2IJ"}
+				.fb-share-button{"data-href" => "http://localhost:3000/user/spotify/album_show/#{@album.id};", "data-layout" => "button", "data-size" => "small"}
+					%a.fb-xfbml-parse-ignore{target: "_blank", href: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fspotify%2Falbum_show%2F%23%7B%40album.id%7D&amp;src=sdkpreparse"}
+				%br
+				-# Line
+				.line-it-button{"data-lang" => "ja", "data-type" => "share-a", "data-ver" => "3", "data-url" => "http://localhost:3000/user/spotify/album_show/#{@album.id}", "data-color" => "default", "data-size" => "small", "data-count" => "false", "style" => "display: none;"}
+				%script{src: "https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js", async: "async", defer: "defer"}
+				%br
+				-# Twitter
+				%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
+				%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in?
 				-# コメント機能
@@ -38,39 +39,41 @@
 					= f.text_area :comment, rows:"2",placeholder: "コメント"
 					= f.hidden_field :album_id , :value => @album.id
 					= f.submit "コメント", class: "btn btn-sm btn-base-1 mt-20 pull-right"
-			%table.table
-				- @album_comments.each do |comment|
-					%tr
-						%td
-							= link_to user_user_path(comment.user) do
-								= attachment_image_tag(comment.user, :profile_image,  size: "40x40", fallback: "no-image.png")
-						%td= comment.user.user_name
-						-# コメント更新用テキストボックス
-						-if @comment == comment
-							%td
-								= form_with model: @comment, url: user_album_comment_path(comment), local: true do |f|
-									= f.text_area :comment, rows:"2"
-									%br
-									= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
-						-else
-							%td= comment.comment
-						%td= comment.created_at.strftime('%Y/%m/%d')
-						-# 編集/削除用プルダウン
-						- if comment.user == current_user
-							%td.fa.fa-bars.comment_pulldown
-								%ul.comment_edit
-									%li
-										= link_to user_spotify_album_show_path(@album.id, comment_id: comment.id) do
-											%i.fa.fa-pencil
-									%li
-										= link_to user_album_comment_path(comment), method: :delete do
-											%i.fa.fa-trash-o
-						- else
-							%td
+			- @album_comments.each do |comment|
+				.row.comment
+					.col-lg-1.col-md-1.col-xs-1
+						= link_to user_user_path(comment.user) do
+							= attachment_image_tag(comment.user, :profile_image,  size: "40x40", fallback: "no-image.png")
+					.col-lg-2.col-md-2.col-xs-2.comment-user-name
+						= link_to comment.user.user_name, user_user_path(comment.user)
+					-# コメント更新用テキストボックス
+					-if @comment == comment
+						.col-lg-6.col-md-6.col-xs-6
+							= form_with model: @comment, url: user_album_comment_path(comment), local: true do |f|
+								= f.text_area :comment, rows:"2"
+								%br
+								= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+					-else
+						.col-lg-6.col-md-6.col-xs-6.comment-comment.table-responsive.text-center
+							= comment.comment
+					.col-lg-2.col-md-2.col-xs-2
+						= comment.created_at.strftime('%Y/%m/%d')
+					-# 編集/削除用プルダウン
+					- if comment.user == current_user
+						.col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
+							%ul.comment_edit
+								%li
+									= link_to user_spotify_album_show_path(@album.id, comment_id: comment.id) do
+										%i.fa.fa-pencil
+								%li
+									= link_to user_album_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+										%i.fa.fa-trash-o
+					- else
+						.col-lg-1.col-md-1.col-xs-1
+			%p= "#{AlbumComment.where(album_id: @album.id).count}コメント"
 			= paginate @album_comments
-			%p= "#{AlbumComment.where(album_id: @album.id).count}コメント" 
 	.row
-		.col-lg-12.col-md-12.col-xs-12
+		.col-lg-12.col-md-12.col-xs-12.album-songs
 			%table.table
 				- @number = 0
 				- @songs.each do |song|
@@ -94,3 +97,6 @@
 										readOnly: true,
 										score: "#{SongRating.where(song_id: song.id).average(:rate).to_f.round(1)}",
 									});
+								= "(#{SongRating.where(song_id: song.id).average(:rate).to_f.round(1)})"
+						%td
+							%p= "#{SongComment.where(song_id: song.id).count}コメント"

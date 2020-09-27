@@ -1,3 +1,19 @@
 // Place all the styles related to the user::home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.top img {
+	box-shadow: 0 10px 25px 0 rgba(255, 255, 255, .5);
+}
+
+.top-world {
+  margin-top: 20px;
+}
+
+.top-jp {
+  margin-top: 10px;
+}
+
+.charge-up ,.latest-comments{
+  margin-top: 30px;
+}
