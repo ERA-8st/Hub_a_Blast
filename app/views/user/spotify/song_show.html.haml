@@ -7,44 +7,50 @@
 			=link_to "#{@song.album.name.truncate(24)}", user_spotify_album_show_path(@song.album.id)
 			= " > #{@song.name.truncate(24)}"
 	.row
-		.col-lg-4.col-md-.col-xs-4
-			= link_to user_spotify_album_show_path(@album.id), {class: "song_image"} do
-				- if @album.images.any?
-					- image = @album.images[1]
-					= image_tag(image["url"], "data-adaptive-background" => '1')
+		.col-lg-6.col-md-6.col-xs-6.song-show-left
+			.song-image
+				= link_to user_spotify_album_show_path(@album.id), {class: "song_image"} do
+					- if @album.images.any?
+						- image = @album.images[1]
+						= image_tag(image["url"], "data-adaptive-background" => '1')
+					- else
+						= image_tag("default.jpg")
+				%br
+				-# プレビューURL
+				= link_to @song.preview_url do
+					%i.fa.fa-play-circle Preview
+				%br
+				= link_to @song.external_urls["spotify"] do
+					%i.fa.fa-spotify Listen on Spotify
+				-# お気に入り
+				.song_favorite
+					= render "user/song_favorites/song_favorites", song_favorite: @song_favorite, song: @song
+			.song-info
+				- if @song.name.length <= 15
+					%h4= @song.name
+				-	elsif @song.name.length <= 20
+					%h5= @song.name
 				- else
-					= image_tag("default.jpg")
-			%br
-			-# お気に入り
-			.song_favorite
-				= render "user/song_favorites/song_favorites", song_favorite: @song_favorite, song: @song
-			%br
-			-# プレビューURL
-			= link_to @song.preview_url do
-				%i.fa.fa-play-circle Preview
-			%br
-			= link_to @song.external_urls["spotify"] do
-				%i.fa.fa-spotify Listen on Spotify
-			%br
-			-# シェア機能
-			-# Facebook
-			#fb-root
-				%script{async: "defer", crossorigin: "anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce: "q44w7xY2"}
-			.fb-share-button{"data-href" => "http://localhost:3000/user/spotify/song_show/#{@song.id};", "data-layout" => "button", "data-size" => "small"}
-				%a.fb-xfbml-parse-ignore{target: "_blank", href: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fspotify%2Fsong_show%2F%23%7B%40song.id%7D&amp;src=sdkpreparse"}
-			%br
-			-# Line
-			.line-it-button{"data-lang" => "ja", "data-type" => "share-a", "data-ver" => "3", "data-url" => "http://localhost:3000/user/spotify/song_show/#{@song.id}", "data-color" => "default", "data-size" => "small", "data-count" => "false", "style" => "display: none;"}
-				%script{src: "https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js", async: "async", defer: "defer"}
-			%br
-			-# Twitter
-			%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
-			%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
-		.col-lg-2.col-md-2.col-xs-2
-			- if user_signed_in?
-				-# 評価機能
-				.song_rating
-					= render "user/spotify/song_rating", song_rating: @song_rating, new_song_rating: @new_song_rating, song: @song
+					%h4.area
+						.marquee= @song.name
+				- if user_signed_in?
+					-# 評価機能
+					.song_rating
+						= render "user/spotify/song_rating", song_rating: @song_rating, new_song_rating: @new_song_rating, song: @song
+				-# シェア機能
+				-# Facebook
+				#fb-root
+					%script{async: "defer", crossorigin: "anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce: "q44w7xY2"}
+				.fb-share-button{"data-href" => "http://localhost:3000/user/spotify/song_show/#{@song.id};", "data-layout" => "button", "data-size" => "small"}
+					%a.fb-xfbml-parse-ignore{target: "_blank", href: "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fspotify%2Fsong_show%2F%23%7B%40song.id%7D&amp;src=sdkpreparse"}
+				%br
+				-# Line
+				.line-it-button{"data-lang" => "ja", "data-type" => "share-a", "data-ver" => "3", "data-url" => "http://localhost:3000/user/spotify/song_show/#{@song.id}", "data-color" => "default", "data-size" => "small", "data-count" => "false", "style" => "display: none;"}
+					%script{src: "https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js", async: "async", defer: "defer"}
+				%br
+				-# Twitter
+				%a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
+				%script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in?
 				-# コメント機能
@@ -52,34 +58,36 @@
 					= f.text_area :comment, rows:"2",placeholder: "コメント"
 					= f.hidden_field :song_id , :value => @song.id
 					= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
-			%table.table
-				- @song_comments.each do |comment|
-					%tr
-						%td
-							= link_to user_user_path(comment.user) do
-								= attachment_image_tag(comment.user, :profile_image,  size: "40x40", fallback: "no-image.png")
-						%td= link_to comment.user.user_name, user_user_path(comment.user)
-						-# コメント更新用テキストボックス
-						-if @comment == comment
-							%td
-								= form_with model: @comment, url: user_song_comment_path(comment), local: true do |f|
-									= f.text_area :comment, rows:"2"
-									%br
-									= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
-						-else
-							%td= comment.comment
-						%td= comment.created_at.strftime('%Y/%m/%d')
-						-# 編集/削除用プルダウン
-						- if comment.user == current_user
-							%td.fa.fa-bars.comment_pulldown
-								%ul.comment_edit
-									%li
-										= link_to user_spotify_song_show_path(@song.id, comment_id: comment.id) do
-											%i.fa.fa-pencil
-									%li
-										= link_to user_song_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
-											%i.fa.fa-trash-o
-						- else
-							%td
-			= paginate @song_comments
+			- @song_comments.each do |comment|
+				.row.comment
+					.col-lg-1.col-md-1.col-xs-1
+						= link_to user_user_path(comment.user) do
+							= attachment_image_tag(comment.user, :profile_image,  size: "40x40", fallback: "no-image.png")
+					.col-lg-2.col-md-2.col-xs-2.comment-user-name
+						= link_to comment.user.user_name, user_user_path(comment.user)
+					-# コメント更新用テキストボックス
+					-if @comment == comment
+						.col-lg-6.col-md-6.col-xs-6
+							= form_with model: @comment, url: user_song_comment_path(comment), local: true do |f|
+								= f.text_area :comment, rows:"2"
+								%br
+								= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
+					-else
+						.col-lg-6.col-md-6.col-xs-6.comment-comment.table-responsive
+							= comment.comment
+					.col-lg-2.col-md-2.col-xs-2
+						= comment.created_at.strftime('%Y/%m/%d')
+					-# 編集/削除用プルダウン
+					- if comment.user == current_user
+						.col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
+							%ul.comment_edit
+								%li
+									= link_to user_spotify_song_show_path(@song.id, comment_id: comment.id) do
+										%i.fa.fa-pencil
+								%li
+									= link_to user_song_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+										%i.fa.fa-trash-o
+					- else
+						.col-lg-1.col-md-1.col-xs-1
 			%p= "#{SongComment.where(song_id: @song.id).count}コメント"
+			= paginate @song_comments

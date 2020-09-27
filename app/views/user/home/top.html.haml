@@ -1,9 +1,9 @@
-.container
+.container.top
 	%h2
 		= link_to user_soptify_new_releases_path do
 			New Releases
 	-# New relsease(日本)
-	%h3 JP
+	%h3.top-jp JP
 	.row
 		- @new_releases_in_jp.first(3).each do |new_release_in_jp|
 			.col-lg-4.col-md-4.col-xs-4
@@ -14,7 +14,7 @@
 					- else
 						= image_tag("default.jpg")
 	-# New relsease(世界) 
-	%h3 World
+	%h3.top-world World
 	.row
 		- @new_releases.first(3).each do |new_release|
 			.col-lg-4.col-md-4.col-xs-4
@@ -25,7 +25,7 @@
 					- else
 						= image_tag("default.jpg")
 	-# トップアクティブ
-	%h2
+	%h2.charge-up
 		= link_to "Charged Up" , user_soptify_charged_ups_path
 	.row
 		- @charged_up.first(3).each do |song|
@@ -39,7 +39,7 @@
 						= image_tag("default.jpg")
 	-# 直近のコメント
 	- if user_signed_in?
-		%h2 Latest Your comment
+		%h2.latest-comments Latest Your comment
 		.row
 			- @song_comments.each do |song_comment|
 				.col-lg-4.col-md-4.col-xs-4
