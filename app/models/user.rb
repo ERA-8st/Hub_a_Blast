@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   attachment :profile_image
 
-  validates :user_name, presence: true
+  validates :user_name, presence: true, length: { maximum: 10 } 
   attachment :profile_image, content_type: ["image/jpeg", "image/png", "image/gif"]
   
   

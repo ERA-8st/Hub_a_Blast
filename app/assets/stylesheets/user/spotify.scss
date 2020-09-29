@@ -2,22 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.comment_edit{
-	list-style: none;
-	li{
-		display: none;
-		padding-top: 10px;
-	}
-}
 
+// show画面タイトル
 .head_title {
 	margin: 0 auto;
 	padding-bottom: 20px;
-	a {
-		color: white;
-	}
 }
 
+
+// charge_up関連
 .charged_up_search{
 	text-align: right;
 }
@@ -34,6 +27,8 @@
 	text-align: right;
 }
 
+
+// Lineシェアボタン
 .line-it-button {
 	margin: 10px 0 5px 0;
 }
@@ -42,6 +37,8 @@
 	display: none;
 }
 
+
+// Album関連
 .album-songs {
 	margin-top: 30px;
 }
@@ -52,6 +49,8 @@
 	padding-left: 10px;
 }
 
+
+// Song関連
 .song-show-left {
 	position: relative;
 }
@@ -72,25 +71,28 @@
 	height: 348px;
 }
 
-.comment_pulldown {
-	width: 48px;
-}
 
-.user-image {
-	max-width: 50px;
-	text-align: center;
-}
-
-.comment-user-name {
-	text-align: center;
-}
-
+// コメント関連
 .comment {
 	border-top: 1px solid;
 	padding: 10px 0;
+	line-height: 40px;
 }
 
+.comment_edit{
+	list-style: none;
+	li{
+		display: none;
+		padding-top: 10px;
+	}
+}
 .comment_pulldown {
+	width: 48px;
+	text-align: center;
+	padding-top: 12px;
+}
+
+.comment-user-name {
 	text-align: center;
 }
 
@@ -98,6 +100,12 @@
 	max-width: 240px;
 }
 
+.user-image {
+	max-width: 50px;
+	text-align: center;
+}
+
+// 曲名アニメーション
 .area {
 	width: 200px;
 	overflow: hidden;
