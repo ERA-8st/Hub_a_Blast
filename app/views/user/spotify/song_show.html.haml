@@ -54,7 +54,8 @@
 		.col-lg-6.col-md-6.col-xs-6
 			- if user_signed_in?
 				-# コメント機能
-				= form_with model: @song_comment, url: user_song_comments_path, local: true do |f|
+				= form_with model: @song_comment, url: user_song_comments_path(page: @page), class: "clearfix", local: true do |f|
+					= render "layouts/error_message", model: f.object
 					= f.text_area :comment, rows:"2",placeholder: "コメント"
 					= f.hidden_field :song_id , :value => @song.id
 					= f.submit "送信する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
@@ -68,9 +69,11 @@
 					-# コメント更新用テキストボックス
 					-if @comment == comment
 						.col-lg-6.col-md-6.col-xs-6
-							= form_with model: @comment, url: user_song_comment_path(comment), local: true do |f|
+							= form_with model: @comment, url: user_song_comment_path(comment, page: @page), local: true do |f|
+								= render "layouts/error_message", model: f.object
 								= f.text_area :comment, rows:"2"
 								%br
+								= link_to "取り消し", user_spotify_song_show_path(@comment.song_id, page: @page)
 								= f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
 					-else
 						.col-lg-6.col-md-6.col-xs-6.comment-comment.table-responsive
@@ -82,7 +85,7 @@
 						.col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
 							%ul.comment_edit
 								%li
-									= link_to user_spotify_song_show_path(@song.id, comment_id: comment.id) do
+									= link_to user_spotify_song_show_path(@song.id, page: @page ,comment_id: comment.id) do
 										%i.fa.fa-pencil
 								%li
 									= link_to user_song_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
@@ -90,4 +93,8 @@
 					- else
 						.col-lg-1.col-md-1.col-xs-1
 			%p= "#{SongComment.where(song_id: @song.id).count}コメント"
-			= paginate @song_comments
+			- unless @error
+				= paginate @song_comments
+			-if @error
+				= link_to "取り消し", user_spotify_song_show_path(@song.id, page: @page)
+			

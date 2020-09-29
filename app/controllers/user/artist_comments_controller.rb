@@ -3,27 +3,38 @@ class User::ArtistCommentsController < ApplicationController
 	def create
 		@artist_comment = current_user.artist_comments.new(artist_comment_params)
 		@artist_comment.artist_id = params[:artist_comment][:artist_id]
+		@page = params[:page]
 		if @artist_comment.save 
-			redirect_back(fallback_location: root_path)
+			redirect_to user_spotify_artist_show_path(@artist_comment.artist_id, page: @page)
 		else
-			redirect_back(fallback_location: root_path)
+			@artist = RSpotify::Artist.find(params[:artist_comment][:artist_id])
+			@albums = @artist.albums
+			@artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
+			@error = true
+			render "user/spotify/artist_show"
 		end
 
 	end
 
 	def update
 		@comment = ArtistComment.find(params[:id])
+		@page = params[:page]
       if @comment.update(artist_comment_params)
-				redirect_to user_spotify_artist_show_path(@comment.artist_id)
+				redirect_to user_spotify_artist_show_path(@comment.artist_id, page: @page)
 			else
-				redirect_back(fallback_location: root_path)
+				@artist = RSpotify::Artist.find(@comment.artist_id)
+				@albums = @artist.albums
+				@artist_comment = ArtistComment.new
+				@artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
+				@error = true
+				render "user/spotify/artist_show"
 			end
 	end
 	
 	def destroy
 		comment = ArtistComment.find(params[:id])
 		comment.destroy
-		redirect_back(fallback_location: root_path)
+		redirect_to user_spotify_artist_show_path(comment.artist_id)
 	end
 
 	private
