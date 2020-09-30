@@ -7,6 +7,7 @@
 			%br= @user.introduction
 			- if @user == current_user
 				= link_to "edit", edit_user_user_path(@user)
+				%br
 			= link_to "フォロー", user_users_follow_index_path(@user)
 			%br
 			= link_to "フォロワー", user_users_follower_index_path(@user)
