@@ -63,9 +63,6 @@ class User::UsersController < ApplicationController
 	end
 
 	def correct_user
-		
-		binding.pry
-		
 		user = User.find(params[:id])
 		unless current_user == user
 			redirect_to root_path

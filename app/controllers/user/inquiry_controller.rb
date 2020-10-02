@@ -1,6 +1,6 @@
 class User::InquiryController < ApplicationController
 
-  before_action :user_present
+  before_action :authenticate_user!
 
   def index
     @inquiry = Inquiry.new
@@ -21,12 +21,6 @@ class User::InquiryController < ApplicationController
     InquiryMailer.received_email(@inquiry).deliver
     InquiryMailer.confirm_email(@inquiry).deliver
     render :action => 'thanks'
-  end
-
-  def user_present
-    unless user_signed_in?
-      redirect_to root_path
-    end
   end
   
 end
