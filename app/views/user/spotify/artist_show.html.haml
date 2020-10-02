@@ -93,7 +93,7 @@
 								readOnly: true,
 								score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
 							});
-						= "(#{AlbumRating.where(album_id: album.id).count})"
+						= "(#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)})"
 					- @album_name.push(album.name.downcase)
 	-# シングル一覧
 	%h3 Single & EP
@@ -122,5 +122,5 @@
 								readOnly: true,
 								score: "#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)}",
 							});
-						= "(#{AlbumRating.where(album_id: album.id).count})"
+						= "(#{AlbumRating.where(album_id: album.id).average(:rate).to_f.round(1)})"
 					- @single_name.push(album.name.downcase)
