@@ -15,7 +15,7 @@
 			%div{class: "follow_button#{@user.id}"}
 				= render "user/relationships/follow_button", user: @user
 			-# DM機能
-			- unless @user.id == current_user.id 
+			- unless user_signed_in? && @user.id == current_user.id 
 				- if (Relationship.find_by(user_id: @user, follow_id: current_user)) && (current_user.following?(@user)) 
 					- if @isRoom == true 
 						%p.user-show-room
