@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     get 'inquiry/confirm'
     get 'inquiry/thanks'
   end
+  get 'welcome/index'
   devise_for :users, controllers: {
+    omniauth_callbacks: 'omniauth_callbacks',
     sessions:      'users/sessions',
     passwords:     'users/passwords',
     registrations: 'users/registrations'

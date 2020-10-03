@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise  :database_authenticatable, :registerable,
+          :recoverable, :rememberable, :validatable, :omniauthable
 
   attachment :profile_image
 
@@ -42,6 +42,28 @@ class User < ApplicationRecord
   # すでにフォローしていないか
   def following?(other_user)
     self.followings.include?(other_user)
+  end
+
+  # Twitterログイン
+  def self.find_for_oauth(auth)
+    user = User.where(uid: auth.uid, provider: auth.provider).first
+    unless user
+      user = User.create(
+        provider: auth.provider,
+        uid:      auth.uid,
+        user_name: auth.info.nickname,
+        email:    User.dummy_email(auth),
+        remote_profile_image_url: auth.info.image,
+        password: Devise.friendly_token[0, 20]
+      )
+    end
+    user
+  end
+
+  private
+
+  def self.dummy_email(auth)
+    "#{auth.uid}-#{auth.provider}@example.com"
   end
 
 end

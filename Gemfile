@@ -89,3 +89,7 @@ gem 'activeadmin'
 
 # ページネーション
 gem 'kaminari'
+
+# SNS認証
+gem 'omniauth'
+gem 'omniauth-twitter'
