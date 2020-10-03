@@ -1,5 +1,7 @@
 class User::SongCommentsController < ApplicationController
 
+	before_action :correct_user, only: [:update, :destroy]
+
 	def create
 		@song_comment = current_user.song_comments.new(song_comment_params)
 		@song_comment.song_id = params[:song_comment][:song_id]
@@ -52,6 +54,13 @@ class User::SongCommentsController < ApplicationController
 
 	def song_comment_params
 		params.require(:song_comment).permit(:comment)
+	end
+
+	def correct_user
+		comment = SongComment.find(params[:id])
+		unless current_user == comment.user
+			redirect_to root_path
+		end
 	end
     
 end

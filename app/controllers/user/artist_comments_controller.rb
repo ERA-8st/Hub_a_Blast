@@ -1,5 +1,7 @@
 class User::ArtistCommentsController < ApplicationController
 
+	before_action :correct_user, only: [:update, :destroy]
+
 	def create
 		@artist_comment = current_user.artist_comments.new(artist_comment_params)
 		@artist_comment.artist_id = params[:artist_comment][:artist_id]
@@ -13,7 +15,6 @@ class User::ArtistCommentsController < ApplicationController
 			@error = true
 			render "user/spotify/artist_show"
 		end
-
 	end
 
 	def update
@@ -41,6 +42,13 @@ class User::ArtistCommentsController < ApplicationController
 
 	def artist_comment_params
 		params.require(:artist_comment).permit(:comment)
+	end
+
+	def correct_user
+		comment = ArtistComment.find(params[:id])
+		unless current_user == comment.user
+			redirect_to root_path
+		end
 	end
 
 end

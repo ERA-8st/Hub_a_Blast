@@ -1,7 +1,6 @@
 class User::UsersController < ApplicationController
 
-	require 'rspotify'
-	RSpotify.authenticate(ENV['SPOTIFY_CLIENT_ID'], ENV['SPOTIFY_SECRET_ID'])
+	before_action :correct_user, only: [:edit, :update]
 
 	def show
 		@user = User.find(params[:id])
@@ -61,7 +60,13 @@ class User::UsersController < ApplicationController
 
 	def user_params
     params.require(:user).permit(:user_name, :introduction, :profile_image)
-  end
-	
+	end
+
+	def correct_user
+		user = User.find(params[:id])
+		unless current_user == user
+			redirect_to root_path
+		end
+	end
 
 end

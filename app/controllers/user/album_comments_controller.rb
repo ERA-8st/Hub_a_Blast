@@ -1,5 +1,7 @@
 class User::AlbumCommentsController < ApplicationController
 
+	before_action :correct_user, only: [:update, :destroy]
+
 	def create
 		@album_comment = current_user.album_comments.new(album_comment_params)
 		@album_comment.album_id = params[:album_comment][:album_id]
@@ -49,6 +51,13 @@ class User::AlbumCommentsController < ApplicationController
 
 	def album_comment_params
 		params.require(:album_comment).permit(:comment)
+	end
+
+	def correct_user
+		comment = AlbumComment.find(params[:id])
+		unless current_user == comment.user
+			redirect_to root_path
+		end
 	end
 
 end

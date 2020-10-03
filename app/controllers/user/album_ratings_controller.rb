@@ -1,5 +1,7 @@
 class User::AlbumRatingsController < ApplicationController
 
+	before_action :correct_user, only: [:update]
+
   def create
 		@album_rating = current_user.album_ratings.new(album_rating_params)
 		@album_rating.album_id = params[:album_rating][:album_id]
@@ -22,6 +24,13 @@ class User::AlbumRatingsController < ApplicationController
 
 	def album_rating_params
 		params.require(:album_rating).permit(:rate, :album_id)
+	end
+
+	def correct_user
+		rating = AlbumRating.find(params[:id])
+		unless current_user == rating.user
+			redirect_to root_path
+		end
 	end
 		
 end
