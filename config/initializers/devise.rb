@@ -10,7 +10,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  config.omniauth :twitter, ENV['Twitter_API_key'], ENV['Twitter_API_secret_key'], callback_url: "http://localhost:3000/users/omniauth_callbacks"
+  config.omniauth :twitter, ENV['Twitter_API_key'], ENV['Twitter_API_secret_key'], callback_url: "http://3.112.221.209/users/omniauth_callbacks"
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
