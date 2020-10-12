@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    models:
+      album_comment: コメント
+    attributes:
+      album_comment:
+        comment: コメント
