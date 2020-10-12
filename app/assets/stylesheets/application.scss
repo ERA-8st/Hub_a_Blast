@@ -202,4 +202,17 @@ ul.pagination {
 
 .error_message {
 	color: red;
+  list-style: none;
 }
+
+#error_explanation {
+  color: red;
+  ul {
+    list-style: none;
+  }
+}
+
+.alert ul {
+  list-style: none;
+}
+

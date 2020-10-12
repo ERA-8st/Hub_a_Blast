@@ -68,6 +68,9 @@ gem 'bootstrap', '~> 4.1.1'
 #Spootify Web API用ラッパー 
 gem 'rspotify'
 
+# エラー文日本語化
+gem 'rails-i18n'
+
 #環境変数設定用()
 gem 'dotenv-rails'
 

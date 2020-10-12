@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    models:
+      artist_comment: コメント
+    attributes:
+      artist_comment:
+        comment: コメント
