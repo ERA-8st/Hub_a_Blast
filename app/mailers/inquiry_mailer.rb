@@ -11,6 +11,6 @@ class InquiryMailer < ApplicationMailer
     @inquiry = inquiry
     mail(:to => inquiry.email, :subject => 'お問い合わせを承りました')
   end
-  
+
 
 end
