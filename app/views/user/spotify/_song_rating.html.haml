@@ -1,33 +1,33 @@
 - if song_rating.blank? 
-	= form_with model: new_song_rating, url: user_song_ratings_path do |f| 
-		.star
-			= f.hidden_field :rate, id: :review_star 
-			= f.hidden_field :song_id, :value => song.id 
-			:javascript
-				$('.star').raty({
-					size     : 36,
-					starOff:  '#{asset_path('star-off.png')}',
-					starOn : '#{asset_path('star-on.png')}',
-					scoreName: "song_rating[rate]",
-				});
-				// レビューボタン省略用
-				$(".star").on("click", function(){
-					$('.evaluate').trigger("click");
-				});
-		= f.submit 'evaluate', class:"evaluate"
+  = form_with model: new_song_rating, url: user_song_ratings_path do |f| 
+    .star
+      = f.hidden_field :rate, id: :review_star 
+      = f.hidden_field :song_id, :value => song.id 
+      :javascript
+        $('.star').raty({
+          size     : 36,
+          starOff:  '#{asset_path('star-off.png')}',
+          starOn : '#{asset_path('star-on.png')}',
+          scoreName: "song_rating[rate]",
+        });
+        // レビューボタン省略用
+        $(".star").on("click", function(){
+          $('.evaluate').trigger("click");
+        });
+    = f.submit 'evaluate', class:"evaluate"
 - else
-	= form_with model: song_rating, url: user_song_rating_path(song_rating) do |f|
-		.star-rate
-		= f.submit 'Re-evaluate', class:"evaluate"
-		:javascript
-			$('.star-rate').raty({
-				size: 36,
-				starOff:  '#{asset_path('star-off.png')}',
-				starOn : '#{asset_path('star-on.png')}',
-				score: "#{song_rating.rate}" ,
-				scoreName: "song_rating[rate]"
-			});
-			// レビューボタン省略用
-			$(".star-rate").on("click", function(){
-				$('.evaluate').trigger("click");
-			});
+  = form_with model: song_rating, url: user_song_rating_path(song_rating) do |f|
+    .star-rate
+    = f.submit 'Re-evaluate', class:"evaluate"
+    :javascript
+      $('.star-rate').raty({
+        size: 36,
+        starOff:  '#{asset_path('star-off.png')}',
+        starOn : '#{asset_path('star-on.png')}',
+        score: "#{song_rating.rate}" ,
+        scoreName: "song_rating[rate]"
+      });
+      // レビューボタン省略用
+      $(".star-rate").on("click", function(){
+        $('.evaluate').trigger("click");
+      });

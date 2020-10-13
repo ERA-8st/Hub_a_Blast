@@ -1,33 +1,33 @@
 - if album_rating.blank? 
-	= form_with model: new_album_rating, url: user_album_ratings_path do |f| 
-		.star
-			= f.hidden_field :rate, id: :review_star 
-			= f.hidden_field :album_id, :value => album.id 
-			:javascript
-				$('.star').raty({
-					size     : 36,
-					starOff:  '#{asset_path('star-off.png')}',
-					starOn : '#{asset_path('star-on.png')}',
-					scoreName: "album_rating[rate]",
-				});
-				// レビュー用ボタン省略用
-				$(".star").on("click", function(){
-					$('.evaluate').trigger("click");
-				});
-		= f.submit 'evaluate', class:"evaluate"
+  = form_with model: new_album_rating, url: user_album_ratings_path do |f| 
+    .star
+      = f.hidden_field :rate, id: :review_star 
+      = f.hidden_field :album_id, :value => album.id 
+      :javascript
+        $('.star').raty({
+          size     : 36,
+          starOff:  '#{asset_path('star-off.png')}',
+          starOn : '#{asset_path('star-on.png')}',
+          scoreName: "album_rating[rate]",
+        });
+        // レビュー用ボタン省略用
+        $(".star").on("click", function(){
+          $('.evaluate').trigger("click");
+        });
+    = f.submit 'evaluate', class:"evaluate"
 - else
-	= form_with model: album_rating, url: user_album_rating_path(album_rating) do |f|
-		.star-rate
-		= f.submit 'Re-evaluate', class:"evaluate"
-		:javascript
-			$('.star-rate').raty({
-				size: 36,
-				starOff:  '#{asset_path('star-off.png')}',
-				starOn : '#{asset_path('star-on.png')}',
-				score: "#{album_rating.rate}" ,
-				scoreName: "album_rating[rate]"
-			});
-			// レビュー用ボタン省略用
-			$(".star-rate").on("click", function(){
-				$('.evaluate').trigger("click");
-			});
+  = form_with model: album_rating, url: user_album_rating_path(album_rating) do |f|
+    .star-rate
+    = f.submit 'Re-evaluate', class:"evaluate"
+    :javascript
+      $('.star-rate').raty({
+        size: 36,
+        starOff:  '#{asset_path('star-off.png')}',
+        starOn : '#{asset_path('star-on.png')}',
+        score: "#{album_rating.rate}" ,
+        scoreName: "album_rating[rate]"
+      });
+      // レビュー用ボタン省略用
+      $(".star-rate").on("click", function(){
+        $('.evaluate').trigger("click");
+      });

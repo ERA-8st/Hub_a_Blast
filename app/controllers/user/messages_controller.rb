@@ -1,6 +1,6 @@
 class User::MessagesController < ApplicationController
-	
-	before_action :authenticate_user!, only: [:create]
+  
+  before_action :authenticate_user!, only: [:create]
 
   def create
     if Entry.where(user_id: current_user.id, room_id: params[:message][:room_id]).present?
@@ -9,8 +9,8 @@ class User::MessagesController < ApplicationController
       @messages = room.messages
     else
       flash[:alert] = "メッセージ送信に失敗しました。"
-		end
-		# redirect_to  user_room_path(@message.room_id)
-	end
-	
+    end
+    # redirect_to  user_room_path(@message.room_id)
+  end
+  
 end

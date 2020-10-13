@@ -1,5 +1,5 @@
 <% if @follows.nil? %>
   $(".follow_button<%= @user.id %>").html("<%= j(render partial: 'user/relationships/follow_button',  locals: {user: @user} ) %>")
 <% else %>
-	$(".follow_index").html("<%= j(render partial: 'user/users/follow_index',  locals: {follows: @follows, index_user: @index_user} ) %>")
+  $(".follow_index").html("<%= j(render partial: 'user/users/follow_index',  locals: {follows: @follows, index_user: @index_user} ) %>")
 <% end %>

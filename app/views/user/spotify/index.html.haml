@@ -1,13 +1,13 @@
 .container
-	-# 検索結果(アーティスト)
-	.artists
-		= render "user/spotify/artists", searchartists: @searchartists, artist_count: @artist_count, search_word: @search_word
-	-# 検索結果(アルバム)
-	.albums
-		= render "user/spotify/albums", searchalbums: @searchalbums, album_count: @album_count, search_word: @search_word
-	-# 検索結果(曲)
-	.songs
-		= render "user/spotify/songs", searchsongs: @searchsongs, song_count: @song_count, search_word: @search_word
+  -# 検索結果(アーティスト)
+  .artists
+    = render "user/spotify/artists", searchartists: @searchartists, artist_count: @artist_count, search_word: @search_word
+  -# 検索結果(アルバム)
+  .albums
+    = render "user/spotify/albums", searchalbums: @searchalbums, album_count: @album_count, search_word: @search_word
+  -# 検索結果(曲)
+  .songs
+    = render "user/spotify/songs", searchsongs: @searchsongs, song_count: @song_count, search_word: @search_word
 
 
 
