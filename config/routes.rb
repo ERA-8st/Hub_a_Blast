@@ -26,9 +26,9 @@ Rails.application.routes.draw do
     get "users/follow_index/:id" => "users#follow_index",as: "users_follow_index"
     get "users/follower_index/:id" => "users#follower_index",as: "users_follower_index"
     resources :relationships, only: [:create, :destroy]
-    resources :messages, only: [:create]
+    resources :messages, only: :create
     resources :rooms, only: [:create,:show]
-    resources :spotify, only: [:index]
+    resources :spotify, only: :index
     get "spotify/artist_show/:id" => "spotify#artist_show" , as: "spotify_artist_show"
     get "spotify/album_show/:id" => "spotify#album_show" , as: "spotify_album_show"
     get "spotify/song_show/:id" => "spotify#song_show" , as: "spotify_song_show"
@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resources :song_comments, only: [:create, :destroy, :update]
     resources :song_ratings, only: [:create, :update]
     resources :song_favorites, only: [:index, :create, :destroy]
+    resources :notifications, only: :index
   end
 
 end
