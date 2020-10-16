@@ -10,6 +10,7 @@ class User::RelationshipsController < ApplicationController
     end
     if following.save
       flash[:success] = 'ユーザーをフォローしました'
+      @user.create_notification_follow!(current_user)
     else
       flash.now[:alert] = 'ユーザーのフォローに失敗しました'
       redirect_back(fallback_location: root_path)

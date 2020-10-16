@@ -111,3 +111,29 @@
   -webkit-transform: rotate(-35deg);
 	transform: rotate(-35deg);
 }
+
+.user-header {
+  margin-top: -30px;
+  margin-bottom: 30px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  line-height: 50px;
+  a {
+    font-size: 30px;
+    margin:0 30px;
+    color: white;
+  }
+  form {
+    display: inline-block;
+    margin:0 30px;
+    font-size: 30px;
+    button{
+      background-color: #202020;
+      border: none;
+      color: white;
+    }
+    button:hover{
+      color: blue;
+    }
+  }
+}
