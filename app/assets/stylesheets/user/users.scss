@@ -115,13 +115,16 @@
 .user-header {
   margin-top: -30px;
   margin-bottom: 30px;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+  // border-top: 1px solid white;
+  // border-bottom: 1px solid white;
   line-height: 50px;
   a {
     font-size: 30px;
-    margin:0 30px;
+    display: inline-block;
+    width: 25%;
     color: white;
+    // border-right: 1px solid white;
+    // border-left: 1px solid white;
   }
   form {
     display: inline-block;
