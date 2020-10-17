@@ -128,3 +128,18 @@
 .user-show {
   margin-top: 25px;
 }
+
+.user-notice {
+  position: relative;
+}
+
+.notice-count {
+  position: absolute;
+  color: gold;
+  font-size: 3px;
+  display: inline;
+  font-size: 17px;
+  top: -5px;
+  right: -5px;
+  font-weight: bold;
+}

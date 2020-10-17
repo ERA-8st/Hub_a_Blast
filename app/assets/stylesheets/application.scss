@@ -62,6 +62,16 @@
     .right {
       line-height: 90px;
       text-align: right;
+      .header-user-image {
+        position: relative;
+        #notice-icon {
+          position: absolute;
+          top: -20px;
+          right: -6px;
+          color: gold;
+          font-size: 15px;
+        }
+      }
       img {
         height: 50px;
         width: 50px;
