@@ -1,17 +1,18 @@
-.container
-	%h2 User info
-	= form_with model: @user ,url: user_user_path(@user),local: true do |f| 
-		= render "layouts/error_message", model: f.object
-		= attachment_image_tag(@user, :profile_image,  size: "200x200", format: 'jpeg', fallback: "no-image.png", id: 'preview')
-		.row
-			.col-lg-2.col-md-2.col-xs-2.user_edit_label
-				= f.label :user_name
-				%br
-				= f.label :image
-				%br
-				= f.label :introduction 
-				= f.submit
-			.col-lg-3.col-md-3.col-xs-3.user_edit_field
-				= f.text_field :user_name, class: "name" 
-				= f.attachment_field :profile_image, onchange: 'previewImage(preview)'
-				= f.text_area :introduction, class: "introduction"
+= render "user/users/user_header", user: @user
+.container.user-edit-container
+  %h2 User info
+  = form_with model: @user ,url: user_user_path(@user),local: true do |f| 
+    = render "layouts/error_message", model: f.object
+    = attachment_image_tag(@user, :profile_image,  size: "200x200", format: 'jpeg', fallback: "no-image.png", id: 'preview')
+    .row
+      .col-lg-2.col-md-2.col-xs-2.user_edit_label
+        = f.label :user_name
+        %br
+        = f.label :image
+        %br
+        = f.label :introduction 
+        = f.submit
+      .col-lg-3.col-md-3.col-xs-3.user_edit_field
+        = f.text_field :user_name, class: "name" 
+        = f.attachment_field :profile_image, onchange: 'previewImage(preview)'
+        = f.text_area :introduction, class: "introduction"
