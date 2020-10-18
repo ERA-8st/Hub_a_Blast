@@ -1,32 +1,5 @@
-.container
-  .row.user-header
-    .col-lg-2.col-md-2.col-xs-2
-    .col-lg-8.col-md-8.col-xs-8.text-center
-      = link_to user_user_path(@user) do
-        %i.fa.fa-home
-      = link_to user_song_favorites_path(user_id: @user.id) do
-        %i.fa.fa-bookmark
-      - if @user == current_user
-        = link_to edit_user_user_path(@user) do
-          %i.fa.fa-pencil
-        = link_to user_notifications_path do
-          %i.fa.fa-bell
-      - unless user_signed_in? && @user.id == current_user.id 
-        - if (Relationship.find_by(user_id: @user, follow_id: current_user)) && (current_user.following?(@user)) 
-          - if @isRoom == true 
-            = link_to user_room_path(@roomId, anchor: 'last') do
-              %i.fa.fa-comments
-          - else
-            = form_for @room, url: user_rooms_path do |f|
-              = fields_for @entry do |e|
-                = e.hidden_field :user_id, value: @user.id 
-              = button_tag type: 'submit' do
-                %i.fa.fa-comments
-    .col-lg-2.col-md-2.col-xs-2
-      - unless @user == current_user
-        -# フォローボタン
-        %div{class: "follow_button#{@user.id} header-follow-button", style: "display:inline-block;"}
-          = render "user/relationships/follow_button", user: @user
+= render "user/users/user_header", user: @user, isRoom: @isRoom, roomId: @roomId
+.container.user-show-container
   .row
     .col-lg-3.col-md-3.col-xs-3
       = attachment_image_tag(@user, :profile_image,  size: "200x200", fallback: "no-image.png")

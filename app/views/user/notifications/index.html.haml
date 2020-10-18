@@ -1,4 +1,5 @@
-.container
+= render "user/users/user_header", user: current_user
+.container.notification-container
   %h3.text-center 通知
   -# = link_to destroy_all_users_notifications_path, method: :delete do
   -#   %i.fas.fa-trash{ style = "color: black;"}

@@ -5,6 +5,8 @@ class User::SongFavoritesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @song_favorites = @user.song_favorites
+    # DM
+    room_present?(@user)
   end
 
 

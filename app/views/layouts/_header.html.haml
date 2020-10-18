@@ -21,7 +21,10 @@
     .col-lg-3.col-md-3.col-xs-3.right
       - if user_signed_in?
         = current_user.user_name
-        = link_to attachment_image_tag(current_user, :profile_image,  size: "50x50", fallback: "no-image.png"), user_user_path(current_user)
+        = link_to user_user_path(current_user), class: "header-user-image" do
+          = attachment_image_tag(current_user, :profile_image,  size: "50x50", fallback: "no-image.png")
+          - if unchecked_notifications.any?
+            %i.fa.fa-circle#notice-icon
       - else
         Guest
         = link_to new_user_session_path do
