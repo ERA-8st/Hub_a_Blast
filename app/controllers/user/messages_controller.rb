@@ -7,10 +7,12 @@ class User::MessagesController < ApplicationController
       @message = Message.create(params.require(:message).permit(:user_id, :message, :room_id).merge(user_id: current_user.id))
       room = Room.find(params[:message][:room_id])
       @messages = room.messages
+      pair_user = Entry.where(room_id: room.id).where.not(user_id: current_user.id)
+      @pair_user = pair_user.first
+      @pair_user.create_notification_message!(current_user, @message.message)
     else
       flash[:alert] = "メッセージ送信に失敗しました。"
     end
-    # redirect_to  user_room_path(@message.room_id)
   end
   
 end

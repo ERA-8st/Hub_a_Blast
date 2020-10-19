@@ -9,7 +9,7 @@
     = link_to user_notifications_path, class: "user-notice" do
       %i.fa.fa-bell
       - if unchecked_notifications.any?
-        %p.notice-count= @notifications.count
+        %p.notice-count= @unchecked_notifications.count
   - unless user_signed_in? && user.id == current_user.id 
     - if (Relationship.find_by(user_id: user, follow_id: current_user)) && (current_user.following?(user)) 
       - if isRoom == true 

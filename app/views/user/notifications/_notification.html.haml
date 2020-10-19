@@ -7,8 +7,11 @@
         = attachment_image_tag( visiter , :profile_image,  size: "40x40", fallback: "no-image.png")
     %td
       = notification_form(notification)
+      - if notification.message.present?
+        %br
+        .moderate-font.text-center{style: "color: #C0C0C0;"}
+          = link_to do
+            %i.fa.fa-comments
+          = notification.message
     %td
       .moderate-font= " (#{time_ago_in_words(notification.created_at)} 前)"
-      -# %br
-      -# - if !@comment.nil?
-      -#   %p.moderate-font.text-center{style = "color: #C0C0C0;"}= @comment
