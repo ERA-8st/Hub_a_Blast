@@ -21,7 +21,3 @@
             = e.hidden_field :user_id, value: user.id 
           = button_tag type: 'submit' do
             %i.fa.fa-comments
-  - unless user == current_user
-    -# フォローボタン
-    %div{class: "follow_button#{user.id} header-follow-button", style: "display:inline-block;"}
-      = render "user/relationships/follow_button", user: user
