@@ -3,24 +3,14 @@
   .row
     .col-lg-3.col-md-3.col-xs-3
       = attachment_image_tag(@user, :profile_image,  size: "200x200", fallback: "no-image.png")
-    .col-lg-3.col-md-3.col-xs-3
-      = @user.user_name
-      %br= @user.introduction
-      = link_to "フォロー", user_users_follow_index_path(@user)
-      %br
-      = link_to "フォロワー", user_users_follower_index_path(@user)
-      -# DM機能
-      - unless user_signed_in? && @user.id == current_user.id 
-        - if (Relationship.find_by(user_id: @user, follow_id: current_user)) && (current_user.following?(@user)) 
-          - if @isRoom == true 
-            %p.user-show-room
-              = link_to "チャットへ", user_room_path(@roomId, anchor: 'last'), class: "btn btn-primary"
-                
-          - else
-            = form_for @room, url: user_rooms_path do |f|
-              = fields_for @entry do |e|
-                = e.hidden_field :user_id, value: @user.id 
-              = f.submit "チャットを始める", class:"btn btn-primary user-show-chat"
+    .col-lg-3.col-md-3.col-xs-3.relation-index
+      .user-show-user-name= @user.user_name
+      .user-show-user-introduction= @user.introduction
+      - unless @user == current_user
+        -# フォローボタン
+        %div{class: "follow_button#{@user.id} follow_button"}
+          = render "user/relationships/follow_button", user: @user
+      .follow-follower #{link_to "フォロー", user_users_follow_index_path(@user)} | #{link_to "フォロワー", user_users_follower_index_path(@user)}
     .col-lg-6.col-md-6.col-xs-6
       -# 直近でDMを送ったユーザー一覧
       - if @user == current_user

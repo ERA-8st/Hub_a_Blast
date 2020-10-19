@@ -120,8 +120,16 @@
   font-size: 30px;
   background-color: rgba(16, 16, 16, 0.9);
   a {
-    margin: 0 80px;
+    padding: 0 80px;
     color: white;
+    border-right: 1px solid white;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:last-child {
+    border-right: none;
   }
 }
 
@@ -136,6 +144,40 @@
   display: inline;
   font-size: 17px;
   top: -5px;
-  right: -5px;
+  right: 75px;
   font-weight: bold;
+}
+.relation-index {
+  position: relative;
+  text-align: center;
+  input {
+    width: 100%;
+  }
+}
+
+.user-show-user-name {
+  font-size: 25px;
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+
+.user-show-user-introduction {
+  text-align: center;
+}
+
+.follow_button {
+  position: absolute;
+  bottom: 24px;
+  width: 100%;
+  padding-top: 3px;
+  border-top: 1px solid white;
+}
+
+.follow-follower {
+  position: absolute;
+  padding: 0 auto;
+  margin: 0 auto;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
