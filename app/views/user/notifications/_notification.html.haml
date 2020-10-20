@@ -10,7 +10,7 @@
       - if notification.message.present?
         %br
         .moderate-font.text-center{style: "color: #C0C0C0;"}
-          = link_to do
+          = link_to user_room_path(notification.room_id, anchor: 'last') do
             %i.fa.fa-comments
           = notification.message
     %td

@@ -9,7 +9,7 @@ class User::MessagesController < ApplicationController
       @messages = room.messages
       pair_user = Entry.where(room_id: room.id).where.not(user_id: current_user.id)
       @pair_user = pair_user.first
-      @pair_user.create_notification_message!(current_user, @message.message)
+      @pair_user.create_notification_message!(current_user, @message)
     else
       flash[:alert] = "メッセージ送信に失敗しました。"
     end
