@@ -73,6 +73,7 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+  
 
   private
 
