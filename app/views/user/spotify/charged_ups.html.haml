@@ -1,4 +1,5 @@
-.container
+= render "user/spotify/song_header"
+.container.header-margin
   .row
     .col-lg-3.col-md-3.col-xs-3
     .col-lg-3.col-md-3.col-xs-3
@@ -7,7 +8,7 @@
       - else
         %h4 Charged Up
     .col-lg-3.col-md-3.col-xs-3.charged_up_search
-      = form_with url: user_soptify_charged_ups_path, method: :get, local: true do |f|
+      = form_with url: user_spotify_charged_ups_path, method: :get, local: true do |f|
         = select_tag(:times, options_for_select(times))
         = f.submit '検索', name: nil
   .row

@@ -1,6 +1,5 @@
 class User::SpotifyController < ApplicationController
 
-
   def index
     if params[:search].blank?
       redirect_back(fallback_location: root_path)
@@ -82,10 +81,13 @@ class User::SpotifyController < ApplicationController
     if params[:comment_id].present?
       @comment = SongComment.find(params[:comment_id])
     end
-    # 評価機能
+    
     if user_signed_in?
+      # 評価機能
       @song_rating = current_user.song_ratings.find_by(song_id: @song.id)
       @new_song_rating = current_user.song_ratings.new
+      # PV機能
+      current_user.create_song_impression(params[:id])
     end
     @song_favorite = SongFavorite.find_by(user_id: current_user, song_id: @song.id)
   end

@@ -73,8 +73,21 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
 
+  # 今日のPVデータが無い場合は新規作成、すでにある場合は時間のみアップデート。
+  def create_song_impression(song_id)
+    user_pv = SongImpression.find_by(user_id: id, song_id: song_id, created_at: Time.zone.now.all_day)
+    if user_pv.blank?
+      new_song_impression = SongImpression.new(
+        user_id: id,
+        song_id: song_id
+      )
+      new_song_impression.save if new_song_impression.valid?
+    else
+      user_pv.touch
+    end
+  end
+  
   private
 
   def self.dummy_email(auth)

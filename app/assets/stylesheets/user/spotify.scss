@@ -125,3 +125,24 @@
 	from    { transform: translate(0%); } 
 	100%,to { transform: translate(-100%); }
 }
+
+.song_header {
+  position: fixed;
+  top: 100px;
+  z-index: 10;
+  width: 100%;
+  font-size: 25px;
+  background-color: rgba(16, 16, 16, 0.9);
+  a {
+    padding: 0 30px;
+    color: white;
+    border-right: 1px solid white;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:last-child {
+    border-right: none;
+  }
+}
