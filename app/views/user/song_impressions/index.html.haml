@@ -1,0 +1,14 @@
+.container 
+  %table.table
+    - @top_impressions.each do |song_impression|
+      %tr
+        - @song = RSpotify::Track.find(song_impression[0])
+        %td
+          = link_to user_spotify_song_show_path(@song.id) do
+            - if @song.album.images.any?
+              - image = @song.album.images[2]
+              = image_tag(image["url"])
+            - else
+              = image_tag("default.jpg")
+        %td
+          = @song.name
