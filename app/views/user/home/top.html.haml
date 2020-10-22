@@ -1,6 +1,7 @@
-.container.top
+= render "user/spotify/song_header"
+.container.top.header-margin
   %h2
-    = link_to user_soptify_new_releases_path do
+    = link_to user_spotify_new_releases_path do
       New Releases
   -# New relsease(日本)
   %h3.top-jp JP
@@ -26,7 +27,7 @@
             = image_tag("default.jpg")
   -# トップアクティブ
   %h2.charge-up
-    = link_to "Charged Up" , user_soptify_charged_ups_path
+    = link_to "Charged Up" , user_spotify_charged_ups_path
   .row
     - @charged_up.first(3).each do |song|
       .col-lg-4.col-md-4.col-xs-4

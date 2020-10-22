@@ -1,5 +1,5 @@
 = render "user/users/user_header", user: @user
-.container.user-edit-container
+.container.header-margin
   %h2 User info
   = form_with model: @user ,url: user_user_path(@user),local: true do |f| 
     = render "layouts/error_message", model: f.object

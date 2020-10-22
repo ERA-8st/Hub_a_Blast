@@ -1,5 +1,5 @@
 = render "user/users/user_header", user: @user, isRoom: @isRoom, roomId: @roomId
-.container.user-show-container
+.container.header-margin
   .row
     .col-lg-3.col-md-3.col-xs-3
       = attachment_image_tag(@user, :profile_image,  size: "200x200", fallback: "no-image.png")
