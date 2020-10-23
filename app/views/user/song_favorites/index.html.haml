@@ -1,25 +1,28 @@
 = render "user/users/user_header", user: @user, isRoom: @isRoom, roomId: @roomId
 .container.header-margin
   .row
-    .col-lg-3.col-md-3.col-xs-3
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-12.col-md-12.col-xs-12
       - if @user == current_user
-        %h4 My favorites
+        %h3 My favorites
       - else
-        %h4= "#{@user.user_name}'s favorites"
+        %h3= "#{@user.user_name}'s favorites"
   .row
-    .col-lg-3.col-md-3.col-xs-3
-    .col-lg-6.col-md-6.col-xs-6
-      - @song_favorites.each do |song_favorite|
-        %table.table
+    .col-lg-12.col-md-12.col-xs-12
+      %table.table
+        %tr
+          %th
+          %th Song
+          %th Album
+          %th Artist
+        - @song_favorites.each do |song_favorite|
           %tr
+            - @song = RSpotify::Track.find(song_favorite.song_id)
             %td
-              = link_to user_spotify_song_show_path(song_favorite.song_id) do
-                - @song = RSpotify::Track.find(song_favorite.song_id)
-                - if @song.album.images.any?
-                  - image = @song.album.images[2]
-                  = image_tag(image["url"])
-                - else
-                  = image_tag("default.jpg")
-            %td
-              = @song.name
+              - if @song.album.images.any?
+                - image = @song.album.images[2]
+                = image_tag(image["url"])
+              - else
+                = image_tag("default.jpg")
+            %td= link_to @song.name, user_spotify_song_show_path(@song.id)
+            %td= link_to @song.album.name, user_spotify_album_show_path(@song.album.id)
+            %td= link_to @song.artists.first.name, user_spotify_artist_show_path(@song.artists.first.id)
