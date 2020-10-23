@@ -1,29 +1,32 @@
 = render "user/spotify/song_header"
 .container.header-margin
   .row
-    .col-lg-3.col-md-3.col-xs-3
-    .col-lg-3.col-md-3.col-xs-3
+    .col-lg-9.col-md-9.col-xs-9
       - if @country_name.present?
         %h4= "New Releases(#{@country_name})"
       - else
         %h4 New Releases
     -# 検索(国別)
-    .col-lg-4.col-md-4.col-xs-4
+    .col-lg-3.col-md-3.col-xs-3
       = form_with url: user_spotify_new_releases_path, method: :get, local: true do |f|
         = select_tag(:country, options_for_select(countries))
         = f.submit '検索', name: nil
   .row
-    .col-lg-3.col-md-3.col-xs-3
-    .col-lg-6.col-md-6.col-xs-6
-      - @new_releases.each do |new_release|
-        %table.table
+    .col-lg-12.col-md-12.col-xs-12
+      %table.table
+        %tr
+          %th
+          %th Album
+          %th Artist
+          %th Release
+        - @new_releases.each do |new_release|
           %tr
             %td
-              = link_to user_spotify_album_show_path(new_release.id) do
-                - if new_release.images.any?
-                  - image = new_release.images[2]
-                  = image_tag(image["url"])
-                - else
-                  = image_tag("default.jpg")
-            %td
-              = new_release.name
+              - if new_release.images.any?
+                - image = new_release.images[2]
+                = image_tag(image["url"])
+              - else
+                = image_tag("default.jpg")
+            %td= link_to new_release.name, user_spotify_album_show_path(new_release.id)
+            %td= link_to new_release.artists.first.name, user_spotify_artist_show_path(new_release.artists.first.id)
+            %td= new_release.release_date
