@@ -11,6 +11,13 @@
         = select_tag(:times, options_for_select(times))
         = f.submit '検索', name: nil
   %table.table
+    %tr
+      %th
+      %th
+      %th Song
+      %th Album
+      %th Artist
+      %th Pv
     - @impression_count = 0
     - @top_impressions.each do |song_impression|
       %tr
@@ -19,13 +26,12 @@
           = @impression_count
         - @song = RSpotify::Track.find(song_impression[0])
         %td
-          = link_to user_spotify_song_show_path(@song.id) do
-            - if @song.album.images.any?
-              - image = @song.album.images[2]
-              = image_tag(image["url"])
-            - else
-              = image_tag("default.jpg")
-        %td
-          = @song.name
-        %td
-          = SongImpression.where(song_id: @song.id).count
+          - if @song.album.images.any?
+            - image = @song.album.images[2]
+            = image_tag(image["url"])
+          - else
+            = image_tag("default.jpg")
+        %td= link_to @song.name, user_spotify_song_show_path(@song.id)
+        %td= link_to @song.album.name, user_spotify_album_show_path(@song.album.id)
+        %td= link_to @song.artists.first.name, user_spotify_artist_show_path(@song.artists.first.id)
+        %td= SongImpression.where(song_id: @song.id).count
