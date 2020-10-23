@@ -1,6 +1,15 @@
 = render "user/spotify/song_header"
 .container.header-margin
-  %h4 Top Impression
+  .row
+    .col-lg-10.col-md-10.col-xs-10
+      - if @time.present?
+        %h4= "Top Impression(#{@time})"
+      - else
+        %h4 Top Impression
+    .col-lg-2.col-md-2.col-xs-2
+      = form_with url: user_song_impressions_path, method: :get, local: true do |f|
+        = select_tag(:times, options_for_select(times))
+        = f.submit '検索', name: nil
   %table.table
     - @impression_count = 0
     - @top_impressions.each do |song_impression|

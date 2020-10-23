@@ -106,9 +106,9 @@ class User::SpotifyController < ApplicationController
   def charged_ups
     # 特定の期間内のコメントを取得して曲のIDの重複数が多い順に並び替えて取得
     case params[:times]
-      when nil
-        @charged_up = SongComment.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
-      when "指定無し"
+      # when nil
+      #   @charged_up = SongComment.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
+      when nil, "指定無し"
         @charged_up = SongComment.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
       when "今日"
         @charged_up = SongComment.where(created_at: Time.zone.now.all_day).group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
@@ -121,5 +121,4 @@ class User::SpotifyController < ApplicationController
         @time = "Month"
       end
   end
-
 end
