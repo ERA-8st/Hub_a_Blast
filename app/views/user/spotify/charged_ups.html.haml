@@ -1,31 +1,47 @@
 = render "user/spotify/song_header"
 .container.header-margin
   .row
-    .col-lg-3.col-md-3.col-xs-3
-    .col-lg-3.col-md-3.col-xs-3
+    .col-lg-10.col-md-10.col-xs-10
       - if @time.present?
-        %h4= "Charged Up(#{@time})"
+        %h3= "Charged Up(#{@time})"
       - else
-        %h4 Charged Up
-    .col-lg-3.col-md-3.col-xs-3.charged_up_search
+        %h3 Charged Up
+    .col-lg-2.col-md-2.col-xs-2.charged_up_search
       = form_with url: user_spotify_charged_ups_path, method: :get, local: true do |f|
         = select_tag(:times, options_for_select(times))
         = f.submit '検索', name: nil
   .row
-    .col-lg-3.col-md-3.col-xs-3
-    .col-lg-6.col-md-6.col-xs-6
-      - @charged_up.each do |song|
-        %table.table.charged_up_table
+    .col-lg-12.col-md-12.col-xs-12
+      %table.table.charged_up_table
+        %tr.table-head
+          %th
+          %th
+          %th
+            Song
+          %th
+            Album
+          %th
+            Artist
+          %th
+            Count
+        - @charged_up_count = 0
+        - @charged_up.each do |song|
           %tr
+            %td 
+              - @charged_up_count += 1
+              = @charged_up_count
             %td
-              = link_to user_spotify_song_show_path(song[0]) do
-                - @song = RSpotify::Track.find(song[0])
-                - if @song.album.images.any?
-                  - image = @song.album.images[2]
-                  = image_tag(image["url"])
-                - else
-                  = image_tag("default.jpg")
+              - @song = RSpotify::Track.find(song[0])
+              - if @song.album.images.any?
+                - image = @song.album.images[2]
+                = image_tag(image["url"])
+              - else
+                = image_tag("default.jpg")
             %td.charged_up_song_name
-              = @song.name
+              = link_to @song.name, user_spotify_song_show_path(@song.id)
+            %td
+              = link_to @song.album.name, user_spotify_album_show_path(@song.album.id)
+            %td
+              = link_to @song.artists.first.name, user_spotify_artist_show_path(@song.artists.first.id)
             %td.charged_up_comments_count
               = "#{song[1]}Comments"
