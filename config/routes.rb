@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     resources :song_favorites, only: [:index, :create, :destroy]
     resources :song_impressions, only: [:index]
     resources :notifications, only: :index
+    resources :browsing_history, only: :index
   end
 
 end
