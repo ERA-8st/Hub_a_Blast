@@ -3,3 +3,5 @@
   = link_to "New Releases", user_spotify_new_releases_path
   = link_to "Charged Up", user_spotify_charged_ups_path
   = link_to "Top Impressions", user_song_impressions_path
+  - if user_signed_in?
+    = link_to "Browsing History", user_browsing_history_index_path
