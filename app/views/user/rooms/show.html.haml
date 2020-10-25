@@ -2,7 +2,7 @@
   .row
     .col-lg-3.col-md-3.col-xs-3
     .col-lg-6.col-md-6.col-xs-6
-      .DM
+      #messages.DM
         = render "user/rooms/messages", messages: @messages
       .fixed_form
         -# = form_for @message, url:user_messages_path, remote: true do |f|
@@ -14,5 +14,6 @@
         %form
           %label Say something
           %br
-          %input{type: "text", "data-behavior" => "room_speaker" }
+          %input{type: "hidden", value: "#{@room.id}", "data-behavior-id" => "room_id"}
+          %input{type: "text", "data-behavior-message" => "room_speaker" }
 
