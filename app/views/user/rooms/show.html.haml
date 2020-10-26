@@ -12,8 +12,7 @@
         -#   = link_to user_room_path(@room.id, anchor: 'last') do
         -#     %i.fa.fa-refresh
         %form
-          %label Say something
+          %label.label Say something
           %br
-          %input{type: "hidden", value: "#{@room.id}", "data-behavior-id" => "room_id"}
-          %input{type: "text", "data-behavior-message" => "room_speaker" }
+          %input{type: "text", "data-behavior-message" => "room_speaker", "data-user_id" => current_user.id, "data-room_id" => @room.id }
 
