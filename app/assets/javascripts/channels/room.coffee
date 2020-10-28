@@ -10,8 +10,12 @@ $ ->
     #   alert data['room_id']
 
     received: (data) ->
-      # alert data['room_id']
-      $('.label').append(data['message'])
+      alert data['message']
+      # $('.label').append(data['message'])
+      # messages = data['messages']
+      # $(".DM").html(" j(render partial: 'user/rooms/messages',  locals: {messages: messages} )")
+
+
 
     speak: (message, user_id, room_id) ->
       @perform 'speak', message: message, user_id: user_id, room_id: room_id
