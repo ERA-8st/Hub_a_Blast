@@ -10,8 +10,17 @@ $ ->
     #   alert data['room_id']
 
     received: (data) ->
-      alert data['message']
-      # $('.label').append(data['message'])
+      # alert data['message']
+      user_id = $('.user_id').val()
+      chat_content = $(document.createElement("p")).append( data['message'].message + "<br>" + data['created_at'] )
+      # created_at = dateToFormatString(data['message'].created_at, '%YMD% %HH%:%mm%:%ss%')
+      if user_id == String(data['message'].user_id)
+        $(".chat").append($(document.createElement("div")).addClass("right-chat-box").append(chat_content))
+      else
+        user_img = $(document.createElement("img")).attr({'src': $("#pair_user_img").get(0).src, 'width': "40", 'height': "40"})
+        $(".chat").append($(document.createElement("div")).addClass("left-chat-box").append($(document.createElement("div")).addClass("chat-image").append( user_img )).append($(document.createElement("div")).addClass("chat-message").append( chat_content )))
+      # <% message = "data['message']" %> 
+      # $('.label').append(template)
       # messages = data['messages']
       # $(".DM").html(" j(render partial: 'user/rooms/messages',  locals: {messages: messages} )")
 
