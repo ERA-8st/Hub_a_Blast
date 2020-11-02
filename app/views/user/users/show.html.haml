@@ -27,7 +27,7 @@
               %td
                 = @chat_user.user_name
               %td
-                = link_to user_room_path(room.id, anchor: 'last') do
+                = link_to user_room_path(room.id, pair_user_id: @chat_user, anchor: 'last') do
                   %i.fa.fa-comments-o
   .row
     .col-lg-6.col-md-6.col-xs-6

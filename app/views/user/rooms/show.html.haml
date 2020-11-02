@@ -2,13 +2,19 @@
   .row
     .col-lg-3.col-md-3.col-xs-3
     .col-lg-6.col-md-6.col-xs-6
-      .DM
+      #messages.DM
+        = attachment_image_tag(@pair_user, :profile_image, id: "pair_user_img", size: "40x40", fallback: "no-image.png", style: "display:none;")
+        -# ActionCable用input
+        %input.user_id{type: "hidden" , value: current_user.id }
+        %input.room_id{type: "hedden" , value: @room.id}
         = render "user/rooms/messages", messages: @messages
       .fixed_form
-        = form_for @message, url:user_messages_path, remote: true do |f|
-          = f.text_field :message, placeholder: "メッセージを入力して下さい" , size: 45, class:"form-text-field"
-          = f.hidden_field :room_id, value: @room.id 
-          = f.submit "投稿",class: 'form-submit'
-          = link_to user_room_path(@room.id, anchor: 'last') do
-            %i.fa.fa-refresh
+        -# = form_for @message, url:user_messages_path, remote: true do |f|
+        -#   = f.text_field :message, placeholder: "メッセージを入力して下さい" , size: 45, class:"form-text-field", data: { behavior: 'room_speaker'}
+        -#   = f.hidden_field :room_id, value: @room.id 
+        -#   = f.submit "投稿",class: 'form-submit'
+        -#   = link_to user_room_path(@room.id, anchor: 'last') do
+        -#     %i.fa.fa-refresh
+        %form
+          %input{type: "text", "data-behavior-message" => "room_speaker", "data-user_id" => current_user.id, "data-room_id" => @room.id }
 

@@ -13,7 +13,7 @@
   - unless user_signed_in? && user.id == current_user.id 
     - if (Relationship.find_by(user_id: user, follow_id: current_user)) && (current_user.following?(user)) 
       - if isRoom == true 
-        = link_to user_room_path(roomId, anchor: 'last') do
+        = link_to user_room_path(roomId, pair_user_id: user, anchor: 'last') do
           %i.fa.fa-comments
       - else
         = form_for room, url: user_rooms_path do |f|
