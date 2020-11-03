@@ -19,6 +19,8 @@ $ ->
           $(".chat").append($(document.createElement("div")).addClass("left-chat-box").append($(document.createElement("div")).addClass("chat-image").append( user_img )).append($(document.createElement("div")).addClass("chat-message").append( chat_content )))
       # Notification
       if String(data['pair_user_id']) == $('.user_header_notification').val()
+        unless $('#notice-icon').length
+          $('.header-user-image').append($(document.createElement("i")).attr({"class": 'fa fa-circle', "id": "notice-icon"}))
         if $('.notice-count').length
           new_notice_count = Number($('.notice-count').text()) + 1
           $('.notice-count').text(String(new_notice_count))
