@@ -6,7 +6,7 @@
         = attachment_image_tag(@pair_user, :profile_image, id: "pair_user_img", size: "40x40", fallback: "no-image.png", style: "display:none;")
         -# ActionCable用input
         %input.user_id{type: "hidden" , value: current_user.id }
-        %input.room_id{type: "hedden" , value: @room.id}
+        %input.room_id{type: "hidden" , value: @room.id}
         = render "user/rooms/messages", messages: @messages
       .fixed_form
         -# = form_for @message, url:user_messages_path, remote: true do |f|

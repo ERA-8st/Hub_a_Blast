@@ -1,5 +1,5 @@
-- if messages.present? 
-  .chat
+.chat
+  - if messages.present? 
     - messages.each do |m| 
       - if m.user == current_user
         .right-chat-box
