@@ -8,7 +8,6 @@
       %i.fa.fa-pencil
     = link_to user_notifications_path, class: "user-notice" do
       %i.fa.fa-bell
-      %input.user_header_notification{value: user.id, type: "hidden"}
       - if unchecked_notifications.any?
         %p.notice-count= @unchecked_notifications.count
   - unless user_signed_in? && user.id == current_user.id 
