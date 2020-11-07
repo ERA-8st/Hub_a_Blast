@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
+
   describe "バリデーション" do
 
     let(:user1) { create(:user)}
@@ -88,7 +89,24 @@ RSpec.describe Notification, type: :model do
         end
       end
       
-      
     end
+
   end
+
+  describe "アソシエーション" do
+    
+    context "Userモデル(visiter)" do
+      it "N:1になっている" do
+        expect(Notification.reflect_on_association(:visiter).macro).to eq :belongs_to
+      end
+    end
+
+    context "Userモデル(visited)" do
+      it "N:1になっている" do
+        expect(Notification.reflect_on_association(:visited).macro).to eq :belongs_to
+      end
+    end
+    
+  end
+  
 end

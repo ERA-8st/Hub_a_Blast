@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ArtistComment, type: :model do
+  
   describe "バリデーション" do
     
     let(:user) { create(:user) }
@@ -43,6 +44,16 @@ RSpec.describe ArtistComment, type: :model do
         expect(artist_comment).to be_invalid  
       end
     end
+  end
+
+  describe "アソシエーション" do
+    
+    context "Userモデル" do
+      it "N:1になっている" do
+        expect(ArtistComment.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
+    
   end
   
 end

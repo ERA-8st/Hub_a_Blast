@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
+
   describe "バリデーション" do
 
     let(:user) { create(:user) }
@@ -45,4 +46,21 @@ RSpec.describe Message, type: :model do
     end
 
   end
+
+  describe "アソシエーション" do
+    
+    context "Userモデル" do
+      it "N:1になっている" do
+        expect(Message.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
+
+    context "Roomモデル" do
+      it "N:1になっている" do
+        expect(Message.reflect_on_association(:room).macro).to eq :belongs_to
+      end
+    end
+    
+  end
+  
 end
