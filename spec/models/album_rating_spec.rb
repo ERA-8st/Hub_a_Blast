@@ -55,4 +55,15 @@ RSpec.describe AlbumRating, type: :model do
     end
     
   end
+
+  describe "アソシエーション" do
+    
+    context "Userモデル" do
+      it "N:1になっている" do
+        expect(AlbumRating.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
+    
+  end
+  
 end
