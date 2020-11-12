@@ -25,7 +25,12 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
+  def login_user_present?
+    unless user_signed_in?
+      redirect_to root_path
+    end
+  end
 
   protected
 

@@ -1,6 +1,7 @@
 class User::ArtistCommentsController < ApplicationController
 
   before_action :correct_user, only: [:update, :destroy]
+  before_action :login_user_present?
 
   def create
     @artist_comment = current_user.artist_comments.new(artist_comment_params)
