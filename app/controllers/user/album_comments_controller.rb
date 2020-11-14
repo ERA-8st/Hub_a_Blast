@@ -1,6 +1,7 @@
 class User::AlbumCommentsController < ApplicationController
 
   before_action :correct_user, only: [:update, :destroy]
+  before_action :login_user_present?
 
   def create
     @album_comment = current_user.album_comments.new(album_comment_params)
