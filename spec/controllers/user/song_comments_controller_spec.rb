@@ -15,7 +15,7 @@ RSpec.describe User::SongCommentsController, type: :controller do
 		context "コメントが保存されなかった場合" do
 			it "エラーメッセージが表示される" do
 				song_comment_params = FactoryBot.attributes_for(:song_comment, comment: nil )
-				sing_in user
+				sign_in user
 				post :create, params: { song_comment: song_comment_params }
 				expect(response).to render_template "user/spotify/song_show"
 			end
@@ -54,7 +54,7 @@ RSpec.describe User::SongCommentsController, type: :controller do
 		context "ログインしていない場合" do
 			it "topに遷移する" do
 				song_comment_params = FactoryBot.attributes_for(:song_comment, comment: "hello!!" )
-				patch :update, params: { id: song_comment.id, song_comment: song_commentparams }
+				patch :update, params: { id: song_comment.id, song_comment: song_comment_params }
 				expect(response).to redirect_to root_path
 			end
 		end
@@ -65,7 +65,7 @@ RSpec.describe User::SongCommentsController, type: :controller do
 				user2 = FactoryBot.create(:user2)
 				sign_in user2
 				song_comment_params = FactoryBot.attributes_for(:song_comment, comment: "hello!!" )
-				patch :update, params: { id: song_comment.id, song_comment: song_commentparams }
+				patch :update, params: { id: song_comment.id, song_comment: song_comment_params }
 				expect(response).to redirect_to root_path  
 			end
 		end
@@ -79,18 +79,25 @@ RSpec.describe User::SongCommentsController, type: :controller do
 			song_comment = FactoryBot.create(:song_comment, user: user )
 			expect{ delete :destroy, params: { id: song_comment.id } }.to change(user.song_comments, :count).by(-1)
 		end
-	end
 
-	context "ログインしていない場合" do
-		it "topに遷移する" do
-			song_comment = FactoryBot.create(:song_comment, user: user )
-			delete :destroy, params: { id: song_comment.id }
-			expect(response).to redirect_to root_path
+		context "ログインしていない場合" do
+			it "topに遷移する" do
+				song_comment = FactoryBot.create(:song_comment, user: user )
+				delete :destroy, params: { id: song_comment.id }
+				expect(response).to redirect_to root_path
+			end
 		end
-	end
-	
-	
 
+		context "ログインユーザーとコメントのユーザーが異なる場合" do
+			it "topに遷移する" do
+				song_comment = FactoryBot.create(:song_comment, user: user)
+				user2 = FactoryBot.create(:user2)
+				sign_in user2
+				delete :destroy, params: { id: song_comment.id }
+				expect(response).to redirect_to root_path
+			end
+		end
 	
+	end
 
 end
