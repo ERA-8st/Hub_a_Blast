@@ -1,9 +1,11 @@
 %h3 ARTISTs
 .row
   - if searchartists.present?
+    - n = 0
     - searchartists.first(artist_count).each do |searchartist|
       .col-lg-3.col-md-3.col-xs-3
-        = link_to user_spotify_artist_show_path(searchartist.id) do
+        - n += 1
+        = link_to user_spotify_artist_show_path(searchartist.id), id: "artist_#{n}" do
           - if searchartist.images.any?
             - image = searchartist.images[2]
             = image_tag(image["url"])
@@ -13,4 +15,4 @@
         = searchartist.name
 - if searchartists.count > artist_count
   - artist_count += 8
-  = link_to "更に表示する", user_spotify_index_path(artist_count: artist_count, search: search_word), remote: true
+  = link_to "更に表示する", user_spotify_index_path(artist_count: artist_count, search: search_word), id: "more_artists", remote: true
