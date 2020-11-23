@@ -55,9 +55,9 @@ RSpec.feature "Users", type: :feature do
     #   end
     # end
     
-    describe "ユーザー詳細" do
-      let(:user) { create(:user) }
-      let(:user2) { create(:user2) }
+    # describe "ユーザー詳細" do
+    #   let(:user) { create(:user) }
+    #   let(:user2) { create(:user2) }
       # describe "ログインユーザーと詳細ユーザーが一致している場合" do
       #   before do
       #     visit new_user_session_path
@@ -209,33 +209,33 @@ RSpec.feature "Users", type: :feature do
       #   end
           
       # end
-      describe "ログインユーザーと詳細ユーザーが異なる場合" do
-        before do
-          visit new_user_session_path
-          fill_in "user_email", with: user2.email
-          fill_in "user_password", with: user2.password
-          click_button "Log in"
-          visit user_user_path(user.id)
-        end
-        context "ヘッダーのテスト" do
-          let(:user_header) { find(".user-header")}
-          let!(:relationship) { create(:relationship, user_id: user2.id, follow_id: user.id) }
-          context "相互フォローかつRoomが存在する場合" do
-            let!(:relationship2) { create(:relationship2, user_id: user.id, follow_id: user2.id) }
-            let(:room) { create(:room)}
-            let!(:entry) { create(:entry, user: user2, room: room) }
-            let!(:entry2) { create(:entry2, user: user, room: room) }
-            before do
-              visit current_path
-            end
-            it "Roomリンクが表示される" do
-              expect(user_header).to have_link "", href: user_room_path(room, pair_user_id: user, anchor: "last")
-            end
-            it "リンクの数が正しい" do
-              header_links = user_header.all("a")
-              expect(header_links.count).to eq 3  
-            end
-          end
+      # describe "ログインユーザーと詳細ユーザーが異なる場合" do
+      #   before do
+      #     visit new_user_session_path
+      #     fill_in "user_email", with: user2.email
+      #     fill_in "user_password", with: user2.password
+      #     click_button "Log in"
+      #     visit user_user_path(user.id)
+      #   end
+      #   context "ヘッダーのテスト" do
+      #     let(:user_header) { find(".user-header")}
+      #     let!(:relationship) { create(:relationship, user_id: user2.id, follow_id: user.id) }
+      #     context "相互フォローかつRoomが存在する場合" do
+      #       let!(:relationship2) { create(:relationship2, user_id: user.id, follow_id: user2.id) }
+      #       let(:room) { create(:room)}
+      #       let!(:entry) { create(:entry, user: user2, room: room) }
+      #       let!(:entry2) { create(:entry2, user: user, room: room) }
+      #       before do
+      #         visit current_path
+      #       end
+      #       it "Roomリンクが表示される" do
+      #         expect(user_header).to have_link "", href: user_room_path(room, pair_user_id: user, anchor: "last")
+      #       end
+      #       it "リンクの数が正しい" do
+      #         header_links = user_header.all("a")
+      #         expect(header_links.count).to eq 3  
+      #       end
+      #     end
           # context "相互フォローかつRoomが存在しない場合" do
           #   let!(:relationship2) { create(:relationship2, user_id: user.id, follow_id: user2.id) }
           #   before do
@@ -251,31 +251,121 @@ RSpec.feature "Users", type: :feature do
           #     expect(header_forms).to eq 1
           #   end
           # end
-          context "相互フォローでない場合" do
-            it "リンクの数が正しい" do
-              header_links = user_header.all("a")
-              expect(header_links.count).to eq 2
-            end
-          end
+    #       context "相互フォローでない場合" do
+    #         it "リンクの数が正しい" do
+    #           header_links = user_header.all("a")
+    #           expect(header_links.count).to eq 2
+    #         end
+    #       end
             
-        end
-        context "ユーザー詳細のテスト" do
+    #     end
+    #     context "ユーザー詳細のテスト" do
           
-        end
-        context "Latest Commentのテスト" do
-          it "タイトルが正しく表示される" do
-            expect(find(".latest-comment")).to have_content "Latest #{user.user_name}'s comment"  
-          end
-        end
-        context "favoriteのテスト" do
-          it "タイトルが正しく表示される" do
-            expect(find(".user-favorites")).to have_content "#{user.user_name}'s favorite"
-          end
-        end
+    #     end
+    #     context "Latest Commentのテスト" do
+    #       it "タイトルが正しく表示される" do
+    #         expect(find(".latest-comment")).to have_content "Latest #{user.user_name}'s comment"  
+    #       end
+    #     end
+    #     context "favoriteのテスト" do
+    #       it "タイトルが正しく表示される" do
+    #         expect(find(".user-favorites")).to have_content "#{user.user_name}'s favorite"
+    #       end
+    #     end
         
+        
+    #   end
+      
+    # end
+
+    describe "ユーザー編集" do
+      let(:user) { create(:user)}
+      let(:user2) { create(:user2)}
+      let(:edit_user_info) { find(".edit-user-info") }
+      before do
+        visit new_user_session_path
+        fill_in "user_email", with: user.email
+        fill_in "user_password", with: user.password
+        click_button "Log in"
+        visit edit_user_user_path(user)
+      end
+      # context "編集画面への遷移" do
+      #   it "自身の編集画面へ遷移できる" do
+      #     visit edit_user_user_path(user.id)
+      #     expect(current_path).to eq edit_user_user_path(user.id)
+      #   end
+      #   it "他人の編集画面へ遷移できない" do
+      #     visit edit_user_user_path(user2.id)
+      #     expect(current_path).to eq root_path 
+      #   end
+      # end
+
+      # context "ヘッダーのテスト" do
+      #   let(:user_header) { find(".user-header")}
+      #   it "ユーザー詳細リンクが正しく表示され、機能している" do
+      #     expect(user_header).to have_link "", href: user_user_path(user)
+      #     user_header.click_link "", href: user_user_path(user)
+      #     expect(current_path).to eq user_user_path(user)  
+      #   end
+      #   it "お気に入り一覧リンクが正しく表示され、機能している" do
+      #     expect(user_header).to have_link "", href: user_song_favorites_path(user_id: user)
+      #     user_header.click_link "", href: user_song_favorites_path(user_id: user)
+      #     expect(current_path).to eq user_song_favorites_path
+      #   end
+      #   it "ユーザー編集リンクが正しく表示され、機能している" do
+      #     expect(user_header).to have_link "", href: edit_user_user_path(user)
+      #     user_header.click_link "", href: edit_user_user_path(user)
+      #     expect(current_path).to eq edit_user_user_path(user)
+      #   end
+      #   it "通知一覧リンクが正しく表示され、機能している" do
+      #     expect(user_header).to have_link "", href: user_notifications_path
+      #     user_header.click_link "", href: user_notifications_path
+      #     expect(current_path).to eq user_notifications_path
+      #   end
+      #   it "未読通知アイコンが表示される" do
+      #     notification = create(:notification, visiter_id: user2.id, visited_id: user.id, action: "follow" )
+      #     visit current_path
+      #     expect(find(".user-notice")).to have_selector "p"
+      #   end
+      #   it "リンクの数が正しい" do
+      #     header_links = user_header.all("a")
+      #     expect(header_links.count).to eq 4  
+      #   end
+      # end
+      # context "表示のテスト" do
+      #   it "タイトルが表示される" do
+      #     expect(edit_user_info).to have_content "User info"  
+      #   end
+      #   it "ユーザー画像が表示される" do
+      #     expect(edit_user_info).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
+      #   end
+      #   it "user_nameのフォームが表示される" do
+      #     expect(edit_user_info).to have_selector "input#user_user_name[value$=#{user.user_name}]"
+      #   end
+      #   it "user_imageのフォームが表示される" do
+      #     expect(edit_user_info).to have_selector "input#user_profile_image"
+      #   end
+      #   it "user_introductionのフォームが表示される" do
+      #     expect(edit_user_info).to have_selector "textarea#user_introduction", text: user.introduction
+      #   end
+      #   it "更新ボタンが表示される" do
+      #     expect(edit_user_info).to have_selector "input[type=submit][value=更新する]"
+      #   end
+      # end
+      context "更新のテスト" do
+        context "user_name" do
+          it "更新される" do
+            edit_user_info.fill_in "user_user_name", with: "changed_user_name"
+            edit_user_info.click_button "更新する"
+
+            binding.pry
+            
+            expect(current_path).to eq user_user_path(user)
+            # expect(user.reload.user_name).to eq "changed_user_name"  
+          end
+        end
         
       end
-      
       
     end
     
