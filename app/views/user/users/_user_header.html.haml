@@ -16,8 +16,8 @@
         = link_to user_room_path(roomId, pair_user_id: user, anchor: 'last') do
           %i.fa.fa-comments
       - else
-        = form_for room, url: user_rooms_path do |f|
-          = fields_for entry do |e|
+        = form_for Room.new, url: user_rooms_path do |f|
+          = fields_for Entry.new do |e|
             = e.hidden_field :user_id, value: user.id 
           = button_tag type: 'submit' do
             %i.fa.fa-comments
