@@ -1,7 +1,7 @@
 = render "user/users/user_header", user: @user, isRoom: @isRoom, roomId: @roomId
 .container.header-margin
   .row
-    .col-lg-3.col-md-3.col-xs-3
+    .col-lg-3.col-md-3.col-xs-3.user-show-user-image
       = attachment_image_tag(@user, :profile_image,  size: "200x200", fallback: "no-image.png")
     .col-lg-3.col-md-3.col-xs-3.relation-index
       .user-show-user-name= @user.user_name
@@ -11,7 +11,7 @@
         %div{class: "follow_button#{@user.id} follow_button"}
           = render "user/relationships/follow_button", user: @user
       .follow-follower #{link_to "フォロー", user_users_follow_index_path(@user)} | #{link_to "フォロワー", user_users_follower_index_path(@user)}
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.latest-chats
       -# 直近でDMを送ったユーザー一覧
       - if @user == current_user
         %h2 Latest Chats
@@ -30,7 +30,7 @@
                 = link_to user_room_path(room.id, pair_user_id: @chat_user, anchor: 'last') do
                   %i.fa.fa-comments-o
   .row
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.latest-comment
       -# 直近でコメントした曲一覧
       - if user_signed_in? && @user == current_user
         %h2 Latest your comment
@@ -49,7 +49,7 @@
                   = image_tag("default.jpg")
             %td
               = @song.name
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.user-favorites
       -# お気に入り(ブックマーク)曲一覧
       - if user_signed_in? && @user == current_user
         %h2.favorite your favorite

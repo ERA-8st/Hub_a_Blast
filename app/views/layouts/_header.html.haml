@@ -5,15 +5,15 @@
         %i.fa.fa-spotify
     .col-lg-6.col-md-6.col-xs-6.center
       - if user_signed_in?
-        = link_to "TOP",     user_home_top_path
-        = link_to "ABOUT",   user_home_about_path
-        = link_to "INQUIRY", user_inquiry_index_path
-        = link_to "LOG_OUT", destroy_user_session_path, method: :delete
+        = link_to "TOP",     user_home_top_path, id: "header_top"
+        = link_to "ABOUT",   user_home_about_path, id: "header_about"
+        = link_to "INQUIRY", user_inquiry_index_path, id: "header_inquiry"
+        = link_to "LOG_OUT", destroy_user_session_path, id: "header_log_out", method: :delete
       - else
-        = link_to "TOP",     user_home_top_path
-        = link_to "ABOUT",   user_home_about_path
-        = link_to "SIGN_IN", new_user_registration_path
-        = link_to "LOG_IN",  new_user_session_path
+        = link_to "TOP",     user_home_top_path, id: "header_top"
+        = link_to "ABOUT",   user_home_about_path, id: "header_about"
+        = link_to "SIGN_IN", new_user_registration_path, id: "header_sign_in"
+        = link_to "LOG_IN",  new_user_session_path, id: "header_log_in"
       %br
       = form_with url: user_spotify_index_path, method: :get, local: true do |f|
         = f.text_field :search
@@ -22,11 +22,11 @@
       - if user_signed_in?
         %input.user_header_notification{value: current_user.id, type: "hidden"}
         = current_user.user_name
-        = link_to user_user_path(current_user), class: "header-user-image" do
+        = link_to user_user_path(current_user), class: "header-user-image", id: "header-user-image" do
           = attachment_image_tag(current_user, :profile_image,  size: "50x50", fallback: "no-image.png")
           - if unchecked_notifications.any?
             %i.fa.fa-circle#notice-icon
       - else
         Guest
-        = link_to new_user_session_path do
+        = link_to new_user_session_path, id: "guest_user_img" do
           = image_tag "no-image.png"
