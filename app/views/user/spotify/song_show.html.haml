@@ -51,7 +51,7 @@
         -# Twitter
         %a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
         %script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.song-show-right
       - if user_signed_in?
         -# コメント機能
         = form_with model: @song_comment, url: user_song_comments_path(page: @page), class: "clearfix", local: true do |f|
@@ -71,7 +71,7 @@
             .col-lg-6.col-md-6.col-xs-6
               = form_with model: @comment, url: user_song_comment_path(comment, page: @page), local: true do |f|
                 = render "layouts/error_message", model: f.object
-                = f.text_area :comment, rows:"2"
+                = f.text_area :comment, rows:"2", id: "song_comment#{comment.id}_edit_form"
                 %br
                 = link_to "取り消し", user_spotify_song_show_path(@comment.song_id, page: @page)
                 = f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
@@ -85,10 +85,10 @@
             .col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
               %ul.comment_edit
                 %li
-                  = link_to user_spotify_song_show_path(@song.id, page: @page ,comment_id: comment.id) do
+                  = link_to user_spotify_song_show_path(@song.id, page: @page ,comment_id: comment.id), id: "song_comment#{comment.id}_edit" do
                     %i.fa.fa-pencil
                 %li
-                  = link_to user_song_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+                  = link_to user_song_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"}, id: "song_comment#{comment.id}_delete" do
                     %i.fa.fa-trash-o
           - else
             .col-lg-1.col-md-1.col-xs-1
