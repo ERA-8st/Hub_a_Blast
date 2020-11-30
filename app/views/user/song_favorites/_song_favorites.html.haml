@@ -3,6 +3,6 @@
     = link_to user_song_favorite_path(song_favorite, song_id: song.id), method: :delete, remote: true do
       %i.fa.fa-bookmark 
   -else
-    = link_to user_song_favorites_path(song_id: song.id), method: :post, remote: true do
+    = link_to user_song_favorites_path(song_id: song.id), id: "create_song_favorite", method: :post, remote: true do
       %i.fa.fa-bookmark-o
   = SongFavorite.where(song_id: song.id).count

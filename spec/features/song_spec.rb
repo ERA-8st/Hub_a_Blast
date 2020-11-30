@@ -71,8 +71,18 @@ describe "曲のテスト" do
     #     end
     #   end
     # end
-    context "コメントのテスト" do
-      let(:song_show_comments) { find(".song-show-right") }
+    # context "コメントのテスト" do
+    #   let(:song_show_comments) { find(".song-show-right") }
+    #   context "表示のテスト" do
+    #     it "コメントが全て表示される" do
+    #       expect(all(".comment").count).to eq 2
+    #       expect(page).to have_content song_comment.comment
+    #       expect(page).to have_content song_comment2.comment
+    #     end
+    #     it "コメント数が表示される" do
+    #       expect(page).to have_content "2コメント"
+    #     end
+    #   end
       # context "投稿のテスト" do
       #   it "成功する" do
       #     expect{
@@ -119,16 +129,31 @@ describe "曲のテスト" do
       #     expect(song_comment).to_not have_link "song_comment#{song_comment2.id}_edit"
       #   end
       # end
-      context "削除のテスト" do
-        it "成功する" do
-          expect{
-            click_link "song_comment#{song_comment.id}_delete"
-          }.to change(user.song_comments, :count).by(-1)
-        end
-        it "表示されない" do
-          expect(page).to_not have_link "song_comment#{song_comment2.id}_delete"
-        end
+      # context "削除のテスト" do
+      #   it "成功する" do
+      #     expect{
+      #       click_link "song_comment#{song_comment.id}_delete"
+      #     }.to change(user.song_comments, :count).by(-1)
+      #     expect(all(".comment").count).to eq 1
+      #   end
+      #   it "表示されない" do
+      #     expect(page).to_not have_link "song_comment#{song_comment2.id}_delete"
+      #   end
+      # end
+    # end
+    context "ブックマークのテスト" do
+      it "ブックマークのリンクが正しく表示される" do
+        expect(page).to have_link "", href: user_song_favorites_path(song_id: "4VXIryQMWpIdGgYR4TrjT1")
+        expect(find(".song_favorite")).to have_content "0"
+        song_favorite = create(:song_favorite, user: user)
+        visit current_path
+        # click_link "", href: user_song_favorites_path(song_id: "4VXIryQMWpIdGgYR4TrjT1")
+        expect(page).to have_link "", href: user_song_favorite_path(song_favorite, song_id: "4VXIryQMWpIdGgYR4TrjT1")
+        expect(find(".song_favorite")).to have_content "1"
       end
+    end
+    context "評価機能のテスト" do
+      
     end
   end
 end
