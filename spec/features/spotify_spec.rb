@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 describe "検索機能" do
   before do
     visit root_path
@@ -31,7 +30,5 @@ describe "検索機能" do
         expect(page).to have_link "", id: "song_12"
       end
     end
-    
   end
-
 end
