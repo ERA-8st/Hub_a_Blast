@@ -147,7 +147,6 @@ describe "曲のテスト" do
         expect(find(".song_favorite")).to have_content "0"
         song_favorite = create(:song_favorite, user: user)
         visit current_path
-        # click_link "", href: user_song_favorites_path(song_id: "4VXIryQMWpIdGgYR4TrjT1")
         expect(page).to have_link "", href: user_song_favorite_path(song_favorite, song_id: "4VXIryQMWpIdGgYR4TrjT1")
         expect(find(".song_favorite")).to have_content "1"
       end
