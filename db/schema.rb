@@ -12,13 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2020_10_20_100727) do
 
-  create_table "active_admin_comments", force: :cascade do |t|
+  create_table "active_admin_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
-  create_table "admin_users", force: :cascade do |t|
+  create_table "admin_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "album_comments", force: :cascade do |t|
+  create_table "album_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "comment"
     t.integer "user_id"
     t.text "album_id"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "album_ratings", force: :cascade do |t|
+  create_table "album_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.text "album_id"
     t.float "rate"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "artist_comments", force: :cascade do |t|
+  create_table "artist_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "comment"
     t.integer "user_id"
     t.text "artist_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "artist_ratings", force: :cascade do |t|
+  create_table "artist_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.text "artist_id"
     t.float "rate"
@@ -70,18 +70,18 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "entries", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
+  create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_entries_on_room_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
-  create_table "messages", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "room_id"
     t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
+  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "visiter_id"
     t.integer "visited_id"
     t.string "action"
@@ -100,9 +100,9 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.integer "room_id"
   end
 
-  create_table "relationships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "follow_id"
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "follow_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["follow_id"], name: "index_relationships_on_follow_id"
@@ -110,14 +110,14 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
-  create_table "rooms", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
-  create_table "song_comments", force: :cascade do |t|
+  create_table "song_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "comment"
     t.integer "user_id"
     t.text "song_id"
@@ -125,22 +125,22 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "song_favorites", force: :cascade do |t|
+  create_table "song_favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "song_id"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_song_favorites_on_user_id"
   end
 
-  create_table "song_impressions", force: :cascade do |t|
+  create_table "song_impressions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.text "song_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "song_ratings", force: :cascade do |t|
+  create_table "song_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.text "song_id"
     t.float "rate"
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -166,4 +166,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100727) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "relationships", "users"
+  add_foreign_key "relationships", "users", column: "follow_id"
+  add_foreign_key "song_favorites", "users"
 end

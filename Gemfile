@@ -7,6 +7,7 @@ ruby '2.5.7'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'mysql2', '>= 0.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -87,7 +88,6 @@ gem 'refile', require: 'refile/rails', github: 'manfe/refile'
 
 # 本番環境用
 group :production do
-  gem 'mysql2'
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
