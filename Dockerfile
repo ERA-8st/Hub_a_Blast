@@ -1,23 +1,17 @@
-#Docker Image を指定します。使用しているアプリのバージョンを指定します。
 FROM ruby:2.5.7
 
-# 必要なパッケージのインストール。node.jsについては当初の記述だとエラーが出たため、修正。
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y mariadb-client --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
-# 作業ディレクトリの作成、設定
-RUN mkdir /workdir
-WORKDIR /workdir
+RUN mkdir /Hub_a_Blast
+ENV APP_ROOT /Hub_a_Blast
+WORKDIR $APP_ROOT
 
-# ホスト側（ローカル）のGemfileを上記で作成した/workdirに追加する
-ADD Gemfile /workdir/Gemfile
-ADD Gemfile.lock /workdir/Gemfile.lock
+ADD ./Gemfile $APP_ROOT/Gemfile
+ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
 
-# Gemfileのbundle install　
-# ENVなしで実行したところエラーが出た。BUNDLER_VERSIONを指定することで回避。
 ENV BUNDLER_VERSION 2.1.4
 RUN gem install bundler
 RUN bundle install
-
-# ホスト側（ローカル）の全てのディレクトリをDocekrコンテナの/workdir配下に追加。
-ADD . /workdir
+ADD . $APP_ROOT
