@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0.22
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - rails_docker_network
+    environment:
+      MYSQL_DATABASE: root
+      MYSQL_ROOT_PASSWORD: password
+    # mysql8.0の認証プラグイン(caching_sha2_password)をmysql_native_passwordに変更
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: rails_db_container
+  web:
+    build: .
+    depends_on:
+      - db
+    command: rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/Hub_a_Blast
+    networks:
+      - rails_docker_network
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    container_name: rails_web_container
+
+volumes:
+  db_data:
+
+networks:
+  rails_docker_network:
+    name: rails_docker_network
