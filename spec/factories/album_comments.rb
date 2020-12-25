@@ -2,6 +2,10 @@ FactoryBot.define do
   factory :album_comment do
     association :user
     comment { "test" }
-    album_id { "2zE1YKY7Okj10Tjl09jjth" }
+    album_id { "0qsh1whWV3FcVaM6A8vLN9" }
+  end
+  factory :album_comment2, class: AlbumComment do
+    comment { "album_comment2_test" }
+    album_id { "0qsh1whWV3FcVaM6A8vLN9" }
   end
 end

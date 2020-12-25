@@ -5,7 +5,7 @@
       = link_to "#{@album.artists.first.name}", user_spotify_artist_show_path(@album.artists.first.id)
       =  " > #{@album.name.truncate(24)}"
   .row
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.album-show-left
       - if @album.images.any?
         - image = @album.images[1]
         = image_tag(image["url"], "data-adaptive-background" => '1')
@@ -32,7 +32,7 @@
         -# Twitter
         %a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
         %script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.album-show-right
       - if user_signed_in?
         -# コメント機能
         = form_with model: @album_comment,  url: user_album_comments_path(page: @page), class: "clearfix", local: true do |f|
@@ -52,7 +52,7 @@
             .col-lg-6.col-md-6.col-xs-6
               = form_with model: @comment, url: user_album_comment_path(comment, page: @page), local: true do |f|
                 = render "layouts/error_message", model: f.object
-                = f.text_area :comment, rows:"2"
+                = f.text_area :comment, rows:"2", id: "album_comment#{comment.id}_edit_form"
                 %br
                 = link_to "取り消し", user_spotify_album_show_path(@comment.album_id, page: @page)
                 = f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
