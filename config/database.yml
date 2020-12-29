@@ -26,6 +26,7 @@ test:
   database: Hub_a_Blast_test
   host: db
 
+
 production:
   <<: *default
   database: <%= ENV['DB_DATABASE'] %>
