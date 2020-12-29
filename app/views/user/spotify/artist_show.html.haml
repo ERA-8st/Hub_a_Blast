@@ -43,6 +43,7 @@
                   = render "layouts/error_message", model: f.object
                   = f.text_area :comment, rows:"2", id: "artist_comment#{comment.id}_edit_form"
                   %br
+                  = link_to "取り消し", user_spotify_artist_show_path(@comment.artist_id, page: @page)
                   = f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
             -else
               .col-lg-6.col-md-6.col-xs-6.comment-comment.table-responsive.text-center
