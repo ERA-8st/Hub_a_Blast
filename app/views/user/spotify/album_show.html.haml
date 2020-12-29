@@ -66,10 +66,10 @@
             .col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
               %ul.comment_edit
                 %li
-                  = link_to user_spotify_album_show_path(@album.id, page: @page, comment_id: comment.id) do
+                  = link_to user_spotify_album_show_path(@album.id, page: @page, comment_id: comment.id), id: "album_comment#{comment.id}_edit" do
                     %i.fa.fa-pencil
                 %li
-                  = link_to user_album_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+                  = link_to user_album_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"}, id: "album_comment#{comment.id}_delete" do
                     %i.fa.fa-trash-o
           - else
             .col-lg-1.col-md-1.col-xs-1
