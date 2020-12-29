@@ -10,23 +10,23 @@ describe "アーティストのテスト" do
     fill_in "user_email", with: user.email
     fill_in "user_password", with: user.password
     click_button "Log in"
-    # visit user_spotify_artist_show_path("???")
+    visit user_spotify_artist_show_path("4STHEaNw4mPZ2tzheohgXB")
   end
   describe "アーティスト詳細のテスト" do
     context "タイトルのテスト" do
       let(:title) { find(".head_title") }
       it "正しく表示される" do
-        # expect(title).to have_content "???"
+        expect(title).to have_content "Paul McCartney"
       end
     end
     context "詳細のテスト" do
       let(:artist_show) { find(".artist-show-left") }
+      let(:artist_share_links) { find(".artist-show-center") }
       it "各種情報が正しく表示される" do
-        # expect(artist_show).to have_selector "img"
-        # expect(artist_show).to have_content "artist_name"
-        expect(artist_show).to have_selector ".fb-share-button"
-        expect(artist_show).to have_selector(".line-it-button", visible: false)
-        expect(artist_show).to have_selector ".twitter-share-button"
+        expect(artist_show).to have_selector "img[src$='https://i.scdn.co/image/4fd90313067d2096aaeb7672a147280b8fdc9223']"
+        expect(artist_share_links).to have_selector ".fb-share-button"
+        expect(artist_share_links).to have_selector(".line-it-button", visible: false)
+        expect(artist_share_links).to have_selector ".twitter-share-button"
       end
     end
     context "コメントのテスト" do
@@ -46,7 +46,7 @@ describe "アーティストのテスト" do
           expect{
             fill_in "artist_comment_comment", with: "test"
             click_button "送信する"
-          }.to change(user.artist_comment, :count).by(1)
+          }.to change(user.artist_comments, :count).by(1)
         end
         it "失敗する" do
           expect{
@@ -59,17 +59,17 @@ describe "アーティストのテスト" do
           expect(artist_show_comments).to have_selector "textarea#artist_comment_comment"
           expect(artist_show_comments).to have_selector "input[value='送信する']"
           click_link "LOG_OUT"
-          # visit user_spotify_artist_show_path("???")
+          visit user_spotify_artist_show_path("4STHEaNw4mPZ2tzheohgXB")
           expect(artist_show_comments).to_not have_selector "textarea#artist_comment_comment"
           expect(artist_show_comments).to_not have_selector "input[value='送信する']"
         end
       end
       context "更新のテスト" do
         before do
-          click_link "artist_comment#{artist_comment.id}_edit_form"
+          click_link "artist_comment#{artist_comment.id}_edit"
         end
         it "成功する" do
-          fill_in "artist_comment#{artist_comment.id}_edit", with: "changed_artist_comment"
+          fill_in "artist_comment#{artist_comment.id}_edit_form", with: "changed_artist_comment"
           click_button "更新する"
           expect(artist_comment.reload.comment).to eq "changed_artist_comment"
         end
@@ -85,7 +85,7 @@ describe "アーティストのテスト" do
           expect(artist_comment.reload.comment).to eq "artist_comment_test"
         end
         it "表示されない" do
-          # visit user_spotify_artist_show_path("???")
+          visit user_spotify_artist_show_path("4STHEaNw4mPZ2tzheohgXB")
           expect(artist_comment).to_not have_link "artist_comment#{artist_comment2.id}_edit_form"
         end
       end
@@ -93,7 +93,7 @@ describe "アーティストのテスト" do
         it "成功する" do
           expect{
             click_link "artist_comment#{artist_comment.id}_delete"
-          }.to change(user.artist_comment, :count).by(1)
+          }.to change(user.artist_comments, :count).by(-1)
           expect(all(".comment").count).to eq 1
         end
         it "表示されない" do

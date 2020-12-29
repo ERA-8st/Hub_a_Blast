@@ -2,13 +2,13 @@
   .row
     %h1.head_title= "#{@artist.name}"
   .row
-    .col-lg-4.col-md-4.col-xs-4.text-right
+    .col-lg-4.col-md-4.col-xs-4.text-right.artist-show-left
       - if @artist.images.any?
         - image = @artist.images[1]
         = image_tag(image["url"], "data-adaptive-background" => '1')
       - else
         =image_tag("default.jpg")
-    .col-lg-1.col-md-1.col-xs-1
+    .col-lg-1.col-md-1.col-xs-1.artist-show-center
       -# Facebook
       .fb-root
       %script{async: "defer", crossorigin: "anonymous", src: "https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v8.0", nonce: "gaokNTax"}
@@ -21,7 +21,7 @@
       %a.twitter-share-button{href: "https://twitter.com/share?ref_src=twsrc%5Etfw","data-show-count" => "false"} Tweet
       %script{async: "defer", src: "https://platform.twitter.com/widgets.js", charset: "utf-8"}
     .col-lg-1.col-md-1.col-xs-1
-    .col-lg-6.col-md-6.col-xs-6
+    .col-lg-6.col-md-6.col-xs-6.artist-show-right
       - if user_signed_in?
         -# コメント機能
         = form_with model: @artist_comment, url: user_artist_comments_path(page: @page), class: "clearfix",local: true do |f|
@@ -41,7 +41,7 @@
               .col-lg-6.col-md-6.col-xs-6
                 = form_with model: @comment, url: user_artist_comment_path(comment, page: @page), local: true do |f|
                   = render "layouts/error_message", model: f.object
-                  = f.text_area :comment, rows:"2"
+                  = f.text_area :comment, rows:"2", id: "artist_comment#{comment.id}_edit_form"
                   %br
                   = f.submit "更新する", class: "btn btn-sm btn-base-1 mt-20 pull-right"
             -else
@@ -54,10 +54,10 @@
               .col-lg-1.col-md-1.col-xs-1.fa.fa-bars.comment_pulldown
                 %ul.comment_edit
                   %li
-                    = link_to user_spotify_artist_show_path(@artist.id, page: @page, comment_id: comment.id) do
+                    = link_to user_spotify_artist_show_path(@artist.id, page: @page, comment_id: comment.id), id: "artist_comment#{comment.id}_edit" do
                       %i.fa.fa-pencil
                   %li
-                    = link_to user_artist_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"} do
+                    = link_to user_artist_comment_path(comment), method: :delete, data: {confirm: "コメントを削除します"}, id: "artist_comment#{comment.id}_delete" do
                       %i.fa.fa-trash-o
             - else
               .col-lg-1.col-md-1.col-xs-1
