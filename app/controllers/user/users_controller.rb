@@ -10,6 +10,7 @@ class User::UsersController < ApplicationController
     @song_favorites = @user.song_favorites.order("id DESC").limit(5)
     # ユーザーのメッセージを新しい順に並び替えて同一のroomに対してのメッセージを除外
     @messages = @user.messages.order("id DESC").select(:room_id).distinct.limit(3) if @user == current_user
+    room_present?(@user)
   end
 
   def edit
@@ -17,7 +18,11 @@ class User::UsersController < ApplicationController
   end
 
   def update
-    @user.update(user_params) ? redirect_to user_user_path(@user), notice: "You have updated user successfully." : render "user/users/edit"
+    if @user.update(user_params) 
+      redirect_to user_user_path(@user), notice: "You have updated user successfully."
+    else
+      render "user/users/edit"
+    end
   end
 
   def follow_index

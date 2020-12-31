@@ -3,13 +3,17 @@ class User::SpotifyController < ApplicationController
   before_action :set_page, only: [:artist_show, :album_show, :song_show]
 
   def index
-    redirect_back(fallback_location: root_path) if params[:search].blank?
-    @searchartists = RSpotify::Artist.search(params[:search])
-    @searchalbums = RSpotify::Album.search(params[:search])
-    @searchsongs = RSpotify::Track.search(params[:search])
-    params[:artist_count].blank? ? @artist_count = 4 : @artist_count = params[:artist_count].to_i
-    params[:album_count].blank? ? @album_count = 4 : @album_count = params[:album_count].to_i
-    params[:song_count].blank? ? @song_count = 4 : @song_count = params[:song_count].to_i
+    if params[:search].blank?
+      redirect_back(fallback_location: root_path) 
+    else
+      @search_word = params[:search]
+      @searchartists = RSpotify::Artist.search(@search_word)
+      @searchalbums = RSpotify::Album.search(@search_word)
+      @searchsongs = RSpotify::Track.search(@search_word)
+      params[:artist_count].blank? ? @artist_count = 4 : @artist_count = params[:artist_count].to_i
+      params[:album_count].blank? ? @album_count = 4 : @album_count = params[:album_count].to_i
+      params[:song_count].blank? ? @song_count = 4 : @song_count = params[:song_count].to_i
+    end
   end
 
   def artist_show
