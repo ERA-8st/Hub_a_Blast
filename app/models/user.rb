@@ -31,9 +31,7 @@ class User < ApplicationRecord
 
   # フォローしようとしているUserが自分では無いか
   def follow(other_user)
-    unless self == other_user
-      self.relationships.find_or_create_by(follow_id: other_user.id)
-    end
+    self.relationships.find_or_create_by(follow_id: other_user.id) unless self == other_user
   end
 
   # フォローしている場合のみアンフォロー
@@ -60,7 +58,6 @@ class User < ApplicationRecord
         password: Devise.friendly_token[0, 20]
       )
     end
-    user
   end
 
   def create_notification_follow!(current_user)

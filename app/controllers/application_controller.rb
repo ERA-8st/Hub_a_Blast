@@ -17,8 +17,7 @@ class ApplicationController < ActionController::Base
             end
           end
         end
-        if @isRoom
-        else
+        unless @isRoom
           @room = Room.new
           @entry = Entry.new
         end
@@ -27,9 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def login_user_present?
-    unless user_signed_in?
-      redirect_to root_path
-    end
+    redirect_to root_path unless user_signed_in?
   end
 
   protected

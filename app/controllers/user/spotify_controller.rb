@@ -3,40 +3,13 @@ class User::SpotifyController < ApplicationController
   before_action :set_page, only: [:artist_show, :album_show, :song_show]
 
   def index
-    if params[:search].blank?
-      redirect_back(fallback_location: root_path)
-    end
-    @search_word = params[:search]
-    # アーティスト検索
-      if @search_word.present?
-        @searchartists = RSpotify::Artist.search(@search_word)
-      end
-      # 一覧表示件数
-      if params[:artist_count].blank?
-        @artist_count = 4
-      else
-        @artist_count = params[:artist_count].to_i
-      end
-    # アルバム検索
-      if @search_word.present?
-        @searchalbums = RSpotify::Album.search(@search_word)
-      end
-      # 一覧表示件数
-      if params[:album_count].blank?
-        @album_count = 4
-      else
-        @album_count = params[:album_count].to_i
-      end
-    # 楽曲検索
-      if @search_word.present?
-        @searchsongs = RSpotify::Track.search(@search_word)
-      end
-      # 一覧表示件数
-      if params[:song_count].blank?
-        @song_count = 4
-      else
-        @song_count = params[:song_count].to_i
-      end
+    redirect_back(fallback_location: root_path) if params[:search].blank?
+    @searchartists = RSpotify::Artist.search(params[:search])
+    @searchalbums = RSpotify::Album.search(params[:search])
+    @searchsongs = RSpotify::Track.search(params[:search])
+    params[:artist_count].blank? ? @artist_count = 4 : @artist_count = params[:artist_count].to_i
+    params[:album_count].blank? ? @album_count = 4 : @album_count = params[:album_count].to_i
+    params[:song_count].blank? ? @song_count = 4 : @song_count = params[:song_count].to_i
   end
 
   def artist_show
@@ -44,10 +17,7 @@ class User::SpotifyController < ApplicationController
     @albums = @artist.albums
     @artist_comment = ArtistComment.new
     @artist_comments = ArtistComment.includes(:user).where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
-    # コメント編集用
-    if params[:comment_id].present?
-      @comment = ArtistComment.find(params[:comment_id])
-    end
+    @comment = ArtistComment.find(params[:comment_id]) if params[:comment_id].present?
   end
 
   def album_show
@@ -55,10 +25,7 @@ class User::SpotifyController < ApplicationController
     @songs = @album.tracks
     @album_comment = AlbumComment.new
     @album_comments = AlbumComment.includes(:user).where(album_id: @album.id).order("id DESC").page(params[:page]).per(5)
-    # コメント編集用
-    if params[:comment_id].present?
-      @comment = AlbumComment.find(params[:comment_id])
-    end
+    @comment = AlbumComment.find(params[:comment_id]) if params[:comment_id].present?
     # 評価機能
     if user_signed_in?
       @album_rating = current_user.album_ratings.find_by(album_id: @album.id)
@@ -71,11 +38,7 @@ class User::SpotifyController < ApplicationController
     @album = @song.album
     @song_comment = SongComment.new
     @song_comments = SongComment.includes(:user).where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
-    # コメント編集用
-    if params[:comment_id].present?
-      @comment = SongComment.find(params[:comment_id])
-    end
-    
+    @comment = SongComment.find(params[:comment_id]) if params[:comment_id].present?
     if user_signed_in?
       # 評価機能
       @song_rating = current_user.song_ratings.find_by(song_id: @song.id)
@@ -90,7 +53,6 @@ class User::SpotifyController < ApplicationController
     case params[:country]
       when nil || ""
         @new_releases = RSpotify::Album.new_releases
-      # 国別 new_release
       else
         @new_releases = RSpotify::Album.new_releases(country: params[:country])
         @country_name = params[:country]
