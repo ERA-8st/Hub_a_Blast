@@ -1,7 +1,7 @@
 %table.table
 	- follows.each do |follow|
 		%tr
-			- user = User.find(follow.follow_id)
+			- user = follow.follow
 			%td
 				= attachment_image_tag(user, :profile_image,  size: "40x40", fallback: "no-image.png")
 			%td

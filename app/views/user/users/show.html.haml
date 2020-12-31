@@ -18,8 +18,7 @@
         %table.table
           - @messages.each do |message|
             %tr
-              - room = Room.find(message.room_id)
-              - entry = Entry.where(room_id: room.id).where.not(user_id: current_user.id)
+              - entry = Entry.where(room_id: message.room_id).where.not(user_id: current_user.id)
               - @chat_user = User.find(entry.first.user_id)
               %td
                 = link_to user_user_path(@chat_user) do
@@ -27,7 +26,7 @@
               %td
                 = @chat_user.user_name
               %td
-                = link_to user_room_path(room.id, pair_user_id: @chat_user, anchor: 'last') do
+                = link_to user_room_path(message.room_id, pair_user_id: @chat_user, anchor: 'last') do
                   %i.fa.fa-comments-o
   .row
     .col-lg-6.col-md-6.col-xs-6.latest-comment

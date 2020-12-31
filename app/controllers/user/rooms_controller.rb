@@ -11,15 +11,13 @@ class User::RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
-    @pair_user = User.find(params[:pair_user_id])
     if Entry.where(user_id: current_user.id,room_id: @room.id).present?
-      @messages = @room.messages
-      @message = Message.new
-      @entries = @room.entries
+      @messages = @room.messages.includes(:user)
+      @pair_user = User.find(params[:pair_user_id])
+      # フッター固定用
+      @fixed_footer = true
     else
       redirect_back(fallback_location: root_path)
     end
-    # フッター固定用
-    @fixed_footer = true
   end
 end
