@@ -1,5 +1,7 @@
 class User::SpotifyController < ApplicationController
 
+  before_action :set_page, only: [:artist_show, :album_show, :song_show]
+
   def index
     if params[:search].blank?
       redirect_back(fallback_location: root_path)
@@ -41,16 +43,10 @@ class User::SpotifyController < ApplicationController
     @artist = RSpotify::Artist.find(params[:id])
     @albums = @artist.albums
     @artist_comment = ArtistComment.new
-    @artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
-    @page = params[:page]
+    @artist_comments = ArtistComment.includes(:user).where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
     # コメント編集用
     if params[:comment_id].present?
       @comment = ArtistComment.find(params[:comment_id])
-    end
-    # 評価機能
-    if user_signed_in?
-      @artist_rating = current_user.artist_ratings.find_by(artist_id: @artist.id)
-    @new_artist_rating = current_user.artist_ratings.new
     end
   end
 
@@ -58,8 +54,7 @@ class User::SpotifyController < ApplicationController
     @album = RSpotify::Album.find(params[:id])
     @songs = @album.tracks
     @album_comment = AlbumComment.new
-    @album_comments = AlbumComment.where(album_id: @album.id).order("id DESC").page(params[:page]).per(5)
-    @page = params[:page]
+    @album_comments = AlbumComment.includes(:user).where(album_id: @album.id).order("id DESC").page(params[:page]).per(5)
     # コメント編集用
     if params[:comment_id].present?
       @comment = AlbumComment.find(params[:comment_id])
@@ -75,8 +70,7 @@ class User::SpotifyController < ApplicationController
     @song = RSpotify::Track.find(params[:id])
     @album = @song.album
     @song_comment = SongComment.new
-    @song_comments = SongComment.where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
-    @page = params[:page]
+    @song_comments = SongComment.includes(:user).where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
     # コメント編集用
     if params[:comment_id].present?
       @comment = SongComment.find(params[:comment_id])
@@ -119,4 +113,11 @@ class User::SpotifyController < ApplicationController
         @time = "Month"
       end
   end
+
+  private
+
+  def set_page
+    @page = params[:page]
+  end
+  
 end

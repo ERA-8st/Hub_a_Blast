@@ -11,7 +11,6 @@ class User::SongFavoritesController < ApplicationController
 
 
   def create
-    @song = RSpotify::Track.find(params[:song_id])
     new_song_favorite = current_user.song_favorites.new
     new_song_favorite.song_id = params[:song_id]
     new_song_favorite.save
@@ -19,10 +18,11 @@ class User::SongFavoritesController < ApplicationController
   end
 
   def destroy
-    @song = RSpotify::Track.find(params[:song_id])
     song_favorite = SongFavorite.find(params[:id])
     song_favorite.destroy
   end
+
+  private
 
   def correct_user
     song_favorite = SongFavorite.find(params[:id])
@@ -30,5 +30,10 @@ class User::SongFavoritesController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def set_song
+    @song = RSpotify::Track.find(params[:song_id])
+  end
+  
 
 end
