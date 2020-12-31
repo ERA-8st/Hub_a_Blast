@@ -58,6 +58,7 @@ class User < ApplicationRecord
         password: Devise.friendly_token[0, 20]
       )
     end
+    user
   end
 
   def create_notification_follow!(current_user)
