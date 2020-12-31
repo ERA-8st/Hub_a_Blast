@@ -5,18 +5,12 @@ class User::ArtistRatingsController < ApplicationController
   def create
     @artist_rating = current_user.artist_ratings.new(artist_rating_params)
     @artist_rating.artist_id = params[:artist_rating][:artist_id]
-    if @artist_rating.save
-      else
-        redirect_back(fallback_location: root_path)
-      end
+    redirect_back(fallback_location: root_path) unless @artist_rating.save
   end
 
   def update
     @artist_rating = ArtistRating.find(params[:id])
-    if @artist_rating.update(artist_rating_params)
-    else
-      redirect_back(fallback_location: root_path)
-    end
+    redirect_back(fallback_location: root_path) unless @artist_rating.update(artist_rating_params)
   end
 
 
@@ -28,9 +22,7 @@ class User::ArtistRatingsController < ApplicationController
 
   def correct_user
     rating = ArtistRating.find(params[:id])
-    unless current_user == rating.user
-      redirect_to root_path
-    end
+    redirect_to root_path unless current_user == rating.user
   end
 
 end

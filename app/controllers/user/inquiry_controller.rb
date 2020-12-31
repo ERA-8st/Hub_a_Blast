@@ -9,11 +9,7 @@ class User::InquiryController < ApplicationController
 
   def confirm
     @inquiry = Inquiry.new(params[:inquiry].permit(:name, :email, :message))
-    if @inquiry.valid?
-      render :action => 'confirm'
-    else
-      render :action => 'index'
-    end
+    @inquiry.valid? ? render :action => 'confirm' : render :action => 'index'
   end
 
   def thanks

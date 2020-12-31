@@ -5,18 +5,12 @@ class User::AlbumRatingsController < ApplicationController
   def create
     @album_rating = current_user.album_ratings.new(album_rating_params)
     @album_rating.album_id = params[:album_rating][:album_id]
-    if @album_rating.save
-    else
-      redirect_back(fallback_location: root_path)
-    end
+    redirect_back(fallback_location: root_path) unless @album_rating.save
   end
 
   def update
     @album_rating = AlbumRating.find(params[:id])
-    if @album_rating.update(album_rating_params)
-    else
-      redirect_back(fallback_location: root_path)
-    end
+    redirect_back(fallback_location: root_path) unless @album_rating.update(album_rating_params)
   end
 
 
@@ -28,9 +22,7 @@ class User::AlbumRatingsController < ApplicationController
 
   def correct_user
     rating = AlbumRating.find(params[:id])
-    unless current_user == rating.user
-      redirect_to root_path
-    end
+    redirect_to root_path unless current_user == rating.user
   end
 
 end

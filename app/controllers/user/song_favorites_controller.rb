@@ -26,14 +26,11 @@ class User::SongFavoritesController < ApplicationController
 
   def correct_user
     song_favorite = SongFavorite.find(params[:id])
-    unless current_user == song_favorite.user
-      redirect_to root_path
-    end
+    redirect_to root_path unless current_user == song_favorite.user
   end
 
   def set_song
     @song = RSpotify::Track.find(params[:song_id])
   end
-  
 
 end

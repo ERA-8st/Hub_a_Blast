@@ -47,9 +47,7 @@ class User::ArtistCommentsController < ApplicationController
 
   def correct_user
     comment = ArtistComment.find(params[:id])
-    unless current_user == comment.user
-      redirect_to root_path
-    end
+    redirect_to root_path unless current_user == comment.user
   end
 
 end
