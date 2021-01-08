@@ -1,7 +1,7 @@
 class User::SongCommentsController < ApplicationController
 
-  before_action :correct_user, only: [:update, :destroy]
   before_action :login_user_present?
+  before_action :correct_comment_user, only: [:update, :destroy]
 
   def create
     @song_comment = current_user.song_comments.new(song_comment_params)
@@ -25,7 +25,6 @@ class User::SongCommentsController < ApplicationController
   end
 
   def update
-    @comment = SongComment.find(params[:id])
     @page = params[:page]
     if @comment.update(song_comment_params)
       redirect_to user_spotify_song_show_path(@comment.song_id, page: @page)
@@ -46,20 +45,14 @@ class User::SongCommentsController < ApplicationController
   end
   
   def destroy
-    comment = SongComment.find(params[:id])
-    comment.destroy
-    redirect_to user_spotify_song_show_path(comment.song_id)
+    @comment.destroy
+    redirect_to user_spotify_song_show_path(@comment.song_id)
   end
 
   private
 
   def song_comment_params
     params.require(:song_comment).permit(:comment)
-  end
-
-  def correct_user
-    comment = SongComment.find(params[:id])
-    redirect_to root_path unless current_user == comment.user
   end
 
 end
