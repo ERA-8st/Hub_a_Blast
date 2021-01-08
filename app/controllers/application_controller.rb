@@ -29,6 +29,19 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless user_signed_in?
   end
 
+  def correct_comment_user
+    @url = request.url
+    if @url.include? "/user/song_comments"
+      @comment = SongComment.find(params[:id])
+    elsif @url.include? "/user/album_comments"
+      @comment = AlbumComment.find(params[:id])
+    elsif @url.include? "/user/artist_comments"
+      @comment = ArtistComment.find(params[:id])
+    end
+    redirect_to root_path unless current_user == @comment.user
+  end
+  
+
   protected
 
   def configure_permitted_parameters
