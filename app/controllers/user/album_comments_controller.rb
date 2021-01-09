@@ -2,11 +2,11 @@ class User::AlbumCommentsController < ApplicationController
 
   before_action :login_user_present?
   before_action :correct_comment_user, only: [:update, :destroy]
+  before_action :set_page, except: [:destroy]
 
   def create
     @album_comment = current_user.album_comments.new(album_comment_params)
     @album_comment.album_id = params[:album_comment][:album_id]
-    @page = params[:page]
     if @album_comment.save 
       redirect_to user_spotify_album_show_path(@album_comment.album_id, page: @page)
     else
@@ -23,7 +23,6 @@ class User::AlbumCommentsController < ApplicationController
   end
 
   def update
-    @page = params[:page]
     if @comment.update(album_comment_params)
       redirect_to user_spotify_album_show_path(@comment.album_id, page: @page)
     else
