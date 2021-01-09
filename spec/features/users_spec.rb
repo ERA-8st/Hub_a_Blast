@@ -247,9 +247,6 @@ RSpec.feature "Users", type: :feature do
             end
           end
         end
-        context "ユーザー詳細のテスト" do
-          
-        end
         context "Latest Commentのテスト" do
           it "タイトルが正しく表示される" do
             expect(find(".latest-comment")).to have_content "Latest #{user.user_name}'s comment"  
@@ -367,6 +364,40 @@ RSpec.feature "Users", type: :feature do
             expect(user.reload.introduction).to eq "changed_user_introduction"
           end
         end
+      end
+    end
+    describe "DM" do
+      let(:user) { create(:user) }
+      let(:user2) { create(:user2) }
+      let(:room) { create(:room) }
+      let!(:entry1) { create(:entry, user: user, room: room) }
+      let!(:entry2) { create(:entry2, user: user2, room: room) }
+      let!(:message1) { create(:message, user: user, room: room) }
+      let!(:message2) { create(:message2, user: user2, room: room) }
+      before do
+        visit new_user_session_path
+        fill_in "user_email", with: user.email
+        fill_in "user_password", with: user.password
+        click_button "Log in"
+        visit user_room_path(room, pair_user_id: user2)
+      end
+      let(:dm) { find(".DM")}
+      let(:chat) { find(".chat") }
+      it "ページが正しく表示される" do
+        expect(dm).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']", id: "pair_user_img", visible: false
+        expect(dm).to have_selector "input.user_id", visible: false
+        expect(dm).to have_selector "input.room_id", visible: false
+        expect(page).to have_selector "input", id: "DM_form"
+      end
+      it "自分のメッセージが正しく表示される" do
+        expect(chat.all(".right-chat-box").count).to eq 1
+        expect(find(".right-chat-box")).to have_content "message1"
+      end
+      it "相手のメッセージが正しく表される" do
+        expect(chat.all(".left-chat-box").count).to eq 1
+        expect(find(".left-chat-box")).to have_selector ".chat-image"
+        expect(find(".left-chat-box")).to have_selector ".chat-message"
+        expect(find(".left-chat-box")).to have_content "message2"
       end
     end
   end
