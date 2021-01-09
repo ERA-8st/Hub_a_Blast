@@ -68,9 +68,7 @@ describe "ヘッダーのテスト" do
         click_link "guest_user_img"
         expect(current_path).to eq new_user_session_path
       end
-      
     end
-    
   end
   
   describe "ログインしている場合" do
