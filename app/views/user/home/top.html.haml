@@ -1,9 +1,7 @@
 = render "user/spotify/song_header"
 .container.top.header-margin
   %h2
-    = link_to user_spotify_new_releases_path do
-      New Releases
-  -# New relsease(日本)
+    = link_to "New Releases", user_spotify_new_releases_path
   %h3.top-jp JP
   .row
     - @new_releases_in_jp.first(3).each do |new_release_in_jp|

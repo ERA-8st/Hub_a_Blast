@@ -7,11 +7,11 @@
       - else
         %h4 New Releases
     -# 検索(国別)
-    .col-lg-3.col-md-3.col-xs-3
+    .col-lg-3.col-md-3.col-xs-3.select_country
       = form_with url: user_spotify_new_releases_path, method: :get, local: true do |f|
         = select_tag(:country, options_for_select(countries))
         = f.submit '検索', name: nil
-  .row
+  .row.new_releases
     .col-lg-12.col-md-12.col-xs-12
       %table.table
         %tr

@@ -45,9 +45,9 @@ describe "アルバムのテスト" do
     context "曲一覧のテスト" do
       it "全て正しく表示される" do
         expect(all("tr").count).to eq 8
+        expect(find(".album-songs")).to have_link "Come Together", href: "/user/spotify/song_show/3tui2rMOT8HYr05PRK4S77"
       end
     end
-    
     context "コメントのテスト" do
       let(:album_show_comments) { find(".album-show-right") }
       context "表示のテスト" do
@@ -119,7 +119,5 @@ describe "アルバムのテスト" do
         end
       end
     end
-    
   end
-  
 end
