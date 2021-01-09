@@ -40,7 +40,10 @@ class ApplicationController < ActionController::Base
     end
     redirect_to root_path unless current_user == @comment.user
   end
-  
+
+  def set_page
+    @page = params[:page]
+  end
 
   protected
 

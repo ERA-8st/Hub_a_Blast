@@ -79,11 +79,5 @@ class User::SpotifyController < ApplicationController
         @time = "Month"
       end
   end
-
-  private
-
-  def set_page
-    @page = params[:page]
-  end
   
 end

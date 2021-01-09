@@ -1,6 +1,7 @@
 class User::SongFavoritesController < ApplicationController
 
   before_action :correct_user, only: [:destroy]
+  before_action :set_song, only: [:create, :destroy]
 
   def index
     @user = User.find(params[:user_id])

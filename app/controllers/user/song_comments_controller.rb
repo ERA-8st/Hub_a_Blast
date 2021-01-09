@@ -2,11 +2,11 @@ class User::SongCommentsController < ApplicationController
 
   before_action :login_user_present?
   before_action :correct_comment_user, only: [:update, :destroy]
+  before_action :set_page, except: [:destroy]
 
   def create
     @song_comment = current_user.song_comments.new(song_comment_params)
     @song_comment.song_id = params[:song_comment][:song_id]
-    @page = params[:page]
     if @song_comment.save 
       redirect_to user_spotify_song_show_path(@song_comment.song_id, page: @page)
     else
@@ -25,7 +25,6 @@ class User::SongCommentsController < ApplicationController
   end
 
   def update
-    @page = params[:page]
     if @comment.update(song_comment_params)
       redirect_to user_spotify_song_show_path(@comment.song_id, page: @page)
     else
@@ -33,7 +32,6 @@ class User::SongCommentsController < ApplicationController
       @album = @song.album
       @song_comment = SongComment.new
       @song_comments = SongComment.where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
-      @page = params[:page]
       if user_signed_in?
         @song_rating = current_user.song_ratings.find_by(song_id: @song.id)
         @new_song_rating = current_user.song_ratings.new
