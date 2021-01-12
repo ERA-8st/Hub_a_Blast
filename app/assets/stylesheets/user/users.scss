@@ -131,6 +131,17 @@
   a:last-child {
     border-right: none;
   }
+  #new_room {
+    padding: 0 80px;
+    display: inline-block;
+  }
+  .create_room {
+    background-color: rgba(16, 16, 16, 0);
+    border: none;
+    i {
+      color: white;
+    }
+  }
 }
 
 .user-notice {

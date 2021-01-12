@@ -19,5 +19,5 @@
         = form_for Room.new, url: user_rooms_path do |f|
           = fields_for Entry.new do |e|
             = e.hidden_field :user_id, value: user.id 
-          = button_tag type: 'submit' do
+          = button_tag type: 'submit', class: "create_room" do
             %i.fa.fa-comments
