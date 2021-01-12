@@ -60,7 +60,6 @@
       }
     }
     .right {
-      line-height: 90px;
       text-align: right;
       .header-user-image {
         position: relative;
@@ -75,6 +74,11 @@
       img {
         height: 50px;
         width: 50px;
+      }
+      #guest-login {
+        margin-top: 10px;
+        text-align: center;
+        display: inline-block;
       }
     }
  }

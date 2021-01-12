@@ -11,8 +11,11 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'omniauth_callbacks',
     sessions:      'users/sessions',
     passwords:     'users/passwords',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
   }
+  devise_scope :user do
+    post 'users/guest_sign_in' => 'users/sessions#new_guest'
+  end
 
   root to: 'user/home#top'
 

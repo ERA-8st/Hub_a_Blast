@@ -85,6 +85,13 @@ class User < ApplicationRecord
       user_pv.touch
     end
   end
+
+  def self.guest
+    find_or_create_by!(user_name: "Guest", email: 'guest@example.com') do |user|
+      user.profile_image = open("#{Rails.root}/app/assets/images/guest_image.png")
+      user.password = SecureRandom.urlsafe_base64
+    end
+  end
   
   private
 
