@@ -60,6 +60,7 @@
       }
     }
     .right {
+      line-height: 90px;
       text-align: right;
       .header-user-image {
         position: relative;
@@ -76,6 +77,7 @@
         width: 50px;
       }
       #guest-login {
+        line-height: 26px;
         margin-top: 10px;
         text-align: center;
         display: inline-block;
