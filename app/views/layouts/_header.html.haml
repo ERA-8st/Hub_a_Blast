@@ -27,6 +27,4 @@
           - if unchecked_notifications.any?
             %i.fa.fa-circle#notice-icon
       - else
-        Guest
-        = link_to new_user_session_path, id: "guest_user_img" do
-          = image_tag "no-image.png"
+        #guest-login= link_to raw(escaped_guest_login_link) ,users_guest_sign_in_path, method: :post
