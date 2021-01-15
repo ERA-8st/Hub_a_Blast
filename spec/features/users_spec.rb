@@ -59,69 +59,49 @@ RSpec.feature "Users", type: :feature do
         end
         context "ヘッダーのテスト" do
           let(:user_header) { find(".user-header")}
-          context "表示のテスト" do
-            it "ユーザー詳細リンクが表示される" do
-              expect(user_header).to have_link "", href: user_user_path(user.id)
-            end
-            it "お気に入り一覧リンクが表示される" do
-              expect(user_header).to have_link "", href: user_song_favorites_path(user_id: user.id)
-            end
-            it "ユーザー編集リンクが表示される" do
-              expect(user_header).to have_link "", href: edit_user_user_path(user.id)  
-            end
-            it "通知一覧リンクが表示される" do
-              expect(user_header).to have_link "", href: user_notifications_path
-            end
-            it "未読通知アイコンが表示される" do
-              notification = create(:notification, visiter_id: user2.id, visited_id: user.id, action: "follow" )
-              visit current_path
-              expect(find(".user-notice")).to have_selector "p"
-            end
+          it "ユーザー詳細リンクが表示され正しく機能する" do
+            expect(user_header).to have_link "", href: user_user_path(user.id)
+            user_header.click_link "", href: user_user_path(user.id)
+            expect(current_path).to eq user_user_path(user.id)
           end
-          context "リンクの確認" do
-            it "ユーザー詳細に遷移する" do
-              user_header.click_link "", href: user_user_path(user.id)
-              expect(current_path).to eq user_user_path(user.id)
-            end
-            it "お気に入り一覧に遷移する" do
-              user_header.click_link "", href: user_song_favorites_path(user_id: user.id)
-              expect(current_path).to eq user_song_favorites_path
-            end
-            it "ユーザー編集画面に遷移する" do
-              user_header.click_link "", href: edit_user_user_path(user.id)
-              expect(current_path).to eq edit_user_user_path(user.id) 
-            end
-            it "通知一覧に遷移する" do
-              user_header.click_link "", href: user_notifications_path
-              expect(current_path).to eq user_notifications_path
-            end
+          it "お気に入り一覧リンクが表示され正しく機能する" do
+            expect(user_header).to have_link "", href: user_song_favorites_path(user_id: user.id)
+            user_header.click_link "", href: user_song_favorites_path(user_id: user.id)
+            expect(current_path).to eq user_song_favorites_path
+          end
+          it "ユーザー編集リンクが表示され正しく機能する" do
+            expect(user_header).to have_link "", href: edit_user_user_path(user.id)
+            user_header.click_link "", href: edit_user_user_path(user.id)
+            expect(current_path).to eq edit_user_user_path(user.id)
+          end
+          it "通知一覧リンクが表示され正しく機能する" do
+            expect(user_header).to have_link "", href: user_notifications_path
+            user_header.click_link "", href: user_notifications_path
+            expect(current_path).to eq user_notifications_path
+          end
+          it "未読通知アイコンが表示される" do
+            notification = create(:notification, visiter_id: user2.id, visited_id: user.id, action: "follow" )
+            visit current_path
+            expect(find(".user-notice")).to have_selector "p"
           end
         end
         context "ユーザー詳細のテスト" do
-          context "表示のテスト" do
-            it "ユーザー画像が表示される" do
-              expect(find(".user-show-user-image")).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
-            end
-            it "ユーザー名が表示される" do
-              expect(find(".user-show-user-name").text).to eq user.user_name
-            end
-            it "ユーザー詳細が表示される" do
-              expect(find(".user-show-user-introduction").text).to eq user.introduction 
-            end
-            it "フォロー一覧リンクが表示される" do
-              expect(find(".follow-follower")).to have_link "フォロー", href: user_users_follow_index_path(user)
-            end
-            it "フォロワー一覧リンクが表示される" do
-              expect(find(".follow-follower")).to have_link "フォロワー", href: user_users_follower_index_path(user)
-            end
+          it "ユーザー画像が表示される" do
+            expect(find(".user-show-user-image")).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
           end
-          context "リンクの確認" do
-            it "フォロー一覧に遷移する" do
-              find(".follow-follower").click_link "フォロー", href: user_users_follow_index_path(user)
-            end
-            it "フォロワー一覧に遷移する" do
-              find(".follow-follower").click_link "フォロワー", href: user_users_follower_index_path(user)
-            end
+          it "ユーザー名が表示される" do
+            expect(find(".user-show-user-name").text).to eq user.user_name
+          end
+          it "ユーザー詳細が表示される" do
+            expect(find(".user-show-user-introduction").text).to eq user.introduction 
+          end
+          it "フォロー一覧リンクが表示され正しく機能する" do
+            expect(find(".follow-follower")).to have_link "フォロー", href: user_users_follow_index_path(user)
+            find(".follow-follower").click_link "フォロー", href: user_users_follow_index_path(user)
+          end
+          it "フォロワー一覧リンクが表示され正しく機能する" do
+            expect(find(".follow-follower")).to have_link "フォロワー", href: user_users_follower_index_path(user)
+            find(".follow-follower").click_link "フォロワー", href: user_users_follower_index_path(user)
           end
         end
         context "Latest Chatsのテスト" do
@@ -133,26 +113,22 @@ RSpec.feature "Users", type: :feature do
           before do
             visit current_path
           end
-          context "表示のテスト" do
-            it "タイトルが表示される" do
-              expect(latest_chats).to have_content "Latest Chats"
-            end
-            it "直近のチャットユーザーが表示される" do
-              expect(latest_chats).to have_link "", href: user_user_path(user2)
-              expect(latest_chats).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
-              expect(latest_chats).to have_content user2.user_name
-              expect(latest_chats).to have_link "", href: user_room_path(room, pair_user_id: user2, anchor: "last")
-            end
+          it "タイトルが表示される" do
+            expect(latest_chats).to have_content "Latest Chats"
           end
-          context "リンクの確認" do
-            it "相手のユーザー詳細へ遷移する" do
-              latest_chats.click_link "", href: user_user_path(user2)
-              expect(current_path).to eq user_user_path(user2)  
-            end
-            it "相手とのRoomに遷移する" do
-              latest_chats.click_link "", href: user_room_path(room, pair_user_id: user2, anchor: "last")
-              expect(current_path).to eq user_room_path(room)
-            end
+          it "直近のチャットユーザーが表示される" do
+            expect(latest_chats).to have_link "", href: user_user_path(user2)
+            expect(latest_chats).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
+            expect(latest_chats).to have_content user2.user_name
+            expect(latest_chats).to have_link "", href: user_room_path(room, pair_user_id: user2, anchor: "last")
+          end
+          it "相手のユーザー詳細へ遷移する" do
+            latest_chats.click_link "", href: user_user_path(user2)
+            expect(current_path).to eq user_user_path(user2)  
+          end
+          it "相手とのRoomに遷移する" do
+            latest_chats.click_link "", href: user_room_path(room, pair_user_id: user2, anchor: "last")
+            expect(current_path).to eq user_room_path(room)
           end
         end
         context "Latest Commentのテスト" do
@@ -161,19 +137,15 @@ RSpec.feature "Users", type: :feature do
           before do
             visit current_path
           end
-          context "表示のテスト" do
-            it "タイトルが表示される" do
-              expect(latest_comment).to have_content "Latest your comment"  
-            end
-            it "直近にコメントした曲が表示される" do
-              expect(latest_comment).to have_link "", href: user_spotify_song_show_path(song_comment.song_id)
-            end
+          it "タイトルが表示される" do
+            expect(latest_comment).to have_content "Latest your comment"  
           end
-          context "リンクの確認" do
-            it "曲詳細に遷移する" do
-              latest_comment.click_link "", href: user_spotify_song_show_path(song_comment.song_id)
-              expect(current_path).to eq user_spotify_song_show_path(song_comment.song_id)
-            end
+          it "直近にコメントした曲が表示される" do
+            expect(latest_comment).to have_link "", href: user_spotify_song_show_path(song_comment.song_id)
+          end
+          it "曲詳細に遷移する" do
+            latest_comment.click_link "", href: user_spotify_song_show_path(song_comment.song_id)
+            expect(current_path).to eq user_spotify_song_show_path(song_comment.song_id)
           end
         end
         context "favoriteのテスト" do
@@ -182,19 +154,15 @@ RSpec.feature "Users", type: :feature do
           before do
             visit current_path
           end
-          context "表示のテスト" do
-            it "タイトルが表示される" do
-              expect(user_favorites).to have_content "your favorite"
-            end
-            it "直近のブックマークした曲が表示される" do
-              expect(user_favorites).to have_link "", href: user_spotify_song_show_path(song_favorite.song_id)
-            end
+          it "タイトルが表示される" do
+            expect(user_favorites).to have_content "your favorite"
           end
-          context "リンクの確認" do
-            it "曲詳細に遷移する" do
-              user_favorites.click_link "", href: user_spotify_song_show_path(song_favorite.song_id)
-              expect(current_path).to eq user_spotify_song_show_path(song_favorite.song_id)
-            end
+          it "直近のブックマークした曲が表示される" do
+            expect(user_favorites).to have_link "", href: user_spotify_song_show_path(song_favorite.song_id)
+          end
+          it "曲詳細に遷移する" do
+            user_favorites.click_link "", href: user_spotify_song_show_path(song_favorite.song_id)
+            expect(current_path).to eq user_spotify_song_show_path(song_favorite.song_id)
           end
         end
       end
@@ -263,105 +231,126 @@ RSpec.feature "Users", type: :feature do
       let(:user) { create(:user)}
       let(:user2) { create(:user2)}
       let(:edit_user_info) { find(".edit-user-info") }
-      before do
-        visit new_user_session_path
-        fill_in "user_email", with: user.email
-        fill_in "user_password", with: user.password
-        click_button "Log in"
-        visit edit_user_user_path(user)
-      end
-      context "編集画面への遷移" do
-        it "自身の編集画面へ遷移できる" do
-          visit edit_user_user_path(user.id)
-          expect(current_path).to eq edit_user_user_path(user.id)
+      context "ゲストユーザーとしてログイン" do
+        before do
+          visit root_path
+          click_link "guest-login"
+          click_link "header-user-image"
+          find(".user-header").click_link("user-header-edit")
         end
-        it "他人の編集画面へ遷移できない" do
-          visit edit_user_user_path(user2.id)
-          expect(current_path).to eq root_path 
+        it "アラートが表示される" do
+          expect(page).to have_content "ゲストユーザーの編集はできません。"
         end
-      end
-      context "ヘッダーのテスト" do
-        let(:user_header) { find(".user-header")}
-        it "ユーザー詳細リンクが正しく表示され、機能している" do
-          expect(user_header).to have_link "", href: user_user_path(user)
-          user_header.click_link "", href: user_user_path(user)
-          expect(current_path).to eq user_user_path(user)  
-        end
-        it "お気に入り一覧リンクが正しく表示され、機能している" do
-          expect(user_header).to have_link "", href: user_song_favorites_path(user_id: user)
-          user_header.click_link "", href: user_song_favorites_path(user_id: user)
-          expect(current_path).to eq user_song_favorites_path
-        end
-        it "ユーザー編集リンクが正しく表示され、機能している" do
-          expect(user_header).to have_link "", href: edit_user_user_path(user)
-          user_header.click_link "", href: edit_user_user_path(user)
-          expect(current_path).to eq edit_user_user_path(user)
-        end
-        it "通知一覧リンクが正しく表示され、機能している" do
-          expect(user_header).to have_link "", href: user_notifications_path
-          user_header.click_link "", href: user_notifications_path
-          expect(current_path).to eq user_notifications_path
-        end
-        it "未読通知アイコンが表示される" do
-          notification = create(:notification, visiter_id: user2.id, visited_id: user.id, action: "follow" )
-          visit current_path
-          expect(find(".user-notice")).to have_selector "p"
-        end
-        it "リンクの数が正しい" do
-          header_links = user_header.all("a")
-          expect(header_links.count).to eq 4  
+        it "更新ができない" do
+          fill_in 'user_user_name', with: 'edited_guest_user_name'
+          fill_in "user_introduction", with: "edited_guest_user_introduction"
+          click_button "更新する"
+          expect(current_path).to eq edit_user_user_path(1)
+          expect(find("#user_user_name").value).to eq "Guest"
+          expect(find("#user_introduction").value).to eq "これはPF閲覧用ゲストユーザーです。"
         end
       end
-      context "表示のテスト" do
-        it "タイトルが表示される" do
-          expect(edit_user_info).to have_content "User info"  
+      context "通常ユーザーとしてログイン" do
+        before do
+          visit new_user_session_path
+          fill_in "user_email", with: user.email
+          fill_in "user_password", with: user.password
+          click_button "Log in"
+          visit edit_user_user_path(user)
         end
-        it "ユーザー画像が表示される" do
-          expect(edit_user_info).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
-        end
-        it "user_nameのフォームが表示される" do
-          expect(edit_user_info).to have_selector "input#user_user_name[value$=#{user.user_name}]"
-        end
-        it "user_imageのフォームが表示される" do
-          expect(edit_user_info).to have_selector "input#user_profile_image"
-        end
-        it "user_introductionのフォームが表示される" do
-          expect(edit_user_info).to have_selector "textarea#user_introduction", text: user.introduction
-        end
-        it "更新ボタンが表示される" do
-          expect(edit_user_info).to have_selector "input[type=submit][value=更新する]"
-        end
-      end
-      context "更新のテスト" do
-        context "user_name" do
-          it "更新される" do
-            fill_in 'user_user_name', with: 'new_user'
-            click_button "更新する"
-            expect(current_path).to eq user_user_path(user)
-            expect(user.reload.user_name).to eq "new_user"  
+        context "編集画面への遷移" do
+          it "自身の編集画面へ遷移できる" do
+            visit edit_user_user_path(user.id)
+            expect(current_path).to eq edit_user_user_path(user.id)
           end
-          it "更新されない" do
-            fill_in 'user_user_name', with: ''
-            click_button "更新する"
-            expect(current_path).to eq user_user_path(user)
-            expect(page).to have_content "ユーザー名を入力してください" 
+          it "他人の編集画面へ遷移できない" do
+            visit edit_user_user_path(user2.id)
+            expect(current_path).to eq root_path 
           end
         end
-        context "profile_image" do
-          it "更新される" do
-            image_path = File.join(Rails.root, "spec/factories/images/img.png")
-            edit_user_info.find('#user_profile_image').set(image_path)
-            click_button "更新する"
-            expect(current_path).to eq user_user_path(user)
-            expect(user.reload.profile_image_id).to_not eq nil
+        context "ヘッダーのテスト" do
+          let(:user_header) { find(".user-header")}
+          it "ユーザー詳細リンクが正しく表示され、機能している" do
+            expect(user_header).to have_link "", href: user_user_path(user)
+            user_header.click_link "", href: user_user_path(user)
+            expect(current_path).to eq user_user_path(user)  
+          end
+          it "お気に入り一覧リンクが正しく表示され、機能している" do
+            expect(user_header).to have_link "", href: user_song_favorites_path(user_id: user)
+            user_header.click_link "", href: user_song_favorites_path(user_id: user)
+            expect(current_path).to eq user_song_favorites_path
+          end
+          it "ユーザー編集リンクが正しく表示され、機能している" do
+            expect(user_header).to have_link "", href: edit_user_user_path(user)
+            user_header.click_link "", href: edit_user_user_path(user)
+            expect(current_path).to eq edit_user_user_path(user)
+          end
+          it "通知一覧リンクが正しく表示され、機能している" do
+            expect(user_header).to have_link "", href: user_notifications_path
+            user_header.click_link "", href: user_notifications_path
+            expect(current_path).to eq user_notifications_path
+          end
+          it "未読通知アイコンが表示される" do
+            notification = create(:notification, visiter_id: user2.id, visited_id: user.id, action: "follow" )
+            visit current_path
+            expect(find(".user-notice")).to have_selector "p"
+          end
+          it "リンクの数が正しい" do
+            header_links = user_header.all("a")
+            expect(header_links.count).to eq 4  
           end
         end
-        context "introduction" do
-          it "更新される" do
-            fill_in "user_introduction", with: "changed_user_introduction"
-            click_button "更新する"
-            expect(current_path).to eq user_user_path(user)
-            expect(user.reload.introduction).to eq "changed_user_introduction"
+        context "表示のテスト" do
+          it "タイトルが表示される" do
+            expect(edit_user_info).to have_content "User info"  
+          end
+          it "ユーザー画像が表示される" do
+            expect(edit_user_info).to have_selector "img[src$='/assets/no-image-a8970a4d625bc37c078b5c74f8e6f65c9ad2110f5089a90c4b638e1d41cebc4b.png']"
+          end
+          it "user_nameのフォームが表示される" do
+            expect(edit_user_info).to have_selector "input#user_user_name[value$=#{user.user_name}]"
+          end
+          it "user_imageのフォームが表示される" do
+            expect(edit_user_info).to have_selector "input#user_profile_image"
+          end
+          it "user_introductionのフォームが表示される" do
+            expect(edit_user_info).to have_selector "textarea#user_introduction", text: user.introduction
+          end
+          it "更新ボタンが表示される" do
+            expect(edit_user_info).to have_selector "input[type=submit][value=更新する]"
+          end
+        end
+        context "更新のテスト" do
+          context "user_name" do
+            it "更新される" do
+              fill_in 'user_user_name', with: 'new_user'
+              click_button "更新する"
+              expect(current_path).to eq user_user_path(user)
+              expect(user.reload.user_name).to eq "new_user"  
+            end
+            it "更新されない" do
+              fill_in 'user_user_name', with: ''
+              click_button "更新する"
+              expect(current_path).to eq user_user_path(user)
+              expect(page).to have_content "ユーザー名を入力してください" 
+            end
+          end
+          context "profile_image" do
+            it "更新される" do
+              image_path = File.join(Rails.root, "spec/factories/images/img.png")
+              edit_user_info.find('#user_profile_image').set(image_path)
+              click_button "更新する"
+              expect(current_path).to eq user_user_path(user)
+              expect(user.reload.profile_image_id).to_not eq nil
+            end
+          end
+          context "introduction" do
+            it "更新される" do
+              fill_in "user_introduction", with: "changed_user_introduction"
+              click_button "更新する"
+              expect(current_path).to eq user_user_path(user)
+              expect(user.reload.introduction).to eq "changed_user_introduction"
+            end
           end
         end
       end

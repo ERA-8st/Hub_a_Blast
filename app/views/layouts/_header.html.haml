@@ -27,4 +27,4 @@
           - if unchecked_notifications.any?
             %i.fa.fa-circle#notice-icon
       - else
-        #guest-login= link_to raw(escaped_guest_login_link) ,users_guest_sign_in_path, method: :post
+        = link_to raw(escaped_guest_login_link) ,users_guest_sign_in_path, method: :post, id: "guest-login"

@@ -4,7 +4,7 @@
   = link_to user_song_favorites_path(user_id: user.id) do
     %i.fa.fa-bookmark
   - if user == current_user
-    = link_to edit_user_user_path(user) do
+    = link_to edit_user_user_path(user), id: "user-header-edit" do
       %i.fa.fa-pencil
     = link_to user_notifications_path, class: "user-notice" do
       %i.fa.fa-bell
