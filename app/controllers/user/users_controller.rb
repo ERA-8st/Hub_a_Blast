@@ -2,6 +2,7 @@ class User::UsersController < ApplicationController
 
   before_action :correct_user, only: [:edit, :update]
   before_action :set_user, except: [:follower_index]
+  before_action :check_guest_update, only: :update
 
   def show
     # コメントを新しい順に並び替えて、同じ曲に対してのコメントを除外したデータを取得
@@ -46,6 +47,12 @@ class User::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def check_guest_update
+    if @user.email == 'guest@example.com'
+      redirect_to edit_user_user_path(@user)
+    end
   end
   
 end
