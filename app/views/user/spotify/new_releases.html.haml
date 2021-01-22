@@ -21,12 +21,7 @@
           %th Release
         - @new_releases.each do |new_release|
           %tr
-            %td
-              - if new_release.images.any?
-                - image = new_release.images[2]
-                = image_tag(image["url"])
-              - else
-                = image_tag("default.jpg")
+            %td= set_image(new_release,2,true,false)
             %td= link_to new_release.name, user_spotify_album_show_path(new_release.id)
             %td= link_to new_release.artists.first.name, user_spotify_artist_show_path(new_release.artists.first.id)
             %td= new_release.release_date

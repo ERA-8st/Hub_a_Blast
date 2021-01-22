@@ -11,14 +11,9 @@
           %th Album
           %th Artist
         - @songs.first(30).each do |song_impression|
+          - @song = RSpotify::Track.find(song_impression)
           %tr
-            - @song = RSpotify::Track.find(song_impression)
-            %td
-              - if @song.album.images.any?
-                - image = @song.album.images[2]
-                = image_tag(image["url"])
-              - else
-                = image_tag("default.jpg")
+            %td= set_song_image(@song,2,true,false)
             %td= link_to @song.name, user_spotify_song_show_path(@song.id)
             %td= link_to @song.album.name, user_spotify_album_show_path(@song.album.id)
             %td= link_to @song.artists.first.name, user_spotify_artist_show_path(@song.artists.first.id)
