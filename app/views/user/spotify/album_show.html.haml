@@ -6,11 +6,7 @@
       =  " > #{@album.name.truncate(24)}"
   .row
     .col-lg-6.col-md-6.col-xs-6.album-show-left
-      - if @album.images.any?
-        - image = @album.images[1]
-        = image_tag(image["url"], "data-adaptive-background" => '1')
-      - else
-        = image_tag("default.jpg")
+      = set_image(@album,1,false,true)
       .album-info
         = @album.name.truncate(24)
         %br

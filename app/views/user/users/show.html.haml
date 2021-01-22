@@ -39,13 +39,8 @@
         %table.table
           %tr
             %td
-              = link_to user_spotify_song_show_path(song_comment.song_id) do
-                - @song = RSpotify::Track.find(song_comment.song_id)
-                - if @song.album.images.any?
-                  - image = @song.album.images[2]
-                  = image_tag(image["url"])
-                - else
-                  = image_tag("default.jpg")
+              - @song = RSpotify::Track.find(song_comment.song_id)
+              = set_song_image(@song,2,true,false)
             %td
               = @song.name
     .col-lg-6.col-md-6.col-xs-6.user-favorites
@@ -59,12 +54,7 @@
         %table.table
           %tr
             %td
-              = link_to user_spotify_song_show_path(song_favorite.song_id) do
-                - @song = RSpotify::Track.find(song_favorite.song_id)
-                - if @song.album.images.any?
-                  - image = @song.album.images[2]
-                  = image_tag(image["url"])
-                - else
-                  = image_tag("default.jpg")
+              - @song = RSpotify::Track.find(song_favorite.song_id)
+              = set_song_image(@song,2,true,false)
             %td
               = @song.name

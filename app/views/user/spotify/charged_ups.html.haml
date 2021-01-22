@@ -32,11 +32,7 @@
               = @charged_up_count
             %td
               - @song = RSpotify::Track.find(song[0])
-              - if @song.album.images.any?
-                - image = @song.album.images[2]
-                = image_tag(image["url"])
-              - else
-                = image_tag("default.jpg")
+              = set_song_image(@song,2,true,false)
             %td.charged_up_song_name
               = link_to @song.name, user_spotify_song_show_path(@song.id)
             %td

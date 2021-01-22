@@ -3,11 +3,7 @@
     %h1.head_title= "#{@artist.name}"
   .row
     .col-lg-4.col-md-4.col-xs-4.text-right.artist-show-left
-      - if @artist.images.any?
-        - image = @artist.images[1]
-        = image_tag(image["url"], "data-adaptive-background" => '1')
-      - else
-        =image_tag("default.jpg")
+      = set_image(@artist,1,false,true)
     .col-lg-1.col-md-1.col-xs-1.artist-show-center
       -# Facebook
       .fb-root
@@ -74,13 +70,8 @@
     - @albums.each do |album|
       -if album.album_type == "album" && !@album_name.include?(album.name.downcase)
         .col-lg-3.col-md-3.col-xs-3
-          = link_to user_spotify_album_show_path(album.id) do
-            - if album.images.any?
-              - image = album.images[2]
-              = image_tag(image["url"])
-            - else
-              =image_tag("default.jpg")
-            %br
+          = set_image(album,2,true,false)
+          %br
           = album.name.truncate(24)
           -# レビュー平均
           %p{class: "star-rate-#{album.id}"}
@@ -103,13 +94,8 @@
     - @albums.each do |album|
       -if album.album_type == "single" && !@single_name.include?(album.name.downcase)
         .col-lg-3.col-md-3.col-xs-3
-          = link_to user_spotify_album_show_path(album.id) do
-            - if album.images.any?
-              - image = album.images[2]
-              = image_tag(image["url"])
-            - else
-              =image_tag("default.jpg")
-            %br
+          = set_image(album,2,true,false)
+          %br
           = album.name.truncate(24)
           -# レビュー平均
           %p{class: "star-rate-#{album.id}"}

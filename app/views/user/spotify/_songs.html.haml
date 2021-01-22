@@ -3,16 +3,11 @@
   - if searchsongs.present?
     - n = 0
     - searchsongs.first(song_count).each do |searchsong|
-      - n += 1
       .col-lg-3.col-md-3.col-xs-3
-        = link_to user_spotify_song_show_path(searchsong.id), id: "song_#{n}" do
-          - if searchsong.album.images.any?
-            - image = searchsong.album.images[2]
-            = image_tag(image["url"])
-          - else
-            = image_tag("default.jpg")
+        - n += 1
+        = set_song_image(searchsong,2,true,false)
         %br
-        = searchsong.name
+        %p{id: "song_#{n}"}= searchsong.name
 - if searchsongs.count > song_count
   - song_count += 8
   = link_to "更に表示する", user_spotify_index_path(song_count: song_count, search: search_word), id: "more_songs", remote: true

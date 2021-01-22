@@ -6,46 +6,26 @@
   .row
     - @new_releases_in_jp.first(3).each do |new_release_in_jp|
       .col-lg-4.col-md-4.col-xs-4
-        = link_to user_spotify_album_show_path(new_release_in_jp.id) do
-          - if new_release_in_jp.images.any?
-            - image = new_release_in_jp.images[1]
-            = image_tag(image["url"])
-          - else
-            = image_tag("default.jpg")
+        = set_image(new_release_in_jp,1,true,false)
   -# New relsease(世界) 
   %h3.top-world World
   .row
     - @new_releases.first(3).each do |new_release|
       .col-lg-4.col-md-4.col-xs-4
-        = link_to user_spotify_album_show_path(new_release.id) do
-          - if new_release.images.any?
-            - image = new_release.images[1]
-            = image_tag(image["url"])
-          - else
-            = image_tag("default.jpg")
+        = set_image(new_release,1,true,false)
   -# トップアクティブ
   %h2.charge-up
     = link_to "Charged Up" , user_spotify_charged_ups_path
   .row
     - @charged_up.first(3).each do |song|
       .col-lg-4.col-md-4.col-xs-4
-        = link_to user_spotify_song_show_path(song[0]) do
-          - @song = RSpotify::Track.find(song[0])
-          - if @song.album.images.any?
-            - image = @song.album.images[1]
-            = image_tag(image["url"])
-          - else
-            = image_tag("default.jpg")
+        - @song = RSpotify::Track.find(song[0])
+        = set_song_image(@song,1,true,false)
   -# 直近のコメント
   - if user_signed_in?
     %h2.latest-comments Latest Your comment
     .row
       - @song_comments.each do |song_comment|
         .col-lg-4.col-md-4.col-xs-4
-          = link_to user_spotify_song_show_path(song_comment.song_id) do
-            - @song = RSpotify::Track.find(song_comment.song_id)
-            - if @song.album.images.any?
-              - image = @song.album.images[1]
-              = image_tag(image["url"])
-            - else
-              = image_tag("default.jpg")
+          - @song = RSpotify::Track.find(song_comment.song_id)
+          = set_song_image(@song,1,true,false)

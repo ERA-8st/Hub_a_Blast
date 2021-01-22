@@ -9,12 +9,7 @@
   .row
     .col-lg-6.col-md-6.col-xs-6.song-show-left
       .song-image
-        = link_to user_spotify_album_show_path(@album.id), {class: "song_image"} do
-          - if @album.images.any?
-            - image = @album.images[1]
-            = image_tag(image["url"], "data-adaptive-background" => '1')
-          - else
-            = image_tag("default.jpg")
+        = set_image(@album,1,true,true)
         %br
         -# プレビューURL
         = link_to @song.preview_url do
