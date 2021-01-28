@@ -1,5 +1,20 @@
 /* jshint debug: true, expr: true */
 
+var defaul = {
+  selector: '[data-adaptive-background="1"]',
+  parent: ".yield",
+  lumaClasses: {light: "ab-light", dark: "ab-dark"},
+}
+
+$(document).ready(function(){
+  $.adaptiveBackground.run(defaul)
+  .css( "background", "linear-gradient(:root[0], :root[1]")
+  });
+
+$(".yield").on("ab-color-found", function(payload){
+  console.log(payload.palette);
+});
+
 ;
 (function ($) {
   /* Constants & defaults. */
