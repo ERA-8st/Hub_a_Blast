@@ -8,8 +8,8 @@ var defaul = {
 
 $(document).ready(function(){
   $.adaptiveBackground.run(defaul)
-  .css( "background", "linear-gradient(:root[0], :root[1]")
-  });
+  $(defaul).css( "background", "linear-gradient(:root[0], :root[1]")
+});
 
 $(".yield").on("ab-color-found", function(payload){
   console.log(payload.palette);
