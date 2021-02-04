@@ -1,5 +1,5 @@
 .container
-  = form_for @inquiry, :url => user_inquiry_confirm_path do |f|
+  = form_for @inquiry, :url => user_inquiry_confirm_path, method: :get do |f|
     .page-header
       %h1 お問い合わせ
     - if @inquiry.errors.any?

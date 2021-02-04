@@ -4,7 +4,7 @@
       お問い合わせ 
       %span.mail-alert
         (メールが受信可能なメールアドレスか再度ご確認ください)
-  = form_for @inquiry, :url => user_inquiry_thanks_path do |f|
+  = form_for @inquiry, :url => user_inquiry_index_path, class: "create_inquiry" do |f|
     %table.table
       %tr
         %th 名前
@@ -21,4 +21,10 @@
         %td
           = f.hidden_field :message
           = simple_format(@inquiry.message)
-    = f.submit '送信', :class => 'btn btn-primary' 
+    = f.submit '送信', :class => 'btn btn-primary'
+  = form_for @inquiry, :url => user_inquiry_index_path, method: :get, id: "fix_inquiry" do |f|
+    = f.hidden_field :name
+    = f.hidden_field :email
+    = f.hidden_field :message
+    = f.submit "修正"
+

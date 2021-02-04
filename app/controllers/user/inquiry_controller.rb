@@ -3,7 +3,7 @@ class User::InquiryController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @inquiry = Inquiry.new
+    @inquiry = (params[:inquiry] ? Inquiry.new(inquiry_params) : Inquiry.new )
   end
 
   def confirm
@@ -11,10 +11,14 @@ class User::InquiryController < ApplicationController
     render :index if @inquiry.invalid?
   end
 
-  def thanks
+  def create
     @inquiry = Inquiry.new(inquiry_params)    
     InquiryMailer.received_email(@inquiry).deliver
     InquiryMailer.confirm_email(@inquiry).deliver
+    redirect_to user_inquiry_thanks_path
+  end
+
+  def thanks
   end
 
   private

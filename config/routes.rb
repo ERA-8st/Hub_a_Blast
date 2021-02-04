@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  namespace :user do
-    get 'inquiry/index'
-    get 'inquiry/confirm'
-    get 'inquiry/thanks'
-  end
   get 'welcome/index'
   devise_for :users, controllers: {
     omniauth_callbacks: 'omniauth_callbacks',
@@ -22,9 +17,9 @@ Rails.application.routes.draw do
   namespace :user do
     get "home/top" => "home#top"
     get "home/about" => "home#about"
-    get   'inquiry'         => 'inquiry#index'     
-    post  'inquiry/confirm' => 'inquiry#confirm'   
-    post  'inquiry/thanks'  => 'inquiry#thanks'
+    resources :inquiry, only: [:index, :create]
+    get  'inquiry/confirm' => 'inquiry#confirm'   
+    get  'inquiry/thanks'  => 'inquiry#thanks'
     resources :users, only: [:show, :edit, :update]
     get "users/follow_index/:id" => "users#follow_index",as: "users_follow_index"
     get "users/follower_index/:id" => "users#follower_index",as: "users_follower_index"
