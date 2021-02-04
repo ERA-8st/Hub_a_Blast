@@ -11,29 +11,30 @@ describe "その他のテスト" do
   end
   describe "問い合わせのテスト" do
     before do
-      visit user_inquiry_path
+      visit user_inquiry_index_path
     end
     context "ログインしていない場合" do
       before do
         click_link "LOG_OUT"
       end
       it "Topに遷移する" do
-        visit user_inquiry_path
+        visit user_inquiry_index_path
         expect(current_path).to eq new_user_session_path
       end
     end
     context "ログインしている場合" do
       it "問い合わせができる" do
-        expect(current_path).to eq user_inquiry_path
+        expect(current_path).to eq user_inquiry_index_path
         fill_in "inquiry_message", with: "test_inquiry"
         click_button "確認"
-        expect(find("#new_inquiry")).to have_content user.user_name
-        expect(find("#new_inquiry")).to have_content user.email
-        expect(find("#new_inquiry")).to have_content "test_inquiry"
+        confirm_inquiry = all("#new_inquiry").first
+        expect(confirm_inquiry).to have_content user.user_name
+        expect(confirm_inquiry).to have_content user.email
+        expect(confirm_inquiry).to have_content "test_inquiry"
         click_button "送信"
         expect(page).to have_content "お問い合わせいただきありがとうございました。"
       end
-      it "エラ〜メッセージが出る" do
+      it "エラーメッセージが出る" do
         click_button "確認"
         expect(page).to have_content "お問い合わせ内容を入力してください"
       end

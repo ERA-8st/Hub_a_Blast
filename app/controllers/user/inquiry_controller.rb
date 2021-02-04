@@ -3,24 +3,28 @@ class User::InquiryController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @inquiry = Inquiry.new
-    render :action => 'index'
+    @inquiry = (params[:inquiry] ? Inquiry.new(inquiry_params) : Inquiry.new )
   end
 
   def confirm
-    @inquiry = Inquiry.new(params[:inquiry].permit(:name, :email, :message))
-    if @inquiry.valid?
-      render :action => 'confirm'
-    else
-      render :action => 'index'
-    end
+    @inquiry = Inquiry.new(inquiry_params)
+    render :index if @inquiry.invalid?
+  end
+
+  def create
+    @inquiry = Inquiry.new(inquiry_params)    
+    InquiryMailer.received_email(@inquiry).deliver
+    InquiryMailer.confirm_email(@inquiry).deliver
+    redirect_to user_inquiry_thanks_path
   end
 
   def thanks
-    @inquiry = Inquiry.new(params[:inquiry].permit(:name, :email, :message))    
-    InquiryMailer.received_email(@inquiry).deliver
-    InquiryMailer.confirm_email(@inquiry).deliver
-    render :action => 'thanks'
+  end
+
+  private
+
+  def inquiry_params
+    params.require(:inquiry).permit(:name, :email, :message)
   end
   
 end
