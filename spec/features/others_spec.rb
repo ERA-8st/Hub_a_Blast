@@ -10,9 +10,6 @@ describe "その他のテスト" do
     click_button "Log in"
   end
   describe "問い合わせのテスト" do
-    before do
-      visit user_inquiry_index_path
-    end
     context "ログインしていない場合" do
       before do
         click_link "LOG_OUT"
@@ -23,8 +20,10 @@ describe "その他のテスト" do
       end
     end
     context "ログインしている場合" do
+      before do
+        visit user_inquiry_index_path
+      end
       it "問い合わせができる" do
-        expect(current_path).to eq user_inquiry_index_path
         fill_in "inquiry_message", with: "test_inquiry"
         click_button "確認"
         confirm_inquiry = all("#new_inquiry").first
@@ -33,6 +32,16 @@ describe "その他のテスト" do
         expect(confirm_inquiry).to have_content "test_inquiry"
         click_button "送信"
         expect(page).to have_content "お問い合わせいただきありがとうございました。"
+      end
+      it "問い合わせ内容の修正ができる" do
+        fill_in "inquiry_message", with: "test_inquiry"
+        click_button "確認"
+        click_button "修正"
+        expect(current_path).to eq user_inquiry_index_path
+        expect(find("textarea#inquiry_message").value).to eq "test_inquiry"
+        fill_in "inquiry_message", with: "fixed_inquiry_message"
+        click_button "確認"
+        expect(page).to have_content "fixed_inquiry_message"
       end
       it "エラーメッセージが出る" do
         click_button "確認"
