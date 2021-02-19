@@ -1,5 +1,6 @@
 class User::SongFavoritesController < ApplicationController
 
+  before_action :authenticate_user!, only: [:create]
   before_action :correct_user, only: [:destroy]
   before_action :set_song, only: [:create, :destroy]
 

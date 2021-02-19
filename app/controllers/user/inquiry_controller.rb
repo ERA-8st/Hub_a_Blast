@@ -12,10 +12,14 @@ class User::InquiryController < ApplicationController
   end
 
   def create
-    @inquiry = Inquiry.new(inquiry_params)    
-    InquiryMailer.received_email(@inquiry).deliver
-    InquiryMailer.confirm_email(@inquiry).deliver
-    redirect_to user_inquiry_thanks_path
+    @inquiry = Inquiry.new(inquiry_params)
+    if @inquiry.valid?
+      InquiryMailer.received_email(@inquiry).deliver
+      InquiryMailer.confirm_email(@inquiry).deliver
+      redirect_to user_inquiry_thanks_path
+    else
+      redirect_to user_inquiry_index_path
+    end
   end
 
   def thanks
