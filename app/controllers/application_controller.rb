@@ -45,6 +45,10 @@ class ApplicationController < ActionController::Base
     @page = params[:page]
   end
 
+  def add_count(count_params)
+    count_params.blank? ? 4 : count_params.to_i
+  end
+
   protected
 
   def configure_permitted_parameters

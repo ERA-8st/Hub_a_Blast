@@ -10,9 +10,9 @@ class User::SpotifyController < ApplicationController
       @searchartists = RSpotify::Artist.search(@search_word)
       @searchalbums = RSpotify::Album.search(@search_word)
       @searchsongs = RSpotify::Track.search(@search_word)
-      params[:artist_count].blank? ? @artist_count = 4 : @artist_count = params[:artist_count].to_i
-      params[:album_count].blank? ? @album_count = 4 : @album_count = params[:album_count].to_i
-      params[:song_count].blank? ? @song_count = 4 : @song_count = params[:song_count].to_i
+      @artist_count = add_count(params[:artist_count])
+      @album_count = add_count(params[:album_count])
+      @song_count = add_count(params[:song_count])
     end
   end
 
