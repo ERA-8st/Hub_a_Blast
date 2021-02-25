@@ -10,11 +10,7 @@ class User::ArtistCommentsController < ApplicationController
     if @artist_comment.save 
       redirect_to user_spotify_artist_show_path(@artist_comment.artist_id, page: @page)
     else
-      @artist = RSpotify::Artist.find(params[:artist_comment][:artist_id])
-      @albums = @artist.albums
-      @artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
-      @error = true
-      render "user/spotify/artist_show"
+      set_error_variables(params[:artist_comment][:artist_id], params[:page])
     end
   end
 
@@ -22,18 +18,22 @@ class User::ArtistCommentsController < ApplicationController
     if @comment.update(artist_comment_params)
       redirect_to user_spotify_artist_show_path(@comment.artist_id, page: @page)
     else
-      @artist = RSpotify::Artist.find(@comment.artist_id)
-      @albums = @artist.albums
       @artist_comment = ArtistComment.new
-      @artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC").page(params[:page]).per(5)
-      @error = true
-      render "user/spotify/artist_show"
+      set_error_variables(@comment.artist_id, params[:page])
     end
   end
   
   def destroy
     @comment.destroy
     redirect_to user_spotify_artist_show_path(@comment.artist_id)
+  end
+
+  def set_error_variables(artist_id, page_params)
+    @artist = RSpotify::Artist.find(artist_id)
+    @albums = @artist.albums
+    @artist_comments = ArtistComment.where(artist_id: @artist.id).order("id DESC").page(page_params).per(5)
+    @error = true
+    render "user/spotify/artist_show"
   end
 
   private

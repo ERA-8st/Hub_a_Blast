@@ -10,16 +10,7 @@ class User::SongCommentsController < ApplicationController
     if @song_comment.save 
       redirect_to user_spotify_song_show_path(@song_comment.song_id, page: @page)
     else
-      @song = RSpotify::Track.find(@song_comment.song_id)
-      @album = @song.album
-      @song_comments = SongComment.where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
-      if user_signed_in?
-        @song_rating = current_user.song_ratings.find_by(song_id: @song.id)
-        @new_song_rating = current_user.song_ratings.new
-      end
-      @song_favorite = SongFavorite.find_by(user_id: current_user, song_id: @song.id)
-      @error = true
-      render "user/spotify/song_show"
+      set_error_variables(@song_comment.song_id, params[:page])
     end
 
   end
@@ -28,23 +19,27 @@ class User::SongCommentsController < ApplicationController
     if @comment.update(song_comment_params)
       redirect_to user_spotify_song_show_path(@comment.song_id, page: @page)
     else
-      @song = RSpotify::Track.find(@comment.song_id)
-      @album = @song.album
       @song_comment = SongComment.new
-      @song_comments = SongComment.where(song_id: @song.id).order("id DESC").page(params[:page]).per(5)
-      if user_signed_in?
-        @song_rating = current_user.song_ratings.find_by(song_id: @song.id)
-        @new_song_rating = current_user.song_ratings.new
-      end
-      @song_favorite = SongFavorite.find_by(user_id: current_user, song_id: @song.id)
-      @error = true
-      render "user/spotify/song_show"
+      set_error_variables(@comment.song_id, params[:page])
     end
   end
   
   def destroy
     @comment.destroy
     redirect_to user_spotify_song_show_path(@comment.song_id)
+  end
+
+  def set_error_variables(song_id, page_params)
+    @song = RSpotify::Track.find(song_id)
+    @album = @song.album
+    @song_comments = SongComment.where(song_id: @song.id).order("id DESC").page(page_params).per(5)
+    if user_signed_in?
+      @song_rating = current_user.song_ratings.find_by(song_id: @song.id)
+      @new_song_rating = current_user.song_ratings.new
+    end
+    @song_favorite = SongFavorite.find_by(user_id: current_user, song_id: @song.id)
+    @error = true
+    render "user/spotify/song_show"
   end
 
   private
