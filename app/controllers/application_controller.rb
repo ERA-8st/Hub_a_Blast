@@ -49,6 +49,15 @@ class ApplicationController < ActionController::Base
     count_params.blank? ? 4 : count_params.to_i
   end
 
+  def new_releases_search(country)
+    if country.blank?
+      RSpotify::Album.new_releases
+    else
+      RSpotify::Album.new_releases(country: country)
+    end
+  end
+  
+
   protected
 
   def configure_permitted_parameters

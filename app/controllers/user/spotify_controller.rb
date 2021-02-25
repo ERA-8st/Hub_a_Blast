@@ -54,13 +54,8 @@ class User::SpotifyController < ApplicationController
   end
 
   def new_releases
-    case params[:country]
-      when nil || ""
-        @new_releases = RSpotify::Album.new_releases
-      else
-        @new_releases = RSpotify::Album.new_releases(country: params[:country])
-        @country_name = params[:country]
-    end
+    @new_releases = new_releases_search(params[:country])
+    @country_name = params[:country]
   end
 
   def charged_ups
