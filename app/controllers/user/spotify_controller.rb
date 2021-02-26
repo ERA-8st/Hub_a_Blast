@@ -10,9 +10,9 @@ class User::SpotifyController < ApplicationController
       @searchartists = RSpotify::Artist.search(@search_word)
       @searchalbums = RSpotify::Album.search(@search_word)
       @searchsongs = RSpotify::Track.search(@search_word)
-      params[:artist_count].blank? ? @artist_count = 4 : @artist_count = params[:artist_count].to_i
-      params[:album_count].blank? ? @album_count = 4 : @album_count = params[:album_count].to_i
-      params[:song_count].blank? ? @song_count = 4 : @song_count = params[:song_count].to_i
+      @artist_count = add_count(params[:artist_count])
+      @album_count = add_count(params[:album_count])
+      @song_count = add_count(params[:song_count])
     end
   end
 
@@ -54,30 +54,14 @@ class User::SpotifyController < ApplicationController
   end
 
   def new_releases
-    case params[:country]
-      when nil || ""
-        @new_releases = RSpotify::Album.new_releases
-      else
-        @new_releases = RSpotify::Album.new_releases(country: params[:country])
-        @country_name = params[:country]
-    end
+    @new_releases = new_releases_search(params[:country])
+    @country_name = params[:country]
   end
 
   def charged_ups
     # 特定の期間内のコメントを取得して曲のIDの重複数が多い順に並び替えて取得
-    case params[:times]
-      when nil, "指定無し"
-        @charged_up = SongComment.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
-      when "今日"
-        @charged_up = SongComment.day.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
-        @time = "Today"
-      when "１週間"
-        @charged_up = SongComment.week.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
-        @time = "Week"
-      when "一ヶ月"
-        @charged_up = SongComment.month.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
-        @time = "Month"
-      end
+    @charged_up = sort_charged_ups(params[:times])[0]
+    @time = sort_charged_ups(params[:times])[1]
   end
   
 end
