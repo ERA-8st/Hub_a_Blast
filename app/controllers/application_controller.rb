@@ -56,7 +56,24 @@ class ApplicationController < ActionController::Base
       RSpotify::Album.new_releases(country: country)
     end
   end
-  
+
+  def sort_charged_ups(times)
+    case times
+      when nil, "指定無し"
+        charged_up = SongComment.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
+      when "今日"
+        charged_up = SongComment.day.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
+        time = "Today"
+      when "１週間"
+        charged_up = SongComment.week.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
+        time = "Week"
+      when "一ヶ月"
+        charged_up = SongComment.month.group(:song_id).count(:song_id).to_a.sort {|a,b| a[1] <=> b[1]}.reverse
+        time = "Month"
+      end
+    return charged_up, time
+  end
+
 
   protected
 
