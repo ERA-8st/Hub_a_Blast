@@ -1,21 +1,21 @@
 %table.table
-	- follows.each do |follow|
-		%tr
-			- user = follow.follow
-			%td
-				= attachment_image_tag(user, :profile_image,  size: "40x40", fallback: "no-image.png")
-			%td
-				= link_to user.user_name, user_user_path(user)
-			%td
-				- if user_signed_in?
-					- unless current_user == user
-						- if current_user.following?(user)
-							= form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }, url: user_relationship_path(user.id), remote: true) do |f|
-								= f.hidden_field :follow_id, value: user.id
-								= f.hidden_field :index_user_id, value: index_user.id
-								= f.submit 'フォロー中', class: 'follow-now btn btn-info'
-						- else
-							= form_for(current_user.relationships.build, url: user_relationships_path, remote: true) do |f|
-								= f.hidden_field :follow_id, value: user.id
-								= f.hidden_field :index_user_id, value: index_user.id
-								= f.submit 'フォロー', class: 'follows btn btn-outline-info'
+  - follows.each do |follow|
+    %tr
+      - user = follow.follow
+      %td
+        = attachment_image_tag(user, :profile_image,  size: "40x40", fallback: "no-image.png")
+      %td
+        = link_to user.user_name, user_user_path(user)
+      %td
+        - if user_signed_in?
+          - unless current_user == user
+            - if current_user.following?(user)
+              = form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }, url: user_relationship_path(user.id), remote: true) do |f|
+                = f.hidden_field :follow_id, value: user.id
+                = f.hidden_field :index_user_id, value: follow.user_id
+                = f.submit 'フォロー中', class: 'follow-now btn btn-info'
+            - else
+              = form_for(current_user.relationships.build, url: user_relationships_path, remote: true) do |f|
+                = f.hidden_field :follow_id, value: user.id
+                = f.hidden_field :index_user_id, value: follow.user_id
+                = f.submit 'フォロー', class: 'follows btn btn-outline-info'
